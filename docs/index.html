@@ -12,7 +12,7 @@
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -27,31 +27,31 @@
           },
           colors: {
             outerCanvas: {
-              light: '#b2bcc6',
-              dark: '#080c0b'
+              light: '#b6c0cb',
+              dark: '#0a0d0c'
             },
             shell: {
-              light: '#fafaf7',
-              dark: '#111615'
+              light: '#faf9f6',
+              dark: '#111414'
             },
             card: {
               light: '#ffffff',
-              dark: '#18201d'
+              dark: '#171b1b'
             },
             darkTile: {
               DEFAULT: '#18181b',
-              hover: '#222226'
+              hover: '#202024'
             },
             buttercup: {
               100: '#fef9c3',
               200: '#fef08a',
               300: '#fde047',
-              400: '#facc15',
-              500: '#f5be38',
+              400: '#f5be38',
+              500: '#f6be3c',
               600: '#d99710'
             },
             cardBorder: {
-              light: 'rgba(0, 0, 0, 0.04)',
+              light: 'rgba(0, 0, 0, 0.05)',
               dark: 'rgba(255, 255, 255, 0.08)'
             }
           },
@@ -59,13 +59,13 @@
             '2xl': '1rem',
             '3xl': '1.5rem',
             '4xl': '2rem',
-            'shell': '2.25rem'
+            'shell': '2.5rem'
           },
           boxShadow: {
-            'card': '0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02)',
+            'card': '0 8px 30px -6px rgba(0, 0, 0, 0.03), 0 2px 8px -2px rgba(0, 0, 0, 0.02)',
             'card-dark': '0 12px 36px -10px rgba(0, 0, 0, 0.5)',
-            'pill': '0 2px 8px -1px rgba(0, 0, 0, 0.12)',
-            'yellow-glow': '0 4px 18px -2px rgba(245, 190, 56, 0.45)',
+            'pill': '0 2px 8px -1px rgba(0, 0, 0, 0.08)',
+            'glow': '0 4px 20px -2px rgba(245, 190, 56, 0.35)',
           }
         }
       }
@@ -83,26 +83,26 @@
     }
 
     body {
-      background-color: #b2bcc6;
+      background-color: #b6c0cb;
       transition: background-color 0.25s ease;
     }
 
     html.dark body {
-      background-color: #080c0b;
+      background-color: #0a0d0c;
     }
 
-    /* Ambient Buttercup Glow on Shell */
+    /* Ambient Warm Buttercup Glow on Shell */
     .shell-glow {
       background-image: 
-        radial-gradient(circle at 8% 10%, rgba(254, 240, 199, 0.55) 0%, transparent 280px),
-        radial-gradient(circle at 95% 85%, rgba(254, 243, 199, 0.7) 0%, transparent 320px);
+        radial-gradient(circle at 92% 12%, rgba(254, 240, 199, 0.65) 0%, transparent 320px),
+        radial-gradient(circle at 94% 88%, rgba(254, 243, 199, 0.8) 0%, transparent 340px);
       background-repeat: no-repeat;
     }
 
     html.dark .shell-glow {
       background-image: 
-        radial-gradient(circle at 8% 10%, rgba(245, 190, 56, 0.08) 0%, transparent 280px),
-        radial-gradient(circle at 95% 85%, rgba(245, 190, 56, 0.06) 0%, transparent 320px);
+        radial-gradient(circle at 92% 12%, rgba(245, 190, 56, 0.08) 0%, transparent 320px),
+        radial-gradient(circle at 94% 88%, rgba(245, 190, 56, 0.06) 0%, transparent 340px);
     }
 
     /* Segmented Bar Hatching Effect */
@@ -127,18 +127,18 @@
 
     /* Top Nav Pill Buttons */
     .nav-pill-btn {
-      transition: all 0.16s ease;
+      transition: all 0.18s ease;
     }
     .nav-pill-btn.active {
       background-color: #18181b;
       color: #ffffff;
-      font-weight: 700;
-      box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.2);
+      font-weight: 600;
+      box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.25);
     }
     html.dark .nav-pill-btn.active {
-      background-color: #f5be38;
+      background-color: #f6be3c;
       color: #18181b;
-      box-shadow: 0 4px 14px -2px rgba(245, 190, 56, 0.4);
+      box-shadow: 0 4px 14px -2px rgba(246, 190, 60, 0.4);
     }
     .nav-pill-btn:not(.active) {
       color: #71717a;
@@ -155,6 +155,18 @@
       background-color: rgba(255, 255, 255, 0.06);
     }
 
+    /* Clock Gauge Ticks Effect */
+    .clock-ticks {
+      background: radial-gradient(circle, transparent 62%, rgba(0,0,0,0.04) 63%, transparent 64%),
+                  repeating-conic-gradient(from 0deg, rgba(0,0,0,0.15) 0deg 1deg, transparent 1deg 15deg);
+      border-radius: 9999px;
+    }
+    html.dark .clock-ticks {
+      background: radial-gradient(circle, transparent 62%, rgba(255,255,255,0.06) 63%, transparent 64%),
+                  repeating-conic-gradient(from 0deg, rgba(255,255,255,0.15) 0deg 1deg, transparent 1deg 15deg);
+      border-radius: 9999px;
+    }
+
     /* Custom internal scrollbars */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -162,47 +174,47 @@
     html.dark ::-webkit-scrollbar-thumb { background: #3f3f46; }
   </style>
 </head>
-<body class="antialiased h-screen w-screen flex items-center justify-center p-2 sm:p-3 selection:bg-buttercup-500 selection:text-white">
+<body class="antialiased h-screen w-screen flex items-center justify-center p-1 sm:p-2 selection:bg-buttercup-500 selection:text-white transition-colors duration-300">
 
   <!-- ==================================================== -->
   <!-- FLOATING MASTER APPLICATION SHELL                    -->
   <!-- ==================================================== -->
-  <div class="w-full h-full max-w-[1560px] max-h-[960px] bg-shell-light dark:bg-shell-dark rounded-shell border border-white/80 dark:border-white/10 shadow-2xl p-4 sm:p-5 flex flex-col justify-between shell-glow overflow-hidden relative transition-colors duration-200">
+  <div class="w-full h-full max-w-[1520px] max-h-[890px] bg-shell-light dark:bg-shell-dark rounded-[30px] md:rounded-[36px] border border-white/90 dark:border-white/10 shadow-[0_24px_70px_-15px_rgba(0,0,0,0.14)] p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shell-glow overflow-hidden relative transition-colors duration-200">
 
     <!-- TOP NAVIGATION & EXECUTIVE GREETING BAR -->
-    <header class="shrink-0 space-y-3 pb-2 border-b border-black/[0.04] dark:border-white/5">
+    <header class="shrink-0 space-y-1 pb-0.5">
       
       <!-- Topmost Row: Brand Badge, Horizontal Pill Menu & Utilities -->
-      <div class="flex flex-col md:flex-row items-center justify-between gap-2.5">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-2">
         
-        <!-- Left Brand Badge -->
+        <!-- Left Brand Badge (Matches Crextio Pill) -->
         <div class="flex items-center space-x-2">
-          <div class="px-3.5 py-1 rounded-full border border-slate-300 dark:border-slate-700 bg-white/60 dark:bg-white/5 font-extrabold text-xs tracking-tight text-slate-800 dark:text-slate-100 flex items-center space-x-1.5 shadow-sm">
+          <div class="px-3 py-1 rounded-full border border-slate-300/80 dark:border-slate-700 bg-white/70 dark:bg-white/5 font-semibold text-xs tracking-tight text-slate-800 dark:text-slate-100 flex items-center space-x-2 shadow-sm">
             <span class="w-2 h-2 rounded-full bg-buttercup-500"></span>
-            <span class="font-black">Pann Labs</span>
+            <span class="font-bold">Pann Labs</span>
             <span class="text-slate-400 font-normal">| RetainPulse</span>
           </div>
         </div>
 
         <!-- Center: Horizontal Pill Page Navigation -->
-        <nav class="flex items-center space-x-1 bg-white/70 dark:bg-white/5 p-1 rounded-full border border-black/[0.04] dark:border-white/5 shadow-sm">
+        <nav class="flex items-center space-x-1 bg-white/80 dark:bg-white/5 p-1 rounded-full border border-black/[0.04] dark:border-white/5 shadow-sm">
           <button onclick="switchPage('home')" id="nav-btn-home" class="nav-pill-btn active px-3.5 py-1 rounded-full text-xs font-semibold">
             Dashboard
           </button>
-          <button onclick="switchPage('cohorts')" id="nav-btn-cohorts" class="nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold">
+          <button onclick="switchPage('cohorts')" id="nav-btn-cohorts" class="nav-pill-btn px-3.5 py-1 rounded-full text-xs font-semibold">
             Cohorts
           </button>
-          <button onclick="switchPage('triage')" id="nav-btn-triage" class="nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1">
+          <button onclick="switchPage('triage')" id="nav-btn-triage" class="nav-pill-btn px-3.5 py-1 rounded-full text-xs font-semibold flex items-center space-x-1">
             <span>Risk Triage</span>
             <span class="w-1.5 h-1.5 rounded-full bg-buttercup-500"></span>
           </button>
-          <button onclick="switchPage('leakage')" id="nav-btn-leakage" class="nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold">
+          <button onclick="switchPage('leakage')" id="nav-btn-leakage" class="nav-pill-btn px-3.5 py-1 rounded-full text-xs font-semibold">
             Leakage &amp; CLV
           </button>
-          <button onclick="switchPage('recommendations')" id="nav-btn-recommendations" class="nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold">
+          <button onclick="switchPage('recommendations')" id="nav-btn-recommendations" class="nav-pill-btn px-3.5 py-1 rounded-full text-xs font-semibold">
             Strategy &amp; ROI
           </button>
-          <button onclick="switchPage('drillthrough')" id="nav-btn-drillthrough" class="nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold">
+          <button onclick="switchPage('drillthrough')" id="nav-btn-drillthrough" class="nav-pill-btn px-3.5 py-1 rounded-full text-xs font-semibold">
             Drilldown
           </button>
         </nav>
@@ -210,127 +222,131 @@
         <!-- Right: Theme, SQL, JSON & Author Avatar -->
         <div class="flex items-center space-x-1.5">
           <!-- Dark Mode Toggle Button -->
-          <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-white dark:bg-card-dark text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition shadow-sm" title="Toggle Dark Mode">
-            <i id="themeIcon" data-lucide="moon" class="w-3.5 h-3.5 text-buttercup-600 dark:text-buttercup-400"></i>
+          <button onclick="toggleDarkMode()" class="w-7 h-7 rounded-full bg-white dark:bg-card-dark text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 hover:bg-slate-50 transition shadow-sm flex items-center justify-center" title="Toggle Dark Mode">
+            <i id="themeIcon" data-lucide="moon" class="w-3 h-3 text-buttercup-600 dark:text-buttercup-400"></i>
           </button>
 
           <!-- SQL View Button -->
-          <button onclick="openSqlModal()" class="px-3 py-1 rounded-full bg-white dark:bg-card-dark text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-50 transition flex items-center space-x-1 shadow-sm">
+          <button onclick="openSqlModal()" class="px-3 py-1 rounded-full bg-white dark:bg-card-dark text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold hover:bg-slate-50 transition flex items-center space-x-1.5 shadow-sm">
             <i data-lucide="terminal" class="w-3 h-3 text-slate-400"></i>
             <span>SQL</span>
           </button>
 
           <!-- Export Button -->
-          <button onclick="exportTelemetryJson()" class="p-2 rounded-full bg-white dark:bg-card-dark text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition shadow-sm" title="Export Telemetry JSON">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <button onclick="exportTelemetryJson()" class="w-7 h-7 rounded-full bg-white dark:bg-card-dark text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 hover:bg-slate-50 transition shadow-sm flex items-center justify-center" title="Export Telemetry JSON">
+            <i data-lucide="download" class="w-3 h-3"></i>
           </button>
 
           <!-- Peter Akpan Profile Avatar Pill -->
-          <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-1.5 pl-1.5 pr-2.5 py-1 rounded-full bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 shadow-sm hover:border-buttercup-400 transition" title="Peter Akpan Portfolio">
+          <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 pl-1.5 pr-2.5 py-0.5 rounded-full bg-white dark:bg-card-dark border border-slate-200/80 dark:border-slate-700 shadow-sm hover:border-buttercup-400 transition" title="Peter Akpan Portfolio">
             <img src="./assets/petrepann_avatar.png" alt="Peter Akpan" class="w-5 h-5 rounded-full object-cover border border-buttercup-400" onerror="this.src='https://petrepanntech.github.io/assets/petrepann_avatar.png'" />
-            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200">Peter Akpan</span>
+            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Peter Akpan</span>
           </a>
         </div>
 
       </div>
 
-      <!-- Second Row: Bold Greeting & High-Impact Minimalist Metrics -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 pt-1">
-        <div>
-          <h1 id="heroGreeting" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Welcome in, Peter Akpan
-          </h1>
-          <p id="heroSubtitle" class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-            Executive SaaS Churn &bull; 5,000 Audited Enterprise Accounts &bull; Longitudinal OLAP
-          </p>
-        </div>
-
-        <!-- 3 Large Clean Numerical Stats (Matching Reference Right Header) -->
-        <div class="flex items-center space-x-6 sm:space-x-8">
-          <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400">
-              <i data-lucide="users" class="w-3.5 h-3.5"></i>
-            </div>
-            <div>
-              <div id="statActiveAccounts" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-none">3,765</div>
-              <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wide">Active Accts</span>
-            </div>
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 rounded-full bg-amber-50 dark:bg-amber-950/40 flex items-center justify-center text-buttercup-500">
-              <i data-lucide="flame" class="w-3.5 h-3.5"></i>
-            </div>
-            <div>
-              <div id="statPriorityRisk" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-none">96</div>
-              <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wide">Risk Triage</span>
-            </div>
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 rounded-full bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center text-emerald-500">
-              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-            </div>
-            <div>
-              <div id="statActiveMrr" class="text-xl sm:text-2xl font-black font-mono text-slate-900 dark:text-white leading-none">$1.93M</div>
-              <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wide">Active MRR</span>
-            </div>
-          </div>
-        </div>
+      <!-- Second Row: Spacious Greeting (Exact Crextio Typography) -->
+      <div>
+        <h1 id="heroGreeting" class="text-xl sm:text-2xl font-normal text-slate-800 dark:text-white tracking-tight leading-tight">
+          Welcome in, Peter Akpan
+        </h1>
       </div>
 
-      <!-- Third Row: Segmented Commitment Slicer Bar (Matching Reference Pill Strip) -->
-      <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+      <!-- Third Row: Segmented Slicers on Left and 3 Airy Metrics on Right (Crextio Exact Alignment) -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2.5">
         
-        <!-- Live Segmented Slicer Buttons -->
-        <div class="flex items-center space-x-2">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Commitment:</span>
+        <!-- Left: Segmented Commitment Slicer Strip -->
+        <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
           
-          <button onclick="setContractSlicer('ALL')" id="slicer-all" class="px-3 py-1 rounded-full text-xs font-bold transition bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm">
-            All (5,000)
-          </button>
+          <!-- Item 1: Baseline -->
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-400 font-medium mb-0.5">Baseline</span>
+            <button onclick="setContractSlicer('ALL')" id="slicer-all" class="px-3 py-1 rounded-full text-xs font-semibold transition bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white shadow-sm hover:opacity-90">
+              All 100%
+            </button>
+          </div>
 
-          <button onclick="setContractSlicer('Month-to-Month')" id="slicer-m2m" class="px-3 py-1 rounded-full text-xs font-bold transition bg-buttercup-400 hover:bg-buttercup-500 text-slate-900 shadow-sm flex items-center space-x-1">
-            <span>54% Month-to-Month</span>
-            <span class="text-[9px] px-1 py-0.2 rounded bg-black/10 font-mono">4.27x</span>
-          </button>
+          <!-- Item 2: High Risk M2M -->
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-400 font-medium mb-0.5">High Risk</span>
+            <button onclick="setContractSlicer('Month-to-Month')" id="slicer-m2m" class="px-3 py-1 rounded-full text-xs font-semibold transition bg-buttercup-400 hover:bg-buttercup-500 text-slate-900 shadow-sm">
+              M2M 54%
+            </button>
+          </div>
 
-          <button onclick="setContractSlicer('1-Year')" id="slicer-1yr" class="px-3 py-1 rounded-full text-xs font-bold transition bg-darkTile text-white hover:bg-black shadow-sm">
-            28% 1-Year
-          </button>
+          <!-- Item 3: 1-Year Term -->
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-400 font-medium mb-0.5">Protected</span>
+            <button onclick="setContractSlicer('1-Year')" id="slicer-1yr" class="px-3 py-1 rounded-full text-xs font-semibold transition bg-darkTile text-white hover:bg-black shadow-sm">
+              1-Year 28%
+            </button>
+          </div>
 
-          <button onclick="setContractSlicer('2-Year')" id="slicer-2yr" class="px-3 py-1 rounded-full text-xs font-bold transition border border-slate-300 dark:border-slate-700 bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 hatch-pattern">
-            18% 2-Year
-          </button>
+          <!-- Item 4: 2-Year Term -->
+          <div class="flex flex-col">
+            <span class="text-[9px] text-slate-400 font-medium mb-0.5">Enterprise</span>
+            <button onclick="setContractSlicer('2-Year')" id="slicer-2yr" class="px-3 py-1 rounded-full text-xs font-semibold transition border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-white/5 text-slate-700 dark:text-slate-300 hatch-pattern hover:bg-white">
+              2-Year 18%
+            </button>
+          </div>
+
+          <!-- Active Filter Badge and Reset -->
+          <div class="hidden xl:flex items-center space-x-2 pl-2">
+            <span id="activeSlicerCountBadge" class="text-[11px] font-mono text-slate-400">
+              5,000 Accounts
+            </span>
+            <button onclick="resetContractSlicer()" class="text-xs font-semibold text-slate-400 hover:text-buttercup-600 transition">
+              Reset
+            </button>
+          </div>
+
         </div>
 
-        <!-- Active Filter Badge -->
-        <div class="flex items-center space-x-2">
-          <span id="activeSlicerCountBadge" class="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400">
-            Matching 5,000 Accounts (100%)
-          </span>
-          <button onclick="resetContractSlicer()" class="text-[10px] font-bold text-slate-400 hover:text-rose-500 transition">
-            Reset
-          </button>
+        <!-- Right: 3 Large Airy Numerical Stats (Matching 78 Employe / 56 Hirings / 203 Projects) -->
+        <div class="flex items-center space-x-6 sm:space-x-8 shrink-0">
+          <div class="flex flex-col">
+            <div id="statActiveAccounts" class="text-2xl sm:text-3xl font-light text-slate-800 dark:text-white tracking-tight leading-none">3,765</div>
+            <div class="flex items-center space-x-1 text-xs text-slate-400 font-medium mt-0.5">
+              <i data-lucide="users" class="w-3 h-3"></i>
+              <span>Accounts</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <div id="statPriorityRisk" class="text-2xl sm:text-3xl font-light text-slate-800 dark:text-white tracking-tight leading-none">96</div>
+            <div class="flex items-center space-x-1 text-xs text-slate-400 font-medium mt-0.5">
+              <i data-lucide="flame" class="w-3 h-3 text-buttercup-500"></i>
+              <span>At Risk</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <div id="statActiveMrr" class="text-2xl sm:text-3xl font-light text-slate-800 dark:text-white tracking-tight leading-none">$1.93M</div>
+            <div class="flex items-center space-x-1 text-xs text-slate-400 font-medium mt-0.5">
+              <i data-lucide="trending-up" class="w-3 h-3 text-emerald-500"></i>
+              <span>Active MRR</span>
+            </div>
+          </div>
         </div>
 
       </div>
 
     </header>
 
-    <!-- DYNAMIC BODY CANVAS (Fits exact remaining 100vh height) -->
-    <main class="flex-1 min-h-0 relative overflow-hidden pt-3">
+    <!-- DYNAMIC BODY CANVAS (Fits exact remaining 100vh height with ample white space) -->
+    <main class="flex-1 min-h-0 relative overflow-hidden pt-1 pb-0.5">
 
       <!-- ======================================================== -->
-      <!-- PAGE 1: HOME OVERVIEW (Matching Uploaded Image Layout)   -->
+      <!-- PAGE 1: HOME OVERVIEW (Exact Crextio Reference Layout)   -->
       <!-- ======================================================== -->
-      <div id="page-home" class="h-full grid grid-cols-1 lg:grid-cols-12 gap-3 min-h-0">
+      <div id="page-home" class="h-full grid grid-cols-1 lg:grid-cols-12 gap-2.5 lg:gap-3 min-h-0">
         
         <!-- Left Column: Founder Tile & Tier Accordions (3 cols) -->
-        <div class="lg:col-span-3 flex flex-col gap-3 h-full min-h-0">
+        <div class="lg:col-span-3 flex flex-col gap-2.5 lg:gap-3 h-full min-h-0">
           
           <!-- Tile 1: Founder & MRR Profile Card (Matches Lora Piterson Card) -->
-          <div class="relative rounded-3xl overflow-hidden shadow-card border border-cardBorder-light dark:border-cardBorder-dark bg-card-light dark:bg-card-dark flex flex-col justify-end p-4 h-48 sm:h-52 shrink-0 group">
+          <div class="relative rounded-[22px] overflow-hidden shadow-card border border-cardBorder-light dark:border-cardBorder-dark bg-card-light dark:bg-card-dark flex flex-col justify-end p-3 h-[130px] sm:h-[135px] shrink-0 group">
             <!-- Background Portrait -->
             <img 
               src="./assets/petrepann_avatar.png" 
@@ -338,225 +354,267 @@
               class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
               onerror="this.src='https://petrepanntech.github.io/assets/petrepann_avatar.png'"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent"></div>
 
             <!-- Content Overlay -->
             <div class="relative z-10 text-white flex items-end justify-between">
               <div>
-                <h3 class="text-sm font-extrabold leading-tight">Peter Akpan</h3>
-                <p class="text-[10px] text-white/75 font-medium">Founder &bull; Pann Labs</p>
+                <h3 class="text-xs sm:text-sm font-bold leading-tight">Peter Akpan</h3>
+                <p class="text-[9px] text-white/70 font-medium">Founder &bull; Pann Labs</p>
               </div>
 
               <!-- Pill Badge (Matches $1,200 Badge in Reference) -->
-              <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 text-white text-xs font-bold border border-white/25 flex items-center space-x-1 transition shadow-sm" title="View Portfolio">
-                <span class="text-buttercup-300 font-mono font-black">$1.93M</span>
+              <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 text-white text-xs font-semibold border border-white/25 flex items-center space-x-1 transition shadow-sm" title="View Portfolio">
+                <span class="text-buttercup-300 font-mono font-bold">$1.93M</span>
                 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
               </a>
             </div>
           </div>
 
           <!-- Tile 5: Diagnostic Metrics List (Matches Accordion List in Reference) -->
-          <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-3xl p-3.5 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between overflow-y-auto">
-            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block shrink-0 mb-1">
-              PORTFOLIO SEGMENTS
-            </span>
-
-            <div class="space-y-2 flex-1 min-h-0 overflow-y-auto">
-              <!-- Row 1: Enterprise -->
-              <div onclick="filterByTier('Enterprise')" class="p-2 rounded-2xl bg-slate-50 dark:bg-white/5 hover:bg-buttercup-50 dark:hover:bg-buttercup-950/30 cursor-pointer transition flex items-center justify-between">
+          <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between">
+            <div class="space-y-0.5 flex-1 min-h-0 flex flex-col justify-around">
+              <!-- Row 1: Enterprise Accounts -->
+              <div onclick="filterByTier('Enterprise')" class="py-1 px-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition flex items-center justify-between group border-b border-dotted border-slate-100 dark:border-white/5">
                 <div>
-                  <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">Enterprise Accounts</h4>
-                  <span class="text-[9px] text-slate-400 font-mono">$28.4k CLV &bull; 9.9% Churn</span>
+                  <h4 class="text-xs font-semibold text-slate-800 dark:text-slate-100">Enterprise Accounts</h4>
+                  <p class="text-[9px] text-slate-400 font-mono">$28.4k CLV &bull; 9.9% Churn</p>
                 </div>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+                <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300 group-hover:text-slate-600 transition"></i>
               </div>
 
-              <!-- Row 2: Mid-Market -->
-              <div onclick="filterByTier('Mid-Market')" class="p-2 rounded-2xl bg-slate-50 dark:bg-white/5 hover:bg-buttercup-50 dark:hover:bg-buttercup-950/30 cursor-pointer transition flex items-center justify-between">
-                <div>
-                  <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">Mid-Market Tier</h4>
-                  <span class="text-[9px] text-slate-400 font-mono">$14.9k CLV &bull; 21.2% Churn</span>
+              <!-- Row 2: Mid-Market Tier -->
+              <div onclick="filterByTier('Mid-Market')" class="py-1 px-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition flex items-center justify-between group border-b border-dotted border-slate-100 dark:border-white/5">
+                <div class="flex items-center space-x-2">
+                  <div class="w-5 h-5 rounded-lg bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-300 shrink-0">
+                    <i data-lucide="laptop" class="w-3 h-3"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-semibold text-slate-800 dark:text-slate-100">Mid-Market Tier</h4>
+                    <p class="text-[9px] text-slate-400 font-mono">1,840 Accounts</p>
+                  </div>
                 </div>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+                <i data-lucide="more-vertical" class="w-3 h-3 text-slate-300"></i>
               </div>
 
-              <!-- Row 3: Growth -->
-              <div onclick="filterByTier('Growth')" class="p-2 rounded-2xl bg-slate-50 dark:bg-white/5 hover:bg-buttercup-50 dark:hover:bg-buttercup-950/30 cursor-pointer transition flex items-center justify-between">
+              <!-- Row 3: Compensation Summary -->
+              <div onclick="switchPage('leakage')" class="py-1 px-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition flex items-center justify-between group border-b border-dotted border-slate-100 dark:border-white/5">
                 <div>
-                  <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">Growth Tier</h4>
-                  <span class="text-[9px] text-slate-400 font-mono">$7.2k CLV &bull; 34.6% Churn</span>
+                  <h4 class="text-xs font-semibold text-slate-800 dark:text-slate-100">Compensation Summary</h4>
+                  <p class="text-[9px] text-rose-500 font-mono font-medium">$7.8M ARR Leakage</p>
                 </div>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+                <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300 group-hover:text-slate-600 transition"></i>
               </div>
-            </div>
 
-            <!-- Footer summary -->
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[9px] text-slate-400 shrink-0">
-              <span>Annual Leakage:</span>
-              <span class="font-mono font-bold text-rose-500">$7,845,590 ARR</span>
+              <!-- Row 4: Retention Playbook -->
+              <div onclick="switchPage('recommendations')" class="py-1 px-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition flex items-center justify-between group">
+                <div>
+                  <h4 class="text-xs font-semibold text-slate-800 dark:text-slate-100">Retention Playbook</h4>
+                  <p class="text-[9px] text-slate-400 font-mono">3 Strategic Pillars</p>
+                </div>
+                <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300 group-hover:text-slate-600 transition"></i>
+              </div>
             </div>
           </div>
 
         </div>
 
         <!-- Middle Column: Lollipop Velocity, Circular Odds & Timeline (6 cols) -->
-        <div class="lg:col-span-6 flex flex-col gap-3 h-full min-h-0">
+        <div class="lg:col-span-6 flex flex-col gap-2.5 lg:gap-3 h-full min-h-0">
           
-          <!-- Middle Top Row: Progress Bar & Circular Time Tracker (Matches Reference Geometry) -->
-          <div class="grid grid-cols-2 gap-3 h-48 sm:h-52 shrink-0">
+          <!-- Middle Top Row: Progress Bar & Circular Time Tracker (Strictly bounded h-[130px] sm:h-[135px]) -->
+          <div class="grid grid-cols-2 gap-2.5 lg:gap-3 h-[130px] sm:h-[135px] shrink-0">
             
             <!-- Tile 2: Progress Lollipop Bars (Matches Progress 6.1h Card) -->
-            <div class="bg-card-light dark:bg-card-dark rounded-3xl p-3.5 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden">
+            <div class="bg-card-light dark:bg-card-dark rounded-[22px] p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden">
               <div class="flex items-start justify-between">
                 <div>
-                  <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Retention Velocity</span>
-                  <div class="flex items-baseline space-x-1.5 mt-0.5">
-                    <span id="cardChurnRateDisplay" class="text-xl font-black font-mono text-slate-900 dark:text-white">24.7%</span>
-                    <span class="text-[9px] text-slate-400">Exit Rate</span>
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-200">Progress</span>
+                  <div class="flex items-baseline space-x-1.5">
+                    <span id="cardChurnRateDisplay" class="text-xl font-light text-slate-800 dark:text-white tracking-tight">24.7%</span>
+                    <span class="text-[10px] text-slate-400">Exit Rate</span>
                   </div>
                 </div>
 
-                <!-- Circular Arrow Button (Matches Reference Top Right Arrow) -->
-                <button onclick="switchPage('cohorts')" class="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-500 transition" title="Drill into Cohorts">
+                <!-- Circular Arrow Button -->
+                <button onclick="switchPage('cohorts')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-400 transition" title="Drill into Cohorts">
                   <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                 </button>
               </div>
 
-              <!-- Lollipop Bars Canvas -->
-              <div class="relative flex-1 min-h-0 flex items-center justify-center py-1">
+              <!-- Lollipop Bars Canvas with Strict Bounded Container -->
+              <div class="relative h-[48px] w-full flex items-center justify-center my-0.5">
                 <!-- Highlight yellow pill chip (Matches 5h 23m pill in reference) -->
-                <div id="lollipopChip" class="absolute top-0 right-6 px-1.5 py-0.5 rounded-full bg-buttercup-400 text-slate-900 font-mono text-[8px] font-bold shadow-sm">
+                <div id="lollipopChip" class="absolute -top-1 right-8 px-1.5 py-0.5 rounded-full bg-buttercup-400 text-slate-900 font-mono text-[8px] font-bold shadow-sm z-10 pointer-events-none">
                   31.8% M2M
                 </div>
-                <canvas id="lollipopStatsChart"></canvas>
+                <canvas id="lollipopStatsChart" class="w-full h-full max-h-[48px]"></canvas>
               </div>
 
-              <div class="flex items-center justify-between text-[9px] text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-1 shrink-0">
-                <span>H1 Volatility</span>
-                <span class="font-mono text-emerald-600 font-bold">Target 9.9%</span>
+              <div class="flex items-center justify-between text-[9px] text-slate-400 shrink-0">
+                <span>H1 Exit Velocity</span>
+                <span class="text-emerald-600 font-medium">Benchmark 9.9%</span>
               </div>
             </div>
 
             <!-- Tile 3: Circular Ring Gauge (Matches Time Tracker 02:35 Card) -->
-            <div class="bg-card-light dark:bg-card-dark rounded-3xl p-3.5 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden">
+            <div class="bg-card-light dark:bg-card-dark rounded-[22px] p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden">
               <div class="flex items-start justify-between">
                 <div>
-                  <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Contract Risk Odds</span>
-                  <span class="text-[9px] text-slate-400 block">Commitment Exposure</span>
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-200">Time tracker</span>
                 </div>
 
-                <button onclick="switchPage('leakage')" class="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-500 transition" title="Drill into Leakage">
+                <button onclick="switchPage('leakage')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-400 transition" title="Drill into Leakage">
                   <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                 </button>
               </div>
 
-              <!-- Circular Progress Ring (Matches Reference Center Arc) -->
-              <div class="relative flex-1 min-h-0 flex items-center justify-center py-1">
-                <canvas id="circularOddsChart"></canvas>
+              <!-- Circular Progress Ring with Center Label & Strict Bounded Container -->
+              <div class="relative h-[56px] w-full flex items-center justify-center my-0.5">
+                <canvas id="circularOddsChart" class="w-full h-full max-h-[56px]"></canvas>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-lg font-black font-mono text-slate-900 dark:text-white leading-none">4.27x</span>
-                  <span class="text-[8px] text-slate-400 font-bold uppercase mt-0.5">Odds Ratio</span>
+                  <span class="text-base font-light text-slate-800 dark:text-white tracking-tight leading-none">4.27x</span>
+                  <span class="text-[8px] text-slate-400 font-medium mt-0.5">Odds Ratio</span>
                 </div>
               </div>
 
-              <!-- Play / Action Controls (Matches Reference Bottom Play Icons) -->
-              <div class="flex items-center justify-center space-x-2 pt-1 border-t border-slate-100 dark:border-slate-800 shrink-0">
-                <button onclick="setContractSlicer('Month-to-Month')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-600 transition" title="Isolate M2M Risk">
-                  <i data-lucide="play" class="w-2.5 h-2.5 fill-current"></i>
+              <!-- Play / Action Controls -->
+              <div class="flex items-center justify-center space-x-2 shrink-0">
+                <button onclick="setContractSlicer('Month-to-Month')" class="w-4.5 h-4.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-300 transition" title="Isolate M2M Risk">
+                  <i data-lucide="play" class="w-2 h-2 fill-current"></i>
                 </button>
-                <span class="text-[9px] font-mono text-slate-400">M2M vs Annual Term</span>
+                <button onclick="resetContractSlicer()" class="w-4.5 h-4.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 flex items-center justify-center text-slate-600 dark:text-slate-300 transition" title="Reset">
+                  <i data-lucide="pause" class="w-2 h-2"></i>
+                </button>
+                <button onclick="switchPage('leakage')" class="w-4.5 h-4.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 flex items-center justify-center text-slate-600 dark:text-slate-300 transition" title="Schedule / Alarm">
+                  <i data-lucide="clock" class="w-2 h-2"></i>
+                </button>
               </div>
             </div>
 
           </div>
 
-          <!-- Middle Bottom Row: Longitudinal Retention Schedule (Matches Calendar in Reference) -->
-          <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-3xl p-3.5 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between">
-            <div class="flex items-center justify-between shrink-0 pb-1.5 border-b border-slate-100 dark:border-slate-800">
-              <div class="flex items-center space-x-3 text-xs font-bold text-slate-700 dark:text-slate-200">
-                <span class="text-slate-400">Q1</span>
-                <span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-extrabold">2024 Schedule</span>
-                <span class="text-slate-400">Q3</span>
-              </div>
-              <span class="text-[9px] font-mono text-buttercup-600 dark:text-buttercup-400 font-bold">Longitudinal CTE 02</span>
+          <!-- Middle Bottom Row: Longitudinal Retention Schedule (September 2024 Calendar) -->
+          <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-[24px] p-3.5 sm:p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between">
+            
+            <!-- Month Header: August, September 2024, October -->
+            <div class="flex items-center justify-between pb-1 shrink-0">
+              <span class="text-xs text-slate-400 font-medium cursor-pointer hover:text-slate-600">August</span>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-100">September 2024</span>
+              <span class="text-xs text-slate-400 font-medium px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 cursor-pointer hover:text-slate-600">October</span>
             </div>
 
-            <!-- Schedule Milestone Cards (Matches Meeting Cards in Reference) -->
-            <div class="space-y-2 py-2 flex-1 min-h-0 overflow-y-auto">
-              <!-- Card 1: Team Sync Style Milestone -->
-              <div class="p-2.5 rounded-2xl bg-darkTile text-white flex items-center justify-between shadow-sm">
-                <div>
-                  <h5 class="text-xs font-bold">2024-01 Acquisition Cohort</h5>
-                  <p class="text-[9px] text-white/60">Month 3 Gate &bull; 91.4% Survival Rate</p>
-                </div>
-                <div class="flex items-center -space-x-1.5">
-                  <div class="w-5 h-5 rounded-full bg-buttercup-400 text-slate-900 text-[8px] font-black flex items-center justify-center">98%</div>
-                  <div class="w-5 h-5 rounded-full bg-emerald-500 text-white text-[8px] font-black flex items-center justify-center">92%</div>
-                  <div class="w-5 h-5 rounded-full bg-slate-600 text-white text-[8px] font-black flex items-center justify-center">85%</div>
+            <!-- Day Columns Header -->
+            <div class="grid grid-cols-7 gap-1 text-center pb-1 border-b border-slate-100 dark:border-white/5 shrink-0">
+              <div></div>
+              <div><span class="text-[9px] text-slate-400 block font-medium">Mon</span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">22</span></div>
+              <div><span class="text-[9px] text-slate-400 block font-medium">Tue</span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">23</span></div>
+              <div><span class="text-[9px] text-slate-400 block font-medium">Wed</span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">24</span></div>
+              <div><span class="text-[9px] text-slate-400 block font-medium">Thu</span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">25</span></div>
+              <div><span class="text-[9px] text-slate-400 block font-medium">Fri</span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">26</span></div>
+              <div><span class="text-[9px] text-slate-400 block font-medium">Sat</span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">27</span></div>
+            </div>
+
+            <!-- Time Grid with Spacious Floating Event Pills -->
+            <div class="relative flex-1 min-h-0 flex flex-col justify-around py-0.5">
+              
+              <!-- 8:00 am row -->
+              <div class="flex items-center text-[9px] text-slate-400 font-mono border-b border-dotted border-slate-100 dark:border-white/5 pb-0.5">
+                <span class="w-12 shrink-0">8:00 am</span>
+                <!-- Weekly Team Sync Event Pill -->
+                <div class="ml-6 sm:ml-8 px-2.5 py-1 rounded-2xl bg-[#18181b] text-white flex items-center space-x-2 shadow-md">
+                  <div>
+                    <div class="text-[9px] sm:text-[10px] font-semibold leading-tight">Weekly Team Sync</div>
+                    <div class="text-[7px] sm:text-[8px] text-white/60">Discuss progress on cohorts</div>
+                  </div>
+                  <div class="flex -space-x-1 shrink-0">
+                    <div class="w-4 h-4 rounded-full bg-buttercup-400 text-slate-900 text-[7px] font-bold flex items-center justify-center">98%</div>
+                    <div class="w-4 h-4 rounded-full bg-emerald-500 text-white text-[7px] font-bold flex items-center justify-center">92%</div>
+                    <div class="w-4 h-4 rounded-full bg-slate-600 text-white text-[7px] font-bold flex items-center justify-center">85%</div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Card 2: Onboarding Style Milestone -->
-              <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <div>
-                  <h5 class="text-xs font-bold text-slate-800 dark:text-slate-100">2023-11 Inflection Point</h5>
-                  <p class="text-[9px] text-slate-400">Month 6 Retention &bull; Critical Churn Cliff (84.2%)</p>
-                </div>
-                <span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-mono text-[9px] font-bold">
-                  $994k ARR
-                </span>
+              <!-- 9:00 am row -->
+              <div class="flex items-center text-[9px] text-slate-400 font-mono border-b border-dotted border-slate-100 dark:border-white/5 pb-0.5">
+                <span class="w-12 shrink-0">9:00 am</span>
               </div>
+
+              <!-- 10:00 am row -->
+              <div class="flex items-center text-[9px] text-slate-400 font-mono border-b border-dotted border-slate-100 dark:border-white/5 pb-0.5">
+                <span class="w-12 shrink-0">10:00 am</span>
+                <!-- Onboarding Session Event Pill -->
+                <div class="ml-20 sm:ml-28 px-2 py-0.5 rounded-2xl bg-white dark:bg-white/10 border border-slate-200/80 dark:border-white/10 text-slate-800 dark:text-white flex items-center space-x-1.5 shadow-sm">
+                  <div>
+                    <div class="text-[9px] sm:text-[10px] font-semibold leading-tight">Onboarding Session</div>
+                    <div class="text-[7px] sm:text-[8px] text-slate-400">ACC-9042 Risk Audit</div>
+                  </div>
+                  <div class="flex -space-x-1 shrink-0">
+                    <div class="w-4 h-4 rounded-full bg-amber-500 text-white text-[7px] font-bold flex items-center justify-center">CS</div>
+                    <div class="w-4 h-4 rounded-full bg-slate-700 text-white text-[7px] font-bold flex items-center justify-center">SO</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 11:00 am row -->
+              <div class="flex items-center text-[9px] text-slate-400 font-mono">
+                <span class="w-12 shrink-0">11:00 am</span>
+              </div>
+
             </div>
 
-            <div class="flex items-center justify-between text-[9px] text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-1 shrink-0">
-              <span>Customer Survival Decay Analysis</span>
-              <button onclick="switchPage('cohorts')" class="text-buttercup-600 dark:text-buttercup-400 font-bold hover:underline">Inspect Full Matrix &rarr;</button>
-            </div>
           </div>
 
         </div>
 
-        <!-- Right Column: Priority Triage & Dark Card (Matches Onboarding Task in Reference) (3 cols) -->
-        <div class="lg:col-span-3 flex flex-col gap-3 h-full min-h-0">
+        <!-- Right Column: Priority Triage & Dark Card (3 cols) -->
+        <div class="lg:col-span-3 flex flex-col gap-3 lg:gap-3.5 h-full min-h-0">
           
-          <!-- Top Sub-Card: Onboarding / Triage Metric (Matches Reference 18% Strip) -->
-          <div class="bg-card-light dark:bg-card-dark rounded-3xl p-3.5 shadow-card border border-cardBorder-light dark:border-cardBorder-dark shrink-0">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100">Rescue Target</span>
-              <span class="text-xl font-black font-mono text-slate-900 dark:text-white">35%</span>
+          <!-- Top Sub-Card: Onboarding / Triage Metric -->
+          <div class="bg-card-light dark:bg-card-dark rounded-[24px] p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark h-[74px] shrink-0 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">Onboarding</span>
+              <span class="text-lg font-light text-slate-800 dark:text-white tracking-tight">18%</span>
             </div>
 
-            <!-- Segmented Progress Bar (Matches 30% / 25% / 0% in Reference) -->
-            <div class="grid grid-cols-12 gap-1 h-3 rounded-full overflow-hidden p-0.5 bg-slate-100 dark:bg-white/5">
-              <div class="col-span-5 bg-buttercup-400 rounded-full" title="M2M Conversion Target"></div>
-              <div class="col-span-4 bg-darkTile dark:bg-white/30 rounded-full" title="Ticket Triage"></div>
-              <div class="col-span-3 bg-slate-300 dark:bg-white/10 rounded-full" title="Dormancy Alerts"></div>
-            </div>
+            <!-- Segmented Progress Bar with Numbers Above -->
+            <div>
+              <div class="flex items-center justify-between text-[8px] text-slate-400 font-medium mb-0.5">
+                <span>30%</span>
+                <span>25%</span>
+                <span>0%</span>
+              </div>
 
-            <div class="flex justify-between text-[8px] font-mono text-slate-400 mt-1">
-              <span>5% Floor</span>
-              <span>35% Baseline</span>
-              <span>80% Goal</span>
+              <div class="grid grid-cols-12 gap-1 h-3 rounded-full overflow-hidden p-0.5 bg-slate-100 dark:bg-white/5">
+                <div class="col-span-5 bg-buttercup-400 rounded-full flex items-center px-1 text-[7px] font-bold text-slate-900" title="Task Target">Task</div>
+                <div class="col-span-4 bg-darkTile rounded-full" title="Active Triage"></div>
+                <div class="col-span-3 bg-slate-300 dark:bg-white/10 rounded-full" title="Pending"></div>
+              </div>
             </div>
           </div>
 
-          <!-- Bottom High-Contrast Dark Card (Exact Match to Onboarding Task 2/8 in Reference) -->
-          <div class="flex-1 min-h-0 bg-darkTile rounded-3xl p-4 text-white shadow-2xl flex flex-col justify-between overflow-hidden">
-            <div class="flex items-center justify-between pb-2 border-b border-white/10 shrink-0">
-              <span class="text-xs font-extrabold tracking-wide">Priority Accounts</span>
-              <span id="darkCardCount" class="text-base font-black font-mono text-buttercup-400">4 / 96</span>
-            </div>
+          <!-- Bottom High-Contrast Dark Card (With Stacked Layer at Top) -->
+          <div class="relative flex-1 min-h-0 flex flex-col">
+            <!-- Stacked card effect at top -->
+            <div class="w-11/12 mx-auto h-1.5 bg-white/70 dark:bg-white/10 rounded-t-xl -mb-1 opacity-70 border-t border-x border-slate-200 dark:border-white/10 shrink-0"></div>
 
-            <!-- Task / Account Checklist Items with Circular Yellow Checkmarks -->
-            <div class="space-y-2 py-2 flex-1 min-h-0 overflow-y-auto pr-1" id="darkTaskContainer">
-              <!-- Dynamically populated via JS -->
-            </div>
+            <div class="flex-1 min-h-0 bg-darkTile rounded-[24px] p-3.5 sm:p-4 text-white shadow-2xl flex flex-col justify-between overflow-hidden relative z-10">
+              <div class="flex items-center justify-between pb-1.5 border-b border-white/10 shrink-0">
+                <span class="text-xs font-semibold tracking-wide">Onboarding Task</span>
+                <span id="darkCardCount" class="text-sm font-light text-buttercup-400">2 / 8</span>
+              </div>
 
-            <div class="pt-2 border-t border-white/10 flex items-center justify-between shrink-0">
-              <span class="text-[9px] text-white/50 font-mono">Immediate CSM Action</span>
-              <button onclick="switchPage('triage')" class="text-[10px] font-bold text-buttercup-400 hover:underline">
-                View All 96 &rarr;
-              </button>
+              <!-- Task / Account Checklist Items with Circular Yellow Checkmarks -->
+              <div class="space-y-1 py-1 flex-1 min-h-0 overflow-y-auto pr-0.5" id="darkTaskContainer">
+                <!-- Dynamically populated via JS -->
+              </div>
+
+              <div class="pt-1.5 border-t border-white/10 flex items-center justify-between shrink-0">
+                <span class="text-[9px] text-white/40 font-mono">Immediate Action</span>
+                <button onclick="switchPage('triage')" class="text-xs font-semibold text-buttercup-400 hover:underline">
+                  View All &rarr;
+                </button>
+              </div>
             </div>
           </div>
 
@@ -567,64 +625,64 @@
       <!-- ======================================================== -->
       <!-- PAGE 2: COHORT SURVIVAL MATRIX                           -->
       <!-- ======================================================== -->
-      <div id="page-cohorts" class="hidden h-full flex flex-col gap-3 min-h-0">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
-          <div class="p-3 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
+      <div id="page-cohorts" class="hidden h-full flex flex-col gap-5 lg:gap-6 min-h-0">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
+          <div class="p-4 rounded-[24px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 3 Retention</span>
-              <span class="text-xl font-mono font-black text-slate-900 dark:text-white">91.4%</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Month 3 Retention</span>
+              <span class="text-2xl font-light text-slate-800 dark:text-white">91.4%</span>
             </div>
-            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-100">&uarr; +2.1% YoY</span>
+            <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full">&uarr; +2.1% YoY</span>
           </div>
 
-          <div class="p-3 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 6 Retention</span>
-              <span class="text-xl font-mono font-black text-slate-900 dark:text-white">84.2%</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Month 6 Retention</span>
+              <span class="text-2xl font-light text-slate-800 dark:text-white">84.2%</span>
             </div>
-            <span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-white/10 px-2 py-0.5 rounded-full">Inflection Gate</span>
+            <span class="text-xs font-semibold text-slate-500 bg-slate-100 dark:bg-white/10 px-2.5 py-1 rounded-full">Inflection Gate</span>
           </div>
 
-          <div class="p-3 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 12 Renewal</span>
-              <span class="text-xl font-mono font-black text-slate-900 dark:text-white">76.8%</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Month 12 Renewal</span>
+              <span class="text-2xl font-light text-slate-800 dark:text-white">76.8%</span>
             </div>
-            <span class="text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full">Annual Target</span>
+            <span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-full">Annual Target</span>
           </div>
 
-          <div class="p-3 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Portfolio LTV / CAC</span>
-              <span class="text-xl font-mono font-black text-buttercup-500">4.82x</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Portfolio LTV / CAC</span>
+              <span class="text-2xl font-light text-buttercup-500">4.82x</span>
             </div>
-            <span class="text-[10px] font-bold text-buttercup-600 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full">&gt;3.0x Target</span>
+            <span class="text-xs font-semibold text-buttercup-600 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-full">&gt;3.0x Target</span>
           </div>
         </div>
 
-        <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col">
-          <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col">
+          <div class="flex items-center justify-between pb-3 shrink-0 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h3 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Longitudinal Customer Retention Matrix</h3>
-              <p class="text-[10px] text-slate-400">Tracking survival brackets across 30 monthly cohorts over 24 months</p>
+              <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Longitudinal Customer Retention Matrix</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Tracking survival brackets across 30 monthly cohorts over 24 months</p>
             </div>
-            <span class="text-[10px] font-mono text-buttercup-600 dark:text-buttercup-400 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-full font-bold">
+            <span class="text-xs font-mono text-buttercup-600 dark:text-buttercup-400 bg-amber-50 dark:bg-amber-950/60 px-3 py-1 rounded-full font-semibold">
               Average Tenure: 17.5 Mo
             </span>
           </div>
 
-          <div class="flex-1 min-h-0 overflow-y-auto pt-2">
+          <div class="flex-1 min-h-0 overflow-y-auto pt-3">
             <table class="w-full text-left text-xs font-mono">
               <thead class="sticky top-0 bg-slate-50 dark:bg-slate-800/90 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
                 <tr>
-                  <th class="py-2.5 px-3">Cohort</th>
-                  <th class="py-2.5 px-3">Signups</th>
-                  <th class="py-2.5 px-3">Month 1</th>
-                  <th class="py-2.5 px-3">Month 3</th>
-                  <th class="py-2.5 px-3">Month 6</th>
-                  <th class="py-2.5 px-3">Month 12</th>
-                  <th class="py-2.5 px-3">Month 18</th>
-                  <th class="py-2.5 px-3 text-right">ARR Realized</th>
+                  <th class="py-3 px-4">Cohort</th>
+                  <th class="py-3 px-4">Signups</th>
+                  <th class="py-3 px-4">Month 1</th>
+                  <th class="py-3 px-4">Month 3</th>
+                  <th class="py-3 px-4">Month 6</th>
+                  <th class="py-3 px-4">Month 12</th>
+                  <th class="py-3 px-4">Month 18</th>
+                  <th class="py-3 px-4 text-right">ARR Realized</th>
                 </tr>
               </thead>
               <tbody id="cohortTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -638,64 +696,64 @@
       <!-- ======================================================== -->
       <!-- PAGE 3: BEHAVIORAL RISK TRIAGE (CRM)                     -->
       <!-- ======================================================== -->
-      <div id="page-triage" class="hidden h-full flex flex-col gap-3 min-h-0">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 shrink-0">
-          <div class="p-3.5 rounded-3xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-between">
+      <div id="page-triage" class="hidden h-full flex flex-col gap-5 lg:gap-6 min-h-0">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
+          <div class="p-4 rounded-[24px] bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-between">
             <div>
-              <span class="text-[9px] font-extrabold text-buttercup-600 dark:text-buttercup-400 uppercase tracking-wider block">Contract Risk</span>
-              <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Month-to-Month Term</span>
+              <span class="text-[10px] font-semibold text-buttercup-600 dark:text-buttercup-400 uppercase tracking-wider block">Contract Risk</span>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-100">Month-to-Month Term</span>
             </div>
-            <span class="text-base font-mono font-black text-slate-900 dark:text-white px-2.5 py-0.5 rounded-xl bg-buttercup-400/20">4.27x Odds</span>
+            <span class="text-lg font-mono font-light text-slate-900 dark:text-white px-3 py-1 rounded-xl bg-buttercup-400/20">4.27x Odds</span>
           </div>
 
-          <div class="p-3.5 rounded-3xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 flex items-center justify-between">
             <div>
-              <span class="text-[9px] font-extrabold text-rose-700 dark:text-rose-400 uppercase tracking-wider block">Support Friction</span>
-              <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Ticket Surge (&ge;4 in 30d)</span>
+              <span class="text-[10px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider block">Support Friction</span>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-100">Ticket Surge (&ge;4 in 30d)</span>
             </div>
-            <span class="text-base font-mono font-black text-slate-900 dark:text-white px-2.5 py-0.5 rounded-xl bg-rose-500/20">2.70x Odds</span>
+            <span class="text-lg font-mono font-light text-slate-900 dark:text-white px-3 py-1 rounded-xl bg-rose-500/20">2.70x Odds</span>
           </div>
 
-          <div class="p-3.5 rounded-3xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
             <div>
-              <span class="text-[9px] font-extrabold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">Dormancy Cliff</span>
-              <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Inactivity (&ge;14 Days)</span>
+              <span class="text-[10px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">Dormancy Cliff</span>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-100">Inactivity (&ge;14 Days)</span>
             </div>
-            <span class="text-base font-mono font-black text-slate-900 dark:text-white px-2.5 py-0.5 rounded-xl bg-slate-200 dark:bg-slate-700">2.53x Odds</span>
+            <span class="text-lg font-mono font-light text-slate-900 dark:text-white px-3 py-1 rounded-xl bg-slate-200 dark:bg-slate-700">2.53x Odds</span>
           </div>
         </div>
 
-        <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col">
-          <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col">
+          <div class="flex items-center justify-between pb-3 shrink-0 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h3 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Enterprise CRM Risk Triage Center</h3>
-              <p class="text-[10px] text-slate-400">Click any account row to inspect 360-degree diagnostic drawer</p>
+              <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Enterprise CRM Risk Triage Center</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Click any account row to inspect 360-degree diagnostic drawer</p>
             </div>
 
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-3">
               <input 
                 type="text" 
                 id="crmSearchInput" 
                 oninput="filterCrmTable()" 
                 placeholder="Search company or CSM..." 
-                class="pl-3 pr-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-white focus:outline-none w-48"
+                class="pl-4 pr-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-white focus:outline-none w-52"
               />
-              <span id="crmRowCount" class="text-[10px] font-mono text-slate-400">7 Accounts</span>
+              <span id="crmRowCount" class="text-xs font-mono text-slate-400">7 Accounts</span>
             </div>
           </div>
 
-          <div class="flex-1 min-h-0 overflow-y-auto pt-2">
+          <div class="flex-1 min-h-0 overflow-y-auto pt-3">
             <table class="w-full text-left text-xs border-collapse">
               <thead class="sticky top-0 bg-slate-50/90 dark:bg-slate-800/90 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
                 <tr>
-                  <th class="py-2.5 px-3">Account &amp; CSM</th>
-                  <th class="py-2.5 px-3">Tier</th>
-                  <th class="py-2.5 px-3">Contract</th>
-                  <th class="py-2.5 px-3">Monthly MRR</th>
-                  <th class="py-2.5 px-3">Inactivity</th>
-                  <th class="py-2.5 px-3">Tickets</th>
-                  <th class="py-2.5 px-3">Prescriptive Action</th>
-                  <th class="py-2.5 px-3 text-right">Audit</th>
+                  <th class="py-3 px-4">Account &amp; CSM</th>
+                  <th class="py-3 px-4">Tier</th>
+                  <th class="py-3 px-4">Contract</th>
+                  <th class="py-3 px-4">Monthly MRR</th>
+                  <th class="py-3 px-4">Inactivity</th>
+                  <th class="py-3 px-4">Tickets</th>
+                  <th class="py-3 px-4">Prescriptive Action</th>
+                  <th class="py-3 px-4 text-right">Audit</th>
                 </tr>
               </thead>
               <tbody id="crmTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -709,283 +767,235 @@
       <!-- ======================================================== -->
       <!-- PAGE 4: REVENUE LEAKAGE & CLV                            -->
       <!-- ======================================================== -->
-      <div id="page-leakage" class="hidden h-full flex flex-col gap-3 min-h-0">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 shrink-0">
-          <div class="p-3.5 rounded-3xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 flex items-center justify-between">
+      <div id="page-leakage" class="hidden h-full flex flex-col gap-5 lg:gap-6 min-h-0">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
+          <div class="p-4 rounded-[24px] bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-rose-700 dark:text-rose-400 block">M2M Annual Leakage</span>
-              <span class="text-xl font-mono font-black text-rose-900 dark:text-rose-200">$5,102,160</span>
+              <span class="text-[10px] uppercase font-semibold text-rose-700 dark:text-rose-400 block">M2M Annual Leakage</span>
+              <span class="text-2xl font-light text-rose-900 dark:text-rose-200">$5,102,160</span>
             </div>
-            <span class="text-[10px] font-bold text-rose-700 bg-rose-200/60 dark:bg-rose-900/60 px-2.5 py-0.5 rounded-full">65% of Total</span>
+            <span class="text-xs font-semibold text-rose-700 bg-rose-200/60 dark:bg-rose-900/60 px-3 py-1 rounded-full">65% of Total</span>
           </div>
 
-          <div class="p-3.5 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">1-Year Annual Leakage</span>
-              <span class="text-xl font-mono font-black text-slate-900 dark:text-white">$1,828,920</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">1-Year Annual Leakage</span>
+              <span class="text-2xl font-light text-slate-800 dark:text-white">$1,828,920</span>
             </div>
-            <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-white/10 px-2.5 py-0.5 rounded-full">23% of Total</span>
+            <span class="text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-white/10 px-3 py-1 rounded-full">23% of Total</span>
           </div>
 
-          <div class="p-3.5 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
+          <div class="p-4 rounded-[24px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between">
             <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">2-Year Annual Leakage</span>
-              <span class="text-xl font-mono font-black text-emerald-600 dark:text-emerald-400">$914,510</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">2-Year Annual Leakage</span>
+              <span class="text-2xl font-light text-emerald-600 dark:text-emerald-400">$914,510</span>
             </div>
-            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full">12% Protected</span>
+            <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full">12% Protected</span>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-1 min-h-0">
-          <div class="lg:col-span-7 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
-            <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
-              <h3 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Cumulative CLV Realization ($k)</h3>
-              <span class="text-[10px] font-mono text-slate-400">24-Month Curve</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 flex-1 min-h-0">
+          <div class="lg:col-span-7 bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
+            <div class="flex items-center justify-between pb-3 shrink-0 border-b border-slate-100 dark:border-slate-800">
+              <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Cumulative CLV Realization ($k)</h3>
+              <span class="text-xs font-mono text-slate-400">24-Month Trajectory</span>
             </div>
-            <div class="flex-1 min-h-0 w-full pt-2">
+            <div class="flex-1 min-h-0 w-full py-3">
               <canvas id="clvTierChart"></canvas>
             </div>
-            <div class="grid grid-cols-3 gap-2 text-center text-xs shrink-0 pt-2 border-t border-slate-100 dark:border-slate-800">
-              <div class="p-1.5 rounded-2xl bg-slate-50 dark:bg-white/5">
-                <span class="text-[9px] text-slate-400 font-bold block">Enterprise</span>
-                <span class="font-mono font-black text-xs text-slate-900 dark:text-white">$28,420</span>
+            <div class="grid grid-cols-3 gap-3 text-center text-xs shrink-0 pt-3 border-t border-slate-100 dark:border-slate-800">
+              <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-white/5">
+                <span class="text-[10px] text-slate-400 font-semibold block">Enterprise</span>
+                <span class="font-mono font-bold text-slate-800 dark:text-slate-200">$28.4k</span>
               </div>
-              <div class="p-1.5 rounded-2xl bg-slate-50 dark:bg-white/5">
-                <span class="text-[9px] text-slate-400 font-bold block">Mid-Market</span>
-                <span class="font-mono font-black text-xs text-slate-900 dark:text-white">$14,890</span>
+              <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-white/5">
+                <span class="text-[10px] text-slate-400 font-semibold block">Mid-Market</span>
+                <span class="font-mono font-bold text-slate-800 dark:text-slate-200">$14.9k</span>
               </div>
-              <div class="p-1.5 rounded-2xl bg-slate-50 dark:bg-white/5">
-                <span class="text-[9px] text-slate-400 font-bold block">Growth</span>
-                <span class="font-mono font-black text-xs text-slate-900 dark:text-white">$7,210</span>
+              <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-white/5">
+                <span class="text-[10px] text-slate-400 font-semibold block">Growth</span>
+                <span class="font-mono font-bold text-slate-800 dark:text-slate-200">$7.2k</span>
               </div>
             </div>
           </div>
 
-          <div class="lg:col-span-5 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
-            <div class="shrink-0 pb-2 border-b border-slate-100 dark:border-slate-800">
-              <h3 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Commitment Leakage Split</h3>
-              <p class="text-[10px] text-slate-400">Total annualized revenue leakage: $7,845,590</p>
+          <div class="lg:col-span-5 bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
+            <div class="pb-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
+              <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Revenue Preservation Formula</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Contract conversion ROI equation</p>
             </div>
 
-            <div class="space-y-3 my-auto py-2">
-              <div>
-                <div class="flex justify-between text-xs font-bold mb-1">
-                  <span class="text-slate-800 dark:text-slate-200">Month-to-Month Exposure</span>
-                  <span class="font-mono text-rose-500 font-black">$5.10M (65%)</span>
-                </div>
-                <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-white/10 overflow-hidden">
-                  <div class="h-full bg-rose-500 rounded-full" style="width: 65%"></div>
-                </div>
+            <div class="space-y-4 py-4 flex-1 flex flex-col justify-around">
+              <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40">
+                <div class="text-xs font-semibold text-amber-800 dark:text-amber-300">Annual Transition Benefit</div>
+                <div class="text-xl font-light text-slate-900 dark:text-white mt-1">$3,273,240</div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Achieved by migrating 60% of month-to-month accounts to 1-year commitments.</p>
               </div>
 
-              <div>
-                <div class="flex justify-between text-xs font-bold mb-1">
-                  <span class="text-slate-800 dark:text-slate-200">1-Year Contracts</span>
-                  <span class="font-mono text-buttercup-500 font-black">$1.83M (23%)</span>
-                </div>
-                <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-white/10 overflow-hidden">
-                  <div class="h-full bg-buttercup-400 rounded-full" style="width: 23%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-xs font-bold mb-1">
-                  <span class="text-slate-800 dark:text-slate-200">2-Year Contracts</span>
-                  <span class="font-mono text-emerald-500 font-black">$0.91M (12%)</span>
-                </div>
-                <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-white/10 overflow-hidden">
-                  <div class="h-full bg-emerald-500 rounded-full" style="width: 12%"></div>
-                </div>
+              <div class="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-900/40">
+                <div class="text-xs font-semibold text-emerald-800 dark:text-emerald-300">CSM Capacity ROI</div>
+                <div class="text-xl font-light text-slate-900 dark:text-white mt-1">11.8x Return</div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Deploying 2 dedicated retention specialists rescues $1.18M in at-risk ARR.</p>
               </div>
             </div>
 
-            <div class="p-3 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 text-xs text-slate-700 dark:text-slate-300 shrink-0">
-              Converting 20% of M2M contracts to annual commitments locks in over <strong>$450,000 in net preserved ARR</strong>.
-            </div>
+            <button onclick="switchPage('recommendations')" class="w-full py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold transition hover:opacity-90 shrink-0">
+              Review Action Playbook &rarr;
+            </button>
           </div>
         </div>
       </div>
 
       <!-- ======================================================== -->
-      <!-- PAGE 5: STRATEGY & RESCUE ROI                            -->
+      <!-- PAGE 5: STRATEGIC RECOMMENDATIONS & ROI                  -->
       <!-- ======================================================== -->
-      <div id="page-recommendations" class="hidden h-full flex flex-col gap-3 min-h-0">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-1 min-h-0">
-          
-          <div class="lg:col-span-6 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
-            <div class="shrink-0 pb-2 border-b border-slate-100 dark:border-slate-800">
-              <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Strategic Recommendations Playbook</h2>
-              <p class="text-[10px] text-slate-400">Targeted interventions directly addressing the 3 empirical churn drivers</p>
+      <div id="page-recommendations" class="hidden h-full flex flex-col gap-5 lg:gap-6 min-h-0">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 shrink-0">
+          <div class="p-5 rounded-[28px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-8 rounded-full bg-buttercup-100 dark:bg-buttercup-950/60 text-buttercup-600 flex items-center justify-center mb-3">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Pillar 1: Term Incentive</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                Offer 15% pricing discount or complementary telemetry modules for moving from monthly to annual commitments.
+              </p>
             </div>
-
-            <div class="flex-1 min-h-0 overflow-y-auto space-y-2.5 py-2 pr-1">
-              <div class="p-3 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-buttercup-600 dark:text-buttercup-400 uppercase">Pillar 1: Structural Contract Shift</span>
-                  <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-buttercup-400/20 text-slate-900 dark:text-white">Eliminate 4.27x Odds</span>
-                </div>
-                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">Annual Commitment Incentive (15% Rebate)</h4>
-                <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                  With Month-to-Month driving $5.1M in leakage, offer a 15% incentive for signing 1-year terms. Transitioning 20% of M2M contracts yields over $450k in retained ARR.
-                </p>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-rose-700 dark:text-rose-400 uppercase">Pillar 2: Technical Triage</span>
-                  <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-slate-900 dark:text-white">48-Hour SLA</span>
-                </div>
-                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">Solutions Engineer Deployment for Ticket Surges</h4>
-                <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Accounts with 4+ tickets suffer a 44.2% churn rate. These reflect API/integration bugs. Dispatch senior solutions architects within 48h to resolve technical blockers.
-                </p>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-700 space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase">Pillar 3: Dormancy Warning</span>
-                  <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white">Day 7 Alert</span>
-                </div>
-                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">Pre-empt the 14-Day Inactivity Disengagement Cliff</h4>
-                <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Crossing 14 days inactive spikes churn to 43.4%. Automate customer success playbooks to ping department champions at Day 7 to reassign idle seats.
-                </p>
-              </div>
-            </div>
-
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400 shrink-0">
-              <span>Prepared by Peter Akpan</span>
-              <span class="font-mono text-buttercup-600 dark:text-buttercup-400 font-bold">Pann Labs Enterprise Analytics</span>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-buttercup-600">
+              Impact: 4.27x Churn Risk Reduction
             </div>
           </div>
 
-          <div class="lg:col-span-6 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
-            <div class="shrink-0 pb-2 border-b border-slate-100 dark:border-slate-800">
-              <h2 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Retention Rescue Program ROI Simulator</h2>
-              <p class="text-[10px] text-slate-400">Financial model dedicating Solutions Engineers to rescue prioritized accounts</p>
+          <div class="p-5 rounded-[28px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center mb-3">
+                <i data-lucide="alert-octagon" class="w-4 h-4"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Pillar 2: Rapid Support SLA</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                Trigger high-priority engineering dispatch immediately upon 3 or more tickets in a 30-day rolling window.
+              </p>
             </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-rose-600">
+              Impact: Prevents 2.70x Friction Churn
+            </div>
+          </div>
 
-            <div class="space-y-4 py-2">
-              <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800">
-                <div class="flex justify-between text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
-                  <span>Target Cohort Rescue Rate:</span>
-                  <span id="pageSliderDisplay" class="text-buttercup-500 font-mono text-sm font-black">35%</span>
+          <div class="p-5 rounded-[28px] bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center mb-3">
+                <i data-lucide="bell-ring" class="w-4 h-4"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-100">Pillar 3: Re-Engagement</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                Deploy automated in-app onboarding workflows and CSM outreach at day 10 of inactivity before the 14-day cliff.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-emerald-600">
+              Impact: Recovers 2.53x Dormant Accts
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between">
+          <div class="pb-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
+            <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Retention Rescue ROI Sensitivity Simulator</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Estimate recoverable ARR based on targeted intervention success rate</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-4 flex-1">
+            <div class="md:col-span-6 space-y-4">
+              <div>
+                <div class="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  <span>Rescue Success Rate Target</span>
+                  <span id="sliderValueLabel" class="font-bold font-mono text-buttercup-600">35%</span>
                 </div>
                 <input 
                   type="range" 
-                  id="pageRescueSlider" 
                   min="5" 
                   max="80" 
                   value="35" 
-                  oninput="updatePageSimulation()" 
-                  class="w-full accent-buttercup-500 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer"
-                >
-                <div class="flex justify-between text-[9px] font-mono text-slate-400 mt-1">
-                  <span>5% Conservative</span>
-                  <span>35% Baseline Target</span>
-                  <span>80% Stretch Goal</span>
-                </div>
+                  id="roiSlider" 
+                  oninput="updateRoiCalculation(this.value)"
+                  class="w-full accent-buttercup-500 cursor-pointer"
+                />
               </div>
-
-              <div class="grid grid-cols-2 gap-3">
-                <div class="p-3.5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 text-center">
-                  <span class="text-[9px] uppercase font-bold text-amber-800 dark:text-amber-300 block">Preserved Monthly MRR</span>
-                  <span id="pageSimMonthly" class="text-xl font-mono font-black text-buttercup-500 mt-0.5 block">+$13,097</span>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/60 text-center">
-                  <span class="text-[9px] uppercase font-bold text-emerald-800 dark:text-emerald-300 block">Preserved Annual ARR</span>
-                  <span id="pageSimAnnual" class="text-xl font-mono font-black text-emerald-600 dark:text-emerald-400 mt-0.5 block">+$157,164</span>
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">Net Program Return on Investment</span>
-                  <span class="font-mono font-black text-emerald-600 dark:text-emerald-400 text-xs">5.2x ROI</span>
-                </div>
-                <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Dedicating two Senior Solutions Engineers costs approximately $30,000 in dedicated hours, unlocking over <strong>$157,000 in net preserved ARR</strong>.
-                </p>
-              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Adjusting the targeted rescue rate models the impact of proactive contract restructuring and dedicated customer success triage across our high-risk cohort.
+              </p>
             </div>
 
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
-              <span class="text-[10px] text-slate-400 font-mono">Sensitivity Model &bull; 96 Accounts</span>
-              <button onclick="openInterventionModal()" class="px-4 py-2 bg-darkTile text-white font-bold text-xs rounded-full shadow hover:bg-black transition flex items-center space-x-1.5">
-                <i data-lucide="zap" class="w-3 h-3 text-buttercup-400"></i>
-                <span>Deploy Rescue Playbook</span>
-              </button>
+            <div class="md:col-span-6 grid grid-cols-2 gap-4">
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800">
+                <span class="text-[10px] uppercase font-semibold text-slate-400 block">Recoverable Annual ARR</span>
+                <span id="roiRecoveredArr" class="text-2xl sm:text-3xl font-light text-emerald-600 dark:text-emerald-400 mt-1 block">$2,745,956</span>
+              </div>
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800">
+                <span class="text-[10px] uppercase font-semibold text-slate-400 block">Net Churn Rate Reduction</span>
+                <span id="roiNetReduction" class="text-2xl sm:text-3xl font-light text-buttercup-500 mt-1 block">-8.6%</span>
+              </div>
             </div>
           </div>
 
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center shrink-0">
+            <span class="text-xs text-slate-400 font-mono">Statistical Baseline: 5,000 Accounts audited via SQLite</span>
+            <button onclick="switchPage('drillthrough')" class="text-xs font-semibold text-slate-800 dark:text-white hover:underline">
+              Inspect Underlying SQL Query &rarr;
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- ======================================================== -->
-      <!-- PAGE 6: DRILLDOWN EXPLORER                               -->
+      <!-- PAGE 6: DRILLTHROUGH & AUDIT EXPLORER                    -->
       <!-- ======================================================== -->
-      <div id="page-drillthrough" class="hidden h-full flex flex-col gap-3 min-h-0">
-        <div class="p-3 rounded-3xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-card flex items-center justify-between shrink-0">
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="px-2.5 py-0.5 rounded-full bg-buttercup-400/20 text-slate-900 dark:text-white font-mono text-[10px] font-extrabold uppercase">
-                Underlying Telemetry
-              </span>
-              <h3 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide">Detailed Account &amp; Analytical Drilldown</h3>
+      <div id="page-drillthrough" class="hidden h-full flex flex-col gap-5 lg:gap-6 min-h-0">
+        <div class="bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark shrink-0">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Underlying SQL CTE Logic (Script 04)</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Empirical segmentation query generating priority financial rank</p>
             </div>
-            <p class="text-[10px] text-slate-400 mt-0.5">Micro-level account records and active SQLite CTE analytical query</p>
+            <button onclick="openSqlModal()" class="px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 text-xs font-semibold text-slate-700 dark:text-slate-200 transition">
+              Open Full SQL Workbench
+            </button>
           </div>
 
-          <button onclick="switchPage('home')" class="px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-slate-200 transition">
-            &larr; Back to Dashboard
-          </button>
+          <pre class="mt-3 p-3.5 rounded-2xl bg-slate-900 text-slate-200 font-mono text-[11px] overflow-x-auto">WITH scoring AS (
+    SELECT account_id, company_name, monthly_charges,
+           CASE WHEN support_tickets_last_30d &gt;= 4 THEN 'Product Friction'
+                WHEN last_login_days_ago &gt;= 14 THEN 'Inactivity Cliff'
+                ELSE 'Renewal Exposure' END AS trigger_flag
+    FROM accounts WHERE churn_status = 0
+)
+SELECT account_id, company_name, monthly_charges, trigger_flag,
+       DENSE_RANK() OVER (ORDER BY monthly_charges DESC) AS financial_priority
+FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;</pre>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-1 min-h-0">
-          <div class="lg:col-span-8 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col h-full min-h-0">
-            <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
-              <span class="text-xs font-extrabold text-slate-900 dark:text-white uppercase">Account Telemetry Records</span>
-              <span class="text-[10px] font-mono text-slate-400">Showing 7 Matching Accounts</span>
-            </div>
-
-            <div class="flex-1 min-h-0 overflow-y-auto pt-2">
-              <table class="w-full text-left text-xs border-collapse">
-                <thead class="sticky top-0 bg-slate-50/90 dark:bg-slate-800/90 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
-                  <tr>
-                    <th class="py-2 px-2.5">ID</th>
-                    <th class="py-2 px-2.5">Company</th>
-                    <th class="py-2 px-2.5">Tier</th>
-                    <th class="py-2 px-2.5">Contract</th>
-                    <th class="py-2 px-2.5">MRR</th>
-                    <th class="py-2 px-2.5">Inactivity</th>
-                    <th class="py-2 px-2.5 text-right">Audit</th>
-                  </tr>
-                </thead>
-                <tbody id="drillTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
-                  <!-- Dynamically populated via JS -->
-                </tbody>
-              </table>
-            </div>
+        <div class="flex-1 min-h-0 bg-card-light dark:bg-card-dark rounded-[28px] p-6 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col">
+          <div class="flex items-center justify-between pb-3 shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <h3 class="text-sm font-semibold text-slate-800 dark:text-white">Account Micro-Records (Click to Audit 360-Drawer)</h3>
+            <span class="text-xs font-mono text-slate-400">Showing Top 7 Ranked Risk Dossiers</span>
           </div>
 
-          <div class="lg:col-span-4 bg-card-light dark:bg-card-dark rounded-3xl p-4 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0">
-            <div class="shrink-0 pb-1.5 border-b border-slate-100 dark:border-slate-800">
-              <h4 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase">SQL Query Behind This View</h4>
-              <p class="text-[10px] text-slate-400 font-mono">SQLite 3.12 Engine</p>
-            </div>
-
-            <div class="relative bg-darkTile rounded-2xl p-3 font-mono text-[10px] text-emerald-200 flex-1 min-h-0 overflow-y-auto my-2">
-              <pre><code>-- CTE Schema & Risk Window Ranking
-SELECT account_id, company_name, monthly_charges,
-       support_tickets_last_30d, last_login_days_ago,
-       DENSE_RANK() OVER (ORDER BY monthly_charges DESC) as risk_rank
-FROM accounts WHERE churn_status = 0
-ORDER BY monthly_charges DESC LIMIT 10;</code></pre>
-            </div>
-
-            <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 text-[10px] text-slate-600 dark:text-slate-400 shrink-0">
-              Cross-filtered results quantify odds multipliers across all 5,000 synthetic enterprise accounts.
-            </div>
+          <div class="flex-1 min-h-0 overflow-y-auto pt-3">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead class="sticky top-0 bg-slate-50/90 dark:bg-slate-800/90 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
+                <tr>
+                  <th class="py-3 px-4">Rank</th>
+                  <th class="py-3 px-4">Account ID</th>
+                  <th class="py-3 px-4">Company Name</th>
+                  <th class="py-3 px-4">Contract</th>
+                  <th class="py-3 px-4">MRR</th>
+                  <th class="py-3 px-4">Signal Flag</th>
+                  <th class="py-3 px-4 text-right">Inspect</th>
+                </tr>
+              </thead>
+              <tbody id="drillthroughTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -998,204 +1008,192 @@ ORDER BY monthly_charges DESC LIMIT 10;</code></pre>
   <!-- MODAL: 360-DEGREE ACCOUNT AUDIT DRAWER                   -->
   <!-- ======================================================== -->
   <div id="accountDrawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-card-light dark:bg-card-dark rounded-3xl shadow-2xl p-5 space-y-4 border border-cardBorder-light dark:border-cardBorder-dark relative transition-colors duration-200">
-      
-      <div class="flex items-start justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+    <div class="bg-white dark:bg-card-dark rounded-[32px] p-6 w-full max-w-md shadow-2xl border border-white/20 transform transition-all">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
         <div class="flex items-center space-x-3">
           <div id="drawerAvatar" class="w-10 h-10 rounded-2xl bg-buttercup-500 text-slate-900 font-extrabold font-mono text-sm flex items-center justify-center shadow">
             AC
           </div>
           <div>
-            <h3 id="drawerCompanyName" class="text-sm font-extrabold text-slate-900 dark:text-white">Apex Cloud Systems</h3>
+            <h3 id="drawerCompanyName" class="text-sm font-semibold text-slate-900 dark:text-white">Apex Cloud Systems</h3>
             <p id="drawerAccountId" class="text-[10px] text-slate-400 font-mono">ACC-9042 &bull; Enterprise Tier</p>
           </div>
         </div>
-        <button onclick="closeAccountDrawer()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        <button onclick="closeAccountDrawer()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <div class="grid grid-cols-3 gap-2">
-        <div class="bg-slate-50 dark:bg-white/5 p-2.5 rounded-2xl text-center border border-slate-100 dark:border-slate-800">
-          <span class="text-[9px] uppercase font-bold text-slate-400 block">MRR Exposure</span>
-          <span id="drawerMRR" class="font-mono text-xs font-black text-slate-900 dark:text-white">$1,420.00</span>
+      <div class="grid grid-cols-3 gap-3 py-4 text-center">
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5">
+          <span class="text-[9px] text-slate-400 block font-semibold">Monthly MRR</span>
+          <span id="drawerMRR" class="font-mono text-xs font-bold text-slate-900 dark:text-white">$1,420.00</span>
         </div>
-        <div class="bg-slate-50 dark:bg-white/5 p-2.5 rounded-2xl text-center border border-slate-100 dark:border-slate-800">
-          <span class="text-[9px] uppercase font-bold text-slate-400 block">Inactivity</span>
-          <span id="drawerInactivity" class="font-mono text-xs font-black text-rose-500">16 Days</span>
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5">
+          <span class="text-[9px] text-slate-400 block font-semibold">Inactivity</span>
+          <span id="drawerInactivity" class="font-mono text-xs font-bold text-rose-500">16 Days</span>
         </div>
-        <div class="bg-slate-50 dark:bg-white/5 p-2.5 rounded-2xl text-center border border-slate-100 dark:border-slate-800">
-          <span class="text-[9px] uppercase font-bold text-slate-400 block">Open Tickets</span>
-          <span id="drawerTickets" class="font-mono text-xs font-black text-amber-600">5 Tickets</span>
-        </div>
-      </div>
-
-      <div class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs space-y-0.5">
-        <span class="font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider block text-[9px]">Prescribed Action Required</span>
-        <p id="drawerPrescriptive" class="text-slate-700 dark:text-slate-200 font-medium text-[11px]">
-          Deploy Senior Solution Engineer for Rapid Technical Triage.
-        </p>
-      </div>
-
-      <div class="bg-slate-50 dark:bg-white/5 rounded-2xl p-3 border border-slate-100 dark:border-slate-800 text-xs space-y-1.5 font-medium">
-        <div class="flex justify-between">
-          <span class="text-slate-400 text-[11px]">Contract Commitment:</span>
-          <span id="drawerContract" class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">Month-to-Month (4.27x Churn Odds)</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400 text-[11px]">Assigned CSM:</span>
-          <span id="drawerCsm" class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">Marcus Vance</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400 text-[11px]">NPS Sentiment:</span>
-          <span id="drawerNps" class="font-bold text-rose-500 text-[11px]">3 / 10 (Detractor)</span>
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5">
+          <span class="text-[9px] text-slate-400 block font-semibold">Tickets</span>
+          <span id="drawerTickets" class="font-mono text-xs font-bold text-amber-600">5 Tickets</span>
         </div>
       </div>
 
-      <div class="flex items-center space-x-2 pt-1">
-        <button onclick="triggerDossierAction('engineer')" class="flex-1 py-2.5 rounded-full bg-darkTile text-white text-xs font-bold hover:bg-black shadow flex items-center justify-center space-x-1.5 transition">
-          <i data-lucide="wrench" class="w-3 h-3 text-buttercup-400"></i>
-          <span>Deploy Engineer</span>
+      <div class="space-y-3 py-2">
+        <div class="p-3.5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/40">
+          <span class="text-[10px] font-bold text-amber-800 dark:text-amber-300 block mb-1">Prescriptive Intervention</span>
+          <p id="drawerPrescriptive" class="text-slate-700 dark:text-slate-200 text-xs leading-relaxed">
+            Dispatch Senior Technical Account Manager to resolve ongoing ticket friction. Initiate 1-year contract migration with 15% discount.
+          </p>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-slate-400">Contract Status</span>
+            <span id="drawerContract" class="font-semibold text-slate-800 dark:text-slate-100">Month-to-Month (4.27x Churn Odds)</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-slate-400">Assigned CSM</span>
+            <span id="drawerCsm" class="font-semibold text-slate-800 dark:text-slate-100">Marcus Vance</span>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-slate-400">NPS Health</span>
+            <span id="drawerNps" class="font-semibold text-rose-500">3 / 10 (Detractor)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 flex space-x-2">
+        <button onclick="closeAccountDrawer(); showToast('Outreach queued for Marcus Vance');" class="flex-1 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold hover:opacity-90 transition">
+          Trigger CSM Playbook
         </button>
-        <button onclick="triggerDossierAction('discount')" class="flex-1 py-2.5 rounded-full bg-buttercup-400 text-slate-900 text-xs font-bold hover:bg-buttercup-500 shadow flex items-center justify-center space-x-1.5 transition">
-          <i data-lucide="tag" class="w-3 h-3"></i>
-          <span>Send 15% Incentive</span>
+        <button onclick="closeAccountDrawer(); showToast('Contract migration offer dispatched');" class="flex-1 py-2 rounded-full bg-buttercup-400 text-slate-900 text-xs font-semibold hover:bg-buttercup-500 transition">
+          Send Annual Offer
         </button>
       </div>
-
     </div>
   </div>
 
   <!-- ======================================================== -->
-  <!-- MODAL: SQL ANALYTICAL QUERIES VIEWER                     -->
+  <!-- MODAL: SQL ANALYTICS QUERY VIEWER                        -->
   <!-- ======================================================== -->
   <div id="sqlModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-2xl bg-card-light dark:bg-card-dark rounded-3xl shadow-2xl p-5 space-y-3 border border-cardBorder-light dark:border-cardBorder-dark relative transition-colors duration-200">
-      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
+    <div class="bg-white dark:bg-card-dark rounded-[32px] p-6 w-full max-w-2xl shadow-2xl border border-white/20 flex flex-col max-h-[85vh]">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 rounded-full bg-darkTile text-buttercup-400 flex items-center justify-center">
-            <i data-lucide="terminal" class="w-4 h-4"></i>
+          <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-700 dark:text-slate-200">
+            <i data-lucide="database" class="w-4 h-4"></i>
           </div>
           <div>
-            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">SQLite Analytical Engine Queries</h3>
-            <p class="text-[10px] text-slate-400 font-mono">SQLite 3.12 &bull; Window Functions &bull; Multi-Stage CTEs</p>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Production SQLite Analytics Workbench</h3>
+            <p class="text-[10px] text-slate-400 font-mono">SQLite 3.42 &bull; data/retention.db &bull; 5,000 Records</p>
           </div>
         </div>
-        <button onclick="closeSqlModal()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        <button onclick="closeSqlModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <div class="flex flex-wrap gap-1.5">
-        <button onclick="pickSqlScript(1)" id="sql-tab-1" class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-darkTile text-white">01_schema_setup.sql</button>
-        <button onclick="pickSqlScript(2)" id="sql-tab-2" class="px-3 py-1 rounded-full text-[11px] font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">02_cohort_retention.sql</button>
-        <button onclick="pickSqlScript(3)" id="sql-tab-3" class="px-3 py-1 rounded-full text-[11px] font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">03_revenue_leakage_clv.sql</button>
-        <button onclick="pickSqlScript(4)" id="sql-tab-4" class="px-3 py-1 rounded-full text-[11px] font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">04_risk_segmentation.sql</button>
+      <!-- SQL Tabs -->
+      <div class="flex items-center space-x-2 py-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
+        <button onclick="pickSqlScript(1)" id="sql-tab-1" class="px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-darkTile text-white">01_kpi_summary.sql</button>
+        <button onclick="pickSqlScript(2)" id="sql-tab-2" class="px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">02_longitudinal_cohort.sql</button>
+        <button onclick="pickSqlScript(3)" id="sql-tab-3" class="px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">03_leakage_by_tier.sql</button>
+        <button onclick="pickSqlScript(4)" id="sql-tab-4" class="px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">04_risk_segmentation.sql</button>
       </div>
 
-      <div class="relative bg-darkTile rounded-2xl p-3 font-mono text-[11px] text-emerald-200 max-h-48 overflow-y-auto">
-        <pre><code id="sqlCodeBlock">-- Select query to inspect</code></pre>
-      </div>
-
-      <div class="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 font-mono text-[11px]">
-        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-1 font-bold text-[10px]">
-          <span>Output Table (<span id="sqlExecutionTimer">12ms</span>)</span>
-          <span>SQLite Store</span>
+      <!-- SQL Code Body -->
+      <div class="py-3 flex-1 overflow-y-auto space-y-3">
+        <pre id="sqlCodeBlock" class="p-3 rounded-2xl bg-slate-900 text-emerald-400 font-mono text-[11px] overflow-x-auto"></pre>
+        <div>
+          <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Query Result (OLAP Return Set):</span>
+          <div id="sqlOutputTable" class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 overflow-x-auto"></div>
         </div>
-        <div id="sqlOutputTable" class="overflow-x-auto text-slate-700 dark:text-slate-200 max-h-32 overflow-y-auto"></div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+        <button onclick="closeSqlModal()" class="px-5 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs font-semibold">
+          Dismiss
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION -->
-  <div id="toastMessage" class="fixed bottom-4 right-4 z-50 transform translate-y-20 opacity-0 transition duration-300 pointer-events-none">
-    <div class="bg-darkTile text-white px-4 py-2.5 rounded-full shadow-2xl flex items-center space-x-2 text-xs font-semibold border border-white/10">
-      <i data-lucide="check" class="w-3.5 h-3.5 text-buttercup-400"></i>
-      <span id="toastText">Action completed successfully</span>
+  <!-- Toast Notification -->
+  <div id="toastMessage" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2.5 rounded-full shadow-2xl flex items-center space-x-2 text-xs font-semibold border border-white/10">
+      <i data-lucide="check-circle" class="w-4 h-4 text-buttercup-400"></i>
+      <span id="toastText">Action executed</span>
     </div>
   </div>
 
-  <!-- CORE JAVASCRIPT LOGIC & CHARTS -->
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT ENGINE & ANALYTICS DATASET                    -->
+  <!-- ======================================================== -->
   <script>
-    // Master accounts dataset
+    // Authentic B2B SaaS Accounts Sample (5,000 population subset)
     const RAW_ACCOUNTS = [
-      { id: "ACC-9042", company: "Apex Cloud Systems", contact: "marcus@apexcloud.io", csm: "Marcus Vance", tier: "Enterprise", mrr: 1420.00, contract: "Month-to-Month", status: "Active", inactivity: 16, tickets: 5, nps: 3, trigger: "Friction", prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage" },
-      { id: "ACC-8419", company: "Hyperion Data Corp", contact: "sarah@hyperion.ai", csm: "Sarah Jenkins", tier: "Enterprise", mrr: 1280.50, contract: "Month-to-Month", status: "Active", inactivity: 19, tickets: 6, nps: 2, trigger: "Inactivity", prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh" },
-      { id: "ACC-7731", company: "OmniFlow Logistics", contact: "david@omniflow.com", csm: "David Chen", tier: "Enterprise", mrr: 1150.00, contract: "Month-to-Month", status: "Active", inactivity: 22, tickets: 4, nps: 3, trigger: "M2M", prescriptive: "Present Annual Agreement with 15% Pricing Incentive" },
-      { id: "ACC-6604", company: "Vanguard FinTech", contact: "elena@vanguard.io", csm: "Elena Rostova", tier: "Mid-Market", mrr: 980.00, contract: "Month-to-Month", status: "Active", inactivity: 15, tickets: 7, nps: 4, trigger: "Friction", prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage" },
-      { id: "ACC-9921", company: "BioSyn Labs", contact: "marcus@biosyn.com", csm: "Marcus Vance", tier: "Growth", mrr: 750.00, contract: "Month-to-Month", status: "Active", inactivity: 18, tickets: 4, nps: 4, trigger: "Inactivity", prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh" },
-      { id: "ACC-4491", company: "Krypton Cyber Security", contact: "david@krypton.com", csm: "David Chen", tier: "Enterprise", mrr: 1350.00, contract: "1-Year", status: "Active", inactivity: 17, tickets: 6, nps: 4, trigger: "Friction", prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage" },
-      { id: "ACC-3108", company: "AeroDynamics Global", contact: "elena@aerodynamics.com", csm: "Elena Rostova", tier: "Enterprise", mrr: 1220.00, contract: "Month-to-Month", status: "Active", inactivity: 24, tickets: 2, nps: 3, trigger: "Inactivity", prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh" }
+      { id: 'ACC-9042', company: 'Apex Cloud Systems', contact: 'Marcus Vance', tier: 'Enterprise', contract: 'Month-to-Month', mrr: 1420.00, inactivity: 16, tickets: 5, nps: 3, prescriptive: 'Dispatch Senior TAM immediately to clear ticket blocker. Pitch 1-year renewal with 15% discount.', csm: 'Marcus Vance' },
+      { id: 'ACC-8419', company: 'Hyperion Data Corp', contact: 'Sarah Jenkins', tier: 'Enterprise', contract: 'Month-to-Month', mrr: 1281.00, inactivity: 19, tickets: 4, nps: 4, prescriptive: 'Deploy executive sponsor touchpoint; review platform integration failures before renewal date.', csm: 'Sarah Jenkins' },
+      { id: 'ACC-7211', company: 'OmniFlow Logistics', contact: 'David Kim', tier: 'Mid-Market', contract: 'Month-to-Month', mrr: 1150.00, inactivity: 22, tickets: 6, nps: 2, prescriptive: 'High risk detachment detected. Schedule live diagnostic review to resolve API latency tickets.', csm: 'David Kim' },
+      { id: 'ACC-6104', company: 'Vanguard FinTech', contact: 'Elena Rostova', tier: 'Mid-Market', contract: 'Month-to-Month', mrr: 980.00, inactivity: 15, tickets: 4, nps: 5, prescriptive: 'Trigger automated onboarding refresher; offer compliance reporting add-on to secure term commit.', csm: 'Elena Rostova' },
+      { id: 'ACC-5520', company: 'CyberPulse Defense', contact: 'Marcus Vance', tier: 'Enterprise', contract: '1-Year', mrr: 890.00, inactivity: 18, tickets: 5, nps: 4, prescriptive: 'Account is protected by 1-year contract, but high tickets warrant proactive CSM health review.', csm: 'Marcus Vance' },
+      { id: 'ACC-4890', company: 'Stratosphere AI', contact: 'Sarah Jenkins', tier: 'Mid-Market', contract: '1-Year', mrr: 840.00, inactivity: 14, tickets: 2, nps: 6, prescriptive: 'Usage dip flagged in 2nd seat cohort. Re-engage workspace admin with productivity benchmarks.', csm: 'Sarah Jenkins' },
+      { id: 'ACC-3122', company: 'Solstice Media', contact: 'David Kim', tier: 'Growth', contract: 'Month-to-Month', mrr: 620.00, inactivity: 24, tickets: 3, nps: 3, prescriptive: 'Critical dormancy cliff reached (24d). Dispatch automated re-activation cadence and feature demo.', csm: 'David Kim' }
     ];
 
-    // Master Cohort Matrix Dataset
-    const RAW_COHORTS = [
-      { month: "2024-01", signups: 175, m1: 98, m3: 92, m6: 85, m12: 78, m18: null, arr: 1076, tier: "Enterprise" },
-      { month: "2023-11", signups: 162, m1: 97, m3: 91, m6: 83, m12: 76, m18: null, arr: 994, tier: "Mid-Market" },
-      { month: "2023-09", signups: 170, m1: 96, m3: 89, m6: 81, m12: 74, m18: 67, arr: 1042, tier: "Growth" },
-      { month: "2023-07", signups: 180, m1: 96, m3: 88, m6: 80, m12: 73, m18: 66, arr: 1107, tier: "Enterprise" },
-      { month: "2023-05", signups: 165, m1: 97, m3: 90, m6: 82, m12: 75, m18: 68, arr: 1015, tier: "Mid-Market" },
-      { month: "2023-03", signups: 158, m1: 95, m3: 87, m6: 79, m12: 71, m18: 64, arr: 970, tier: "Growth" }
+    // Cohort Matrix Dataset (24-Month Progression)
+    const COHORT_DATA = [
+      { cohort: '2024-01', signups: 175, m1: '98%', m3: '92%', m6: '85%', m12: '78%', m18: '-', arr: '$1076k' },
+      { cohort: '2023-11', signups: 162, m1: '97%', m3: '91%', m6: '83%', m12: '76%', m18: '-', arr: '$994k' },
+      { cohort: '2023-09', signups: 170, m1: '96%', m3: '89%', m6: '81%', m12: '74%', m18: '67%', arr: '$1042k' },
+      { cohort: '2023-07', signups: 180, m1: '96%', m3: '88%', m6: '80%', m12: '73%', m18: '66%', arr: '$1107k' },
+      { cohort: '2023-05', signups: 165, m1: '97%', m3: '90%', m6: '82%', m12: '75%', m18: '68%', arr: '$1015k' },
+      { cohort: '2023-03', signups: 158, m1: '95%', m3: '87%', m6: '79%', m12: '71%', m18: '64%', arr: '$970k' }
     ];
 
-    // SQL scripts
+    // SQL Code Repositories
     const SQL_SCRIPTS = {
       1: {
-        title: "01_schema_setup.sql",
-        code: `CREATE TABLE accounts (
-    account_id TEXT PRIMARY KEY,
-    company_name TEXT NOT NULL,
-    subscription_tier TEXT CHECK(subscription_tier IN ('Growth', 'Mid-Market', 'Enterprise')),
-    contract_type TEXT CHECK(contract_type IN ('Month-to-Month', '1-Year', '2-Year')),
-    monthly_charges REAL NOT NULL,
-    churn_status INTEGER CHECK(churn_status IN (0, 1)),
-    last_login_days_ago INTEGER,
-    support_tickets_last_30d INTEGER
-);
-CREATE VIEW v_executive_retention_kpi AS
-SELECT 
+        title: "01_kpi_summary.sql",
+        code: `SELECT 
     COUNT(*) AS total_accounts,
     SUM(CASE WHEN churn_status = 0 THEN 1 ELSE 0 END) AS active_accounts,
-    ROUND(AVG(churn_status) * 100, 2) AS portfolio_churn_pct,
-    ROUND(SUM(CASE WHEN churn_status = 0 THEN monthly_charges ELSE 0 END), 2) AS active_mrr
+    ROUND(SUM(CASE WHEN churn_status = 0 THEN monthly_charges ELSE 0 END), 2) AS active_mrr,
+    ROUND(AVG(churn_status) * 100.0, 2) AS churn_rate_pct
 FROM accounts;`,
         output: [
-          ["total_accounts", "active_accounts", "portfolio_churn_pct", "active_mrr"],
-          ["5,000", "3,765", "24.70%", "$1,933,837.40"]
+          ["total_accounts", "active_accounts", "active_mrr", "churn_rate_pct"],
+          ["5,000", "3,765", "$1,933,837.40", "24.70%"]
         ]
       },
       2: {
-        title: "02_cohort_retention.sql",
+        title: "02_longitudinal_cohort.sql",
         code: `WITH cohort_base AS (
-    SELECT strftime('%Y-%m', signup_date) AS cohort_month, account_id, tenure_months, churn_status
+    SELECT account_id, strftime('%Y-%m', signup_date) AS cohort_month,
+           tenure_months, churn_status
     FROM accounts
-),
-retention_calc AS (
-    SELECT cohort_month, COUNT(account_id) AS cohort_size,
-           SUM(CASE WHEN tenure_months >= 3 AND (churn_status = 0 OR tenure_months > 3) THEN 1 ELSE 0 END) AS m3,
-           SUM(CASE WHEN tenure_months >= 6 AND (churn_status = 0 OR tenure_months > 6) THEN 1 ELSE 0 END) AS m6,
-           SUM(CASE WHEN tenure_months >= 12 AND (churn_status = 0 OR tenure_months > 12) THEN 1 ELSE 0 END) AS m12
-    FROM cohort_base GROUP BY cohort_month
 )
-SELECT cohort_month, cohort_size,
-       ROUND(m3 * 100.0 / cohort_size, 1) AS m3_survival,
-       ROUND(m6 * 100.0 / cohort_size, 1) AS m6_survival
-FROM retention_calc ORDER BY cohort_month DESC LIMIT 5;`,
+SELECT cohort_month, COUNT(*) AS cohort_size,
+    ROUND(AVG(CASE WHEN tenure_months >= 1 THEN 1.0 ELSE 0.0 END) * 100, 1) AS m1_retention,
+    ROUND(AVG(CASE WHEN tenure_months >= 3 THEN 1.0 ELSE 0.0 END) * 100, 1) AS m3_retention,
+    ROUND(AVG(CASE WHEN tenure_months >= 6 THEN 1.0 ELSE 0.0 END) * 100, 1) AS m6_retention,
+    ROUND(AVG(CASE WHEN tenure_months >= 12 THEN 1.0 ELSE 0.0 END) * 100, 1) AS m12_retention
+FROM cohort_base GROUP BY cohort_month ORDER BY cohort_month DESC LIMIT 6;`,
         output: [
-          ["cohort_month", "cohort_size", "m3_survival", "m6_survival"],
-          ["2024-01", "175", "91.4%", "84.2%"],
-          ["2023-11", "162", "91.0%", "83.1%"],
-          ["2023-09", "170", "89.2%", "81.0%"]
+          ["cohort_month", "cohort_size", "m1_retention", "m3_retention", "m6_retention", "m12_retention"],
+          ["2024-01", "175", "98.2%", "92.0%", "85.1%", "78.3%"],
+          ["2023-11", "162", "97.4%", "90.8%", "83.2%", "76.1%"],
+          ["2023-09", "170", "96.5%", "89.4%", "81.0%", "74.2%"]
         ]
       },
       3: {
-        title: "03_revenue_leakage_clv.sql",
-        code: `SELECT contract_type,
-       COUNT(account_id) AS accounts,
+        title: "03_leakage_by_tier.sql",
+        code: `SELECT contract_type, COUNT(*) AS accounts,
        ROUND(AVG(churn_status) * 100, 2) AS churn_pct,
        ROUND(SUM(CASE WHEN churn_status = 1 THEN monthly_charges ELSE 0 END), 2) AS lost_mrr,
        ROUND(SUM(CASE WHEN churn_status = 1 THEN monthly_charges * 12 ELSE 0 END), 2) AS annualized_leakage
-FROM accounts GROUP BY contract_type ORDER BY lost_mrr DESC;`,
+FROM accounts GROUP BY contract_type ORDER BY annualized_leakage DESC;`,
         output: [
           ["contract_type", "accounts", "churn_pct", "lost_mrr", "annualized_leakage"],
           ["Month-to-Month", "2,710", "31.80%", "$425,180.00", "$5,102,160.00"],
@@ -1224,14 +1222,13 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       }
     };
 
-    // State
+    // Application State
     let currentPage = 'home';
     let currentSqlScriptId = 1;
     let isDarkMode = false;
     let activeContractFilter = 'ALL';
-    let selectedDossierAccount = RAW_ACCOUNTS[0];
 
-    // Chart instances
+    // Chart Instances
     let lollipopStatsChartInstance = null;
     let circularOddsChartInstance = null;
     let clvTierChartInstance = null;
@@ -1263,8 +1260,8 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         const navBtn = document.getElementById(`nav-btn-${id}`);
         if (navBtn) {
           navBtn.className = id === 'triage'
-            ? "nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1"
-            : "nav-pill-btn px-3 py-1 rounded-full text-xs font-semibold";
+            ? "nav-pill-btn px-4 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-1.5"
+            : "nav-pill-btn px-4 py-1.5 rounded-full text-xs font-semibold";
         }
       });
 
@@ -1274,8 +1271,8 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       const activeNavBtn = document.getElementById(`nav-btn-${pageId}`);
       if (activeNavBtn) {
         activeNavBtn.className = pageId === 'triage'
-          ? "nav-pill-btn active px-3.5 py-1 rounded-full text-xs font-semibold flex items-center space-x-1"
-          : "nav-pill-btn active px-3.5 py-1 rounded-full text-xs font-semibold";
+          ? "nav-pill-btn active px-4 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-1.5"
+          : "nav-pill-btn active px-4 py-1.5 rounded-full text-xs font-semibold";
       }
 
       if (pageId === 'cohorts') renderCohortTable();
@@ -1326,16 +1323,23 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       document.getElementById('statActiveMrr').textContent = `$${(mrrMatched / 1000000).toFixed(2)}M`;
       document.getElementById('statPriorityRisk').textContent = riskCountMatched;
       document.getElementById('cardChurnRateDisplay').textContent = `${churnRate.toFixed(1)}%`;
-      document.getElementById('activeSlicerCountBadge').textContent = `Matching ${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
+      document.getElementById('activeSlicerCountBadge').textContent = `${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
 
       // Update Lollipop chart
       if (lollipopStatsChartInstance) {
-        let barData = [4.4, 7.2, 6.3, 4.8, 2.1, 5.8];
-        if (contractType === 'Month-to-Month') barData = [6.8, 8.4, 7.9, 6.2, 5.1, 7.4];
-        if (contractType === '2-Year') barData = [1.2, 1.8, 1.4, 1.1, 0.9, 1.5];
-
+        let barData = [2.8, 4.5, 5.6, 6.2, 7.6, 4.9, 3.2];
+        let chipText = '31.8% M2M';
+        if (contractType === 'Month-to-Month') {
+          barData = [3.8, 5.8, 7.2, 8.1, 9.6, 6.4, 4.5];
+          chipText = '42.1% M2M';
+        } else if (contractType === '2-Year') {
+          barData = [1.1, 1.8, 2.2, 2.7, 3.4, 2.1, 1.4];
+          chipText = '12.4% 2-Yr';
+        }
         lollipopStatsChartInstance.data.datasets[0].data = barData;
         lollipopStatsChartInstance.update();
+        const chip = document.getElementById('lollipopChip');
+        if (chip) chip.textContent = chipText;
       }
 
       // Filter Dark Task list
@@ -1350,7 +1354,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     }
 
     function filterByTier(tier) {
-      showToast(`Inspecting ${tier} Tier Segment`);
+      showToast(`Inspecting ${tier} Tier`);
       switchPage('triage');
       const qInput = document.getElementById('crmSearchInput');
       if (qInput) {
@@ -1365,34 +1369,39 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       if (!container) return;
       container.innerHTML = '';
 
-      const displayList = accounts.slice(0, 4);
+      const displayList = accounts.slice(0, 5);
       displayList.forEach((acc, idx) => {
         const item = document.createElement('div');
-        item.className = "p-2 rounded-2xl hover:bg-white/10 cursor-pointer transition flex items-center justify-between";
+        item.className = "py-1.5 px-2 rounded-2xl hover:bg-white/5 cursor-pointer transition flex items-center justify-between";
         item.onclick = () => openAccountDrawer(acc.id);
 
-        const iconType = idx === 0 ? "laptop" : idx === 1 ? "zap" : idx === 2 ? "message-square" : "clock";
+        const iconType = idx === 0 ? "laptop" : idx === 1 ? "zap" : idx === 2 ? "message-square" : idx === 3 ? "calendar" : "link";
+        const isChecked = idx < 2;
 
         item.innerHTML = `
-          <div class="flex items-center space-x-2.5">
-            <div class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/80 shrink-0">
+          <div class="flex items-center space-x-2.5 min-w-0">
+            <div class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/80 shrink-0">
               <i data-lucide="${iconType}" class="w-3 h-3"></i>
             </div>
-            <div class="truncate max-w-[135px]">
-              <h5 class="text-xs font-bold truncate text-white">${acc.company}</h5>
-              <p class="text-[9px] text-white/50 truncate font-mono">$${acc.mrr.toFixed(0)}/mo &bull; ${acc.inactivity}d ago</p>
+            <div class="truncate max-w-[140px]">
+              <h5 class="text-xs font-semibold truncate text-white leading-tight">${acc.company}</h5>
+              <p class="text-[9px] text-white/40 truncate font-mono mt-0.5">$${acc.mrr.toFixed(0)}/mo &bull; ${acc.inactivity}d ago</p>
             </div>
           </div>
 
-          <!-- Circular Yellow Checkmark (Exact Reference Match) -->
-          <div class="w-5 h-5 rounded-full bg-buttercup-400 text-slate-900 flex items-center justify-center shrink-0 shadow-sm">
-            <i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>
-          </div>
+          <!-- Circular Checkmark: Yellow for completed, Subtle Ring for pending -->
+          ${isChecked ? `
+            <div class="w-5 h-5 rounded-full bg-buttercup-400 text-slate-900 flex items-center justify-center shrink-0 shadow-sm">
+              <i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>
+            </div>
+          ` : `
+            <div class="w-5 h-5 rounded-full border border-white/20 shrink-0"></div>
+          `}
         `;
         container.appendChild(item);
       });
 
-      document.getElementById('darkCardCount').textContent = `${displayList.length} / ${accounts.length}`;
+      document.getElementById('darkCardCount').textContent = `2 / 8`;
       lucide.createIcons();
     }
 
@@ -1407,40 +1416,51 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         tr.className = "hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition";
         tr.onclick = () => openAccountDrawer(acc.id);
         tr.innerHTML = `
-          <td class="py-2.5 px-3">
-            <div class="font-bold text-slate-800 dark:text-slate-100">${acc.company}</div>
-            <div class="text-[9px] text-slate-400 font-mono">${acc.id} &bull; ${acc.csm}</div>
+          <td class="py-3 px-4">
+            <div class="font-semibold text-slate-800 dark:text-slate-100">${acc.company}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${acc.id} &bull; ${acc.csm}</div>
           </td>
-          <td class="py-2.5 px-3">
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300">${acc.tier}</span>
+          <td class="py-3 px-4">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300">${acc.tier}</span>
           </td>
-          <td class="py-2.5 px-3">
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${acc.contract === 'Month-to-Month' ? 'bg-amber-100 dark:bg-amber-950/60 text-buttercup-600' : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600'}">
+          <td class="py-3 px-4">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold ${acc.contract === 'Month-to-Month' ? 'bg-amber-100 dark:bg-amber-950/60 text-buttercup-600' : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600'}">
               ${acc.contract}
             </span>
           </td>
-          <td class="py-2.5 px-3 font-mono font-bold text-slate-800 dark:text-slate-100">$${acc.mrr.toFixed(2)}</td>
-          <td class="py-2.5 px-3 font-mono ${acc.inactivity >= 14 ? 'text-rose-500 font-bold' : 'text-slate-500'}">${acc.inactivity}d</td>
-          <td class="py-2.5 px-3 font-mono ${acc.tickets >= 4 ? 'text-amber-500 font-bold' : 'text-slate-500'}">${acc.tickets}</td>
-          <td class="py-2.5 px-3 text-slate-500 text-[10px] truncate max-w-[200px]">${acc.prescriptive}</td>
-          <td class="py-2.5 px-3 text-right">
-            <button class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 font-bold text-[10px] transition">
-              Audit
+          <td class="py-3 px-4 font-mono font-bold text-slate-800 dark:text-slate-200">
+            $${acc.mrr.toFixed(2)}
+          </td>
+          <td class="py-3 px-4 font-mono text-rose-500 font-semibold">
+            ${acc.inactivity} Days
+          </td>
+          <td class="py-3 px-4 font-mono text-amber-600 font-semibold">
+            ${acc.tickets}
+          </td>
+          <td class="py-3 px-4 text-slate-600 dark:text-slate-300 truncate max-w-[200px]">
+            ${acc.prescriptive}
+          </td>
+          <td class="py-3 px-4 text-right">
+            <button class="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 inline-flex items-center justify-center text-slate-500 transition">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i>
             </button>
           </td>
         `;
         tbody.appendChild(tr);
       });
 
-      document.getElementById('crmRowCount').textContent = `${accounts.length} Accounts Listed`;
+      document.getElementById('crmRowCount').textContent = `${accounts.length} Accounts`;
       lucide.createIcons();
     }
 
     function filterCrmTable() {
-      const q = (document.getElementById('crmSearchInput')?.value || '').toLowerCase();
-      const filtered = RAW_ACCOUNTS.filter(a => {
-        return a.company.toLowerCase().includes(q) || a.csm.toLowerCase().includes(q) || a.tier.toLowerCase().includes(q);
-      });
+      const q = document.getElementById('crmSearchInput').value.toLowerCase();
+      const filtered = RAW_ACCOUNTS.filter(a => 
+        a.company.toLowerCase().includes(q) || 
+        a.csm.toLowerCase().includes(q) ||
+        a.tier.toLowerCase().includes(q) ||
+        a.contract.toLowerCase().includes(q)
+      );
       renderCrmTable(filtered);
     }
 
@@ -1450,17 +1470,18 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      RAW_COHORTS.forEach(c => {
+      COHORT_DATA.forEach(c => {
         const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-white/5 transition";
         tr.innerHTML = `
-          <td class="py-2.5 px-3 font-bold text-slate-800 dark:text-slate-100">${c.month}</td>
-          <td class="py-2.5 px-3 text-slate-500">${c.signups}</td>
-          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold">${c.m1}%</span></td>
-          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold">${c.m3}%</span></td>
-          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold">${c.m6}%</span></td>
-          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold">${c.m12}%</span></td>
-          <td class="py-2.5 px-3 text-slate-400">${c.m18 ? c.m18 + '%' : '-'}</td>
-          <td class="py-2.5 px-3 font-bold text-slate-800 dark:text-slate-100 text-right">$${c.arr}k</td>
+          <td class="py-3.5 px-4 font-bold text-slate-800 dark:text-slate-200">${c.cohort}</td>
+          <td class="py-3.5 px-4 text-slate-400">${c.signups}</td>
+          <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 font-bold">${c.m1}</span></td>
+          <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 font-bold">${c.m3}</span></td>
+          <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-buttercup-600 font-bold">${c.m6}</span></td>
+          <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 font-semibold">${c.m12}</span></td>
+          <td class="py-3.5 px-4 text-slate-400">${c.m18}</td>
+          <td class="py-3.5 px-4 text-right font-bold text-slate-800 dark:text-slate-200">${c.arr}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -1468,51 +1489,44 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
 
     // Render Drillthrough Table
     function renderDrillthroughTable() {
-      const tbody = document.getElementById('drillTableBody');
+      const tbody = document.getElementById('drillthroughTableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      RAW_ACCOUNTS.forEach(acc => {
+      RAW_ACCOUNTS.forEach((acc, idx) => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition";
         tr.onclick = () => openAccountDrawer(acc.id);
         tr.innerHTML = `
-          <td class="py-2 px-2.5 font-mono text-[11px] text-slate-400">${acc.id}</td>
-          <td class="py-2 px-2.5 font-bold text-slate-800 dark:text-slate-100">${acc.company}</td>
-          <td class="py-2 px-2.5"><span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-[9px] font-bold">${acc.tier}</span></td>
-          <td class="py-2 px-2.5 text-[10px]">${acc.contract}</td>
-          <td class="py-2 px-2.5 font-mono font-bold">$${acc.mrr.toFixed(2)}</td>
-          <td class="py-2 px-2.5 font-mono ${acc.inactivity >= 14 ? 'text-rose-500 font-bold' : 'text-slate-500'}">${acc.inactivity}d</td>
-          <td class="py-2 px-2.5 text-right">
-            <button class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 text-[10px] font-bold transition">
-              Inspect
-            </button>
-          </td>
+          <td class="py-3 px-4 font-mono font-bold text-slate-400">#${idx + 1}</td>
+          <td class="py-3 px-4 font-mono text-buttercup-600 font-semibold">${acc.id}</td>
+          <td class="py-3 px-4 font-semibold text-slate-800 dark:text-slate-200">${acc.company}</td>
+          <td class="py-3 px-4 text-slate-500">${acc.contract}</td>
+          <td class="py-3 px-4 font-mono font-bold text-slate-900 dark:text-white">$${acc.mrr.toFixed(2)}</td>
+          <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-600 border border-rose-100">${acc.inactivity >= 16 ? 'Dormancy Cliff' : 'Support Surge'}</span></td>
+          <td class="py-3 px-4 text-right"><i data-lucide="chevron-right" class="w-4 h-4 inline text-slate-400"></i></td>
         `;
         tbody.appendChild(tr);
       });
+      lucide.createIcons();
     }
 
-    // Simulator
-    function updatePageSimulation() {
-      const slider = document.getElementById('pageRescueSlider');
-      const rate = parseInt(slider.value, 10);
-      document.getElementById('pageSliderDisplay').textContent = `${rate}%`;
+    // Sensitivity Slider
+    function updateRoiCalculation(val) {
+      document.getElementById('sliderValueLabel').textContent = `${val}%`;
+      const baseLeakage = 7845590;
+      const recovered = (baseLeakage * (val / 100)).toFixed(0);
+      const reduction = (24.7 * (val / 100)).toFixed(1);
 
-      const monthly = Math.round(37420 * (rate / 100));
-      const annual = monthly * 12;
-
-      document.getElementById('pageSimMonthly').textContent = `+$${monthly.toLocaleString('en-US')}`;
-      document.getElementById('pageSimAnnual').textContent = `+$${annual.toLocaleString('en-US')}`;
+      document.getElementById('roiRecoveredArr').textContent = `$${parseInt(recovered).toLocaleString('en-US')}`;
+      document.getElementById('roiNetReduction').textContent = `-${reduction}%`;
     }
 
     // Modals
     function openAccountDrawer(accId) {
       const acc = RAW_ACCOUNTS.find(a => a.id === accId) || RAW_ACCOUNTS[0];
-      selectedDossierAccount = acc;
-
       document.getElementById('drawerCompanyName').textContent = acc.company;
-      document.getElementById('drawerAccountId').textContent = `${acc.id} &bull; ${acc.contact} &bull; ${acc.tier}`;
+      document.getElementById('drawerAccountId').textContent = `${acc.id} \u2022 ${acc.contact} \u2022 ${acc.tier}`;
       document.getElementById('drawerAvatar').textContent = acc.company.substring(0, 2).toUpperCase();
       document.getElementById('drawerMRR').textContent = `$${acc.mrr.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
       document.getElementById('drawerInactivity').textContent = `${acc.inactivity} Days`;
@@ -1530,22 +1544,9 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       document.getElementById('accountDrawer').classList.add('hidden');
     }
 
-    function triggerDossierAction(type) {
-      closeAccountDrawer();
-      if (type === 'engineer') {
-        showToast(`Senior Solutions Engineer dispatched for ${selectedDossierAccount.company}`);
-      } else {
-        showToast(`15% Annual Incentive sent to ${selectedDossierAccount.company}`);
-      }
-    }
-
-    function openInterventionModal() {
-      openAccountDrawer('ACC-9042');
-    }
-
     function openSqlModal() {
+      pickSqlScript(1);
       document.getElementById('sqlModal').classList.remove('hidden');
-      pickSqlScript(currentSqlScriptId);
       lucide.createIcons();
     }
 
@@ -1559,9 +1560,9 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         const btn = document.getElementById(`sql-tab-${n}`);
         if (!btn) return;
         if (n === id) {
-          btn.className = "px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-darkTile text-white";
+          btn.className = "px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-darkTile text-white";
         } else {
-          btn.className = "px-3 py-1 rounded-full text-[11px] font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300";
+          btn.className = "px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300";
         }
       });
 
@@ -1574,11 +1575,11 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       const container = document.getElementById('sqlOutputTable');
       if (!rows || rows.length === 0) return;
       let html = '<table class="w-full text-left font-mono text-[10px]"><thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">';
-      rows[0].forEach(h => html += `<th class="py-1 px-1.5">${h}</th>`);
+      rows[0].forEach(h => html += `<th class="py-1.5 px-2">${h}</th>`);
       html += '</tr></thead><tbody>';
       for (let i = 1; i < rows.length; i++) {
         html += '<tr class="border-b border-slate-100 dark:border-slate-800">';
-        rows[i].forEach(c => html += `<td class="py-1 px-1.5 font-semibold text-slate-800 dark:text-slate-200">${c}</td>`);
+        rows[i].forEach(c => html += `<td class="py-1.5 px-2 font-semibold text-slate-800 dark:text-slate-200">${c}</td>`);
         html += '</tr>';
       }
       html += '</tbody></table>';
@@ -1622,10 +1623,10 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         data: {
           labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
           datasets: [{
-            data: [2.1, 4.4, 5.8, 6.3, 4.8, 7.2, 3.1],
-            backgroundColor: (ctx) => ctx.dataIndex === 5 ? '#facc15' : '#18181b',
+            data: [2.8, 4.5, 5.6, 6.2, 7.6, 4.9, 3.2],
+            backgroundColor: (ctx) => ctx.dataIndex === 4 ? '#f6be3c' : (isDarkMode ? '#52525b' : '#18181b'),
             borderRadius: 9999,
-            barThickness: 5
+            barThickness: 4
           }]
         },
         options: {
@@ -1633,8 +1634,8 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans', size: 8 } } },
-            y: { display: false, min: 0, max: 9 }
+            x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans', size: 9 }, color: '#94a3b8' } },
+            y: { display: false, min: 0, max: 10 }
           }
         }
       });
@@ -1647,7 +1648,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         data: {
           datasets: [{
             data: [72, 28],
-            backgroundColor: ['#facc15', 'rgba(0, 0, 0, 0.06)'],
+            backgroundColor: ['#f6be3c', 'rgba(0, 0, 0, 0.05)'],
             borderWidth: 0,
             circumference: 270,
             rotation: 225
@@ -1656,46 +1657,69 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: '80%',
+          cutout: '82%',
           plugins: { legend: { display: false }, tooltip: { enabled: false } }
         }
       });
     }
 
     function initClvTierChart() {
-      const ctx = document.getElementById('clvTierChart')?.getContext('2d');
-      if (!ctx) return;
+      const ctx = document.getElementById('clvTierChart').getContext('2d');
       clvTierChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['M1', 'M3', 'M6', 'M12', 'M18', 'M24'],
+          labels: ['M1', 'M3', 'M6', 'M9', 'M12', 'M18', 'M24'],
           datasets: [
-            { label: 'Enterprise', data: [1.4, 4.2, 8.5, 16.8, 23.2, 28.4], borderColor: '#facc15', backgroundColor: 'rgba(250, 204, 21, 0.15)', fill: true, tension: 0.35, borderWidth: 2 },
-            { label: 'Mid-Market', data: [0.98, 2.9, 5.6, 9.8, 12.6, 14.9], borderColor: '#18181b', tension: 0.35, borderWidth: 2 },
-            { label: 'Growth', data: [0.75, 2.1, 3.8, 5.4, 6.5, 7.2], borderColor: '#2a9d8f', tension: 0.35, borderWidth: 1.5, borderDash: [3, 3] }
+            {
+              label: 'Enterprise Tier',
+              data: [2.4, 7.2, 14.8, 21.0, 25.4, 27.2, 28.4],
+              borderColor: '#18181b',
+              backgroundColor: 'rgba(24, 24, 27, 0.05)',
+              tension: 0.4,
+              fill: true,
+              borderWidth: 2
+            },
+            {
+              label: 'Mid-Market Tier',
+              data: [1.8, 4.9, 9.4, 12.2, 13.8, 14.4, 14.9],
+              borderColor: '#f6be3c',
+              backgroundColor: 'rgba(246, 190, 60, 0.08)',
+              tension: 0.4,
+              fill: true,
+              borderWidth: 2
+            },
+            {
+              label: 'Growth Tier',
+              data: [1.1, 2.8, 4.9, 6.1, 6.8, 7.0, 7.2],
+              borderColor: '#94a3b8',
+              borderDash: [4, 4],
+              tension: 0.4,
+              fill: false,
+              borderWidth: 1.5
+            }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 9 } } } },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, font: { family: 'Plus Jakarta Sans', size: 10 } } }
+          },
           scales: {
-            x: { grid: { display: false }, ticks: { font: { size: 9 } } },
-            y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => `$${v}k`, font: { size: 9 } } }
+            x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans', size: 10 } } },
+            y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => `$${v}k`, font: { family: 'JetBrains Mono', size: 10 } } }
           }
         }
       });
     }
 
-    window.onload = function() {
-      lucide.createIcons();
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
       initLollipopChart();
       initCircularOddsChart();
       renderDarkTasks(RAW_ACCOUNTS);
-      renderCohortTable();
-      renderCrmTable(RAW_ACCOUNTS);
-      renderDrillthroughTable();
-    };
+      lucide.createIcons();
+    });
   </script>
 </body>
 </html>
