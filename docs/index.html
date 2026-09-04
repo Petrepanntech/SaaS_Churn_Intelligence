@@ -51,6 +51,7 @@
           boxShadow: {
             'soft': '0 4px 20px -4px rgba(38, 66, 57, 0.07), 0 2px 6px -1px rgba(38, 66, 57, 0.04)',
             'float': '0 8px 24px -4px rgba(215, 155, 41, 0.3)',
+            'nav-active': '0 4px 14px -2px rgba(20, 36, 31, 0.35)',
           }
         }
       }
@@ -101,6 +102,24 @@
                         radial-gradient(ellipse at 15% 85%, rgba(255,255,255,0.12) 0%, transparent 55%);
     }
 
+    /* Left Nav Item Button */
+    .nav-side-btn {
+      transition: all 0.18s ease;
+    }
+    .nav-side-btn.active {
+      background-color: #ffffff;
+      color: #264239;
+      font-weight: 800;
+      box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.15);
+    }
+    .nav-side-btn:not(.active) {
+      color: rgba(255, 255, 255, 0.82);
+    }
+    .nav-side-btn:not(.active):hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
     /* Power BI Style Slicer Buttons */
     .slicer-pill {
       transition: all 0.15s ease;
@@ -121,25 +140,6 @@
       color: #1e293b;
     }
 
-    /* Power BI Page Tab Buttons */
-    .page-tab-btn {
-      transition: all 0.15s ease;
-    }
-    .page-tab-btn.active {
-      background-color: #264239;
-      color: #ffffff;
-      font-weight: 700;
-      box-shadow: 0 4px 12px -2px rgba(38, 66, 57, 0.25);
-    }
-    .page-tab-btn:not(.active) {
-      background-color: rgba(255, 255, 255, 0.8);
-      color: #334155;
-    }
-    .page-tab-btn:not(.active):hover {
-      background-color: #ffffff;
-      color: #0f172a;
-    }
-
     /* Internal Table Scrollbars */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -149,356 +149,440 @@
 </head>
 <body class="text-slate-800 antialiased h-screen w-screen p-2 sm:p-3 flex flex-col font-sans selection:bg-mustard-500 selection:text-white">
 
-  <!-- Master Dashboard Frame -->
-  <div class="h-full w-full bg-surface rounded-3xl border border-white/80 shadow-2xl p-3 sm:p-4 flex flex-col gap-2.5 overflow-hidden">
+  <!-- Master Fixed Canvas Wrapper -->
+  <div class="h-full w-full bg-surface rounded-3xl border border-white/80 shadow-2xl p-2.5 sm:p-3 flex flex-row gap-3 overflow-hidden">
 
-    <!-- TOP EXECUTIVE BAR: Branding, Page Tabs, Utilities -->
-    <header class="flex flex-col lg:flex-row items-center justify-between gap-2.5 shrink-0 pb-1 border-b border-slate-200/70">
+    <!-- ==================================================== -->
+    <!-- LEFT SIDEBAR: Navigation Panel & Executive Identity -->
+    <!-- ==================================================== -->
+    <aside class="w-56 lg:w-60 bg-sidebar rounded-2xl p-3 text-white flex flex-col justify-between shrink-0 shadow-xl relative overflow-hidden select-none">
       
-      <!-- Brand & Project Identity -->
-      <div class="flex items-center space-x-3 w-full lg:w-auto justify-between lg:justify-start">
-        <div class="flex items-center space-x-2.5">
-          <div class="w-8 h-8 rounded-xl bg-sidebar text-white flex items-center justify-center font-bold text-sm shadow">
+      <!-- Top Section: Branding & Vertical Navigation -->
+      <div class="space-y-4">
+        
+        <!-- Brand Badge -->
+        <div class="flex items-center space-x-2.5 px-1 pt-1">
+          <div class="w-8 h-8 rounded-xl bg-mustard-500 text-sidebar flex items-center justify-center font-extrabold text-xs shadow-md">
             RP
           </div>
           <div>
-            <div class="flex items-center space-x-1.5">
-              <span class="text-xs font-black tracking-wider text-sidebar uppercase">RetainPulse</span>
-              <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-mustard-500/20 text-mustard-700 font-bold border border-mustard-400/40">v2.4 Telemetry</span>
+            <div class="flex items-center space-x-1">
+              <span class="text-xs font-black tracking-wider uppercase">RetainPulse</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
             </div>
-            <p class="text-[10px] text-slate-500 font-medium">B2B SaaS Churn Audit &bull; 5,000 Accounts &bull; OLAP Retention Engine</p>
+            <p class="text-[9px] text-white/60 font-medium">SaaS Retention Telemetry</p>
           </div>
         </div>
 
-        <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-[10px] font-bold text-slate-700 transition" title="View Peter Akpan Portfolio">
-          <i data-lucide="user" class="w-3 h-3 text-sidebar"></i>
-          <span>Peter Akpan</span>
-          <i data-lucide="external-link" class="w-2.5 h-2.5 text-slate-400"></i>
-        </a>
+        <!-- Author Profile Callout -->
+        <div class="p-2 rounded-xl bg-white/10 border border-white/10 flex items-center justify-between text-xs">
+          <div>
+            <span class="text-[10px] font-extrabold text-white block uppercase tracking-tight">Peter Akpan</span>
+            <span class="text-[9px] text-mustard-300 font-medium">Founder &bull; Pann Labs</span>
+          </div>
+          <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition" title="Visit Live Portfolio">
+            <i data-lucide="external-link" class="w-3 h-3"></i>
+          </a>
+        </div>
+
+        <!-- Vertical Navigation Menu -->
+        <nav class="space-y-1.5 pt-1">
+          <span class="text-[9px] uppercase font-extrabold tracking-wider text-white/50 px-2 block">DASHBOARD PAGES</span>
+
+          <button onclick="switchPage('home')" id="nav-btn-home" class="w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn active">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 shrink-0"></i>
+            <span class="text-[11px] tracking-wide">Home Overview</span>
+          </button>
+
+          <button onclick="switchPage('cohorts')" id="nav-btn-cohorts" class="w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn">
+            <i data-lucide="layers" class="w-3.5 h-3.5 shrink-0"></i>
+            <span class="text-[11px] tracking-wide">Cohort &amp; CLV</span>
+          </button>
+
+          <button onclick="switchPage('triage')" id="nav-btn-triage" class="w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-xl nav-side-btn">
+            <div class="flex items-center space-x-2.5">
+              <i data-lucide="flame" class="w-3.5 h-3.5 shrink-0 text-mustard-400"></i>
+              <span class="text-[11px] tracking-wide">Risk Drivers</span>
+            </div>
+            <span id="navBadgeRisk" class="px-1.5 py-0.2 rounded-full bg-mustard-500 text-sidebar text-[9px] font-mono font-black">96</span>
+          </button>
+
+          <button onclick="switchPage('recommendations')" id="nav-btn-recommendations" class="w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 shrink-0 text-softGreen"></i>
+            <span class="text-[11px] tracking-wide">Strategy &amp; ROI</span>
+          </button>
+        </nav>
+
       </div>
 
-      <!-- Power BI Style Centered Page Tabs Navigation -->
-      <nav class="flex items-center space-x-1 bg-slate-200/70 p-1 rounded-2xl shrink-0">
-        <button onclick="switchPage('home')" id="tab-btn-home" class="page-tab-btn active px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5">
-          <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
-          <span>Home Overview</span>
-        </button>
+      <!-- Bottom Section: Database Sync & Utilities -->
+      <div class="pt-3 border-t border-white/10 space-y-2">
+        <div class="px-1 text-[10px] text-white/60 font-mono">
+          <div class="flex items-center justify-between text-[9px]">
+            <span>DATA STORE:</span>
+            <span class="text-mustard-300 font-bold">SQLite 3.12</span>
+          </div>
+          <div class="text-[9px] text-white/40 mt-0.5">5,000 Accounts Audited</div>
+        </div>
 
-        <button onclick="switchPage('cohorts')" id="tab-btn-cohorts" class="page-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5">
-          <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-          <span>Cohort Survival &amp; CLV</span>
-        </button>
+        <div class="grid grid-cols-2 gap-1.5 pt-1">
+          <button onclick="openSqlModal()" class="px-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white flex items-center justify-center space-x-1 transition" title="Inspect Analytical SQL Queries">
+            <i data-lucide="terminal" class="w-3 h-3 text-mustard-400"></i>
+            <span>SQL View</span>
+          </button>
+          <button onclick="exportTelemetryJson()" class="px-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white flex items-center justify-center space-x-1 transition" title="Export Telemetry JSON">
+            <i data-lucide="download" class="w-3 h-3"></i>
+            <span>Export</span>
+          </button>
+        </div>
 
-        <button onclick="switchPage('triage')" id="tab-btn-triage" class="page-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5">
-          <i data-lucide="flame" class="w-3.5 h-3.5 text-rose-500"></i>
-          <span>Risk Drivers &amp; Triage</span>
-          <span id="tabBadgeRisk" class="px-1.5 py-0.2 rounded-full bg-mustard-500 text-sidebar text-[9px] font-mono font-black">96</span>
-        </button>
-
-        <button onclick="switchPage('recommendations')" id="tab-btn-recommendations" class="page-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5">
-          <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-softGreen"></i>
-          <span>Strategic Recommendations</span>
-        </button>
-      </nav>
-
-      <!-- Utility Actions -->
-      <div class="hidden lg:flex items-center space-x-2">
-        <button onclick="openSqlModal()" class="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-sidebar font-bold text-xs rounded-xl shadow-soft border border-slate-200/80 flex items-center space-x-1.5 transition" title="Inspect SQLite Queries">
-          <i data-lucide="terminal" class="w-3 h-3 text-mustard-600"></i>
-          <span>View SQL Analytics</span>
-        </button>
-
-        <button onclick="exportTelemetryJson()" class="p-1.5 bg-white hover:bg-slate-100 text-sidebar rounded-xl shadow-soft border border-slate-200/80 transition" title="Export Audit JSON">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+        <button onclick="resetActivePageFilters()" class="w-full py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-bold text-white/70 hover:text-white flex items-center justify-center space-x-1.5 transition">
+          <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+          <span>Reset Page Filters</span>
         </button>
       </div>
 
-    </header>
+    </aside>
 
-    <!-- HORIZONTAL TOP SLICER RIBBON (Power BI Style Horizontal Slicers) -->
-    <section class="bg-white rounded-2xl p-2 px-3 shadow-soft border border-slate-200/70 shrink-0 flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
+    <!-- ==================================================== -->
+    <!-- RIGHT MAIN STAGE: Top Slicer Bar + Dynamic Dashboard -->
+    <!-- ==================================================== -->
+    <section class="flex-1 min-h-0 flex flex-col gap-2.5 overflow-hidden">
       
-      <!-- Filter Slicers Group -->
-      <div class="flex items-center space-x-3 flex-wrap gap-y-1.5">
+      <!-- DYNAMIC PAGE-CONTEXTUAL SLICER BAR -->
+      <header class="bg-white rounded-2xl p-2 px-3 shadow-soft border border-slate-200/70 shrink-0 flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
         
-        <div class="flex items-center space-x-1.5 text-sidebar font-black uppercase text-[10px] tracking-wider shrink-0 pr-1">
-          <i data-lucide="sliders-horizontal" class="w-3 h-3 text-slate-400"></i>
-          <span>Slicers</span>
+        <!-- Left: Page Title & Analytical Breadcrumb -->
+        <div class="flex items-center space-x-2">
+          <h1 id="pageHeaderTitle" class="text-xs font-black text-sidebar uppercase tracking-wider">Executive Telemetry Overview</h1>
+          <span class="text-slate-300">&bull;</span>
+          <p id="pageHeaderSubtitle" class="text-[10px] text-slate-500 font-medium">B2B SaaS Churn Audit &bull; 5,000 Accounts</p>
         </div>
 
-        <!-- Slicer 1: Contract -->
-        <div class="flex items-center space-x-1">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Contract:</span>
-          <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-            <button onclick="setSlicer('contract', 'ALL')" id="slicer-contract-ALL" class="slicer-pill active px-2 py-0.5 rounded">All</button>
-            <button onclick="setSlicer('contract', 'Month-to-Month')" id="slicer-contract-Month-to-Month" class="slicer-pill px-2 py-0.5 rounded" title="4.27x Churn Odds">M2M</button>
-            <button onclick="setSlicer('contract', '1-Year')" id="slicer-contract-1-Year" class="slicer-pill px-2 py-0.5 rounded">1-Yr</button>
-            <button onclick="setSlicer('contract', '2-Year')" id="slicer-contract-2-Year" class="slicer-pill px-2 py-0.5 rounded">2-Yr</button>
-          </div>
+        <!-- Right: Page-Specific Slicers (Dynamically switched per page) -->
+        <div class="flex items-center space-x-2 flex-wrap" id="pageSlicersContainer">
+          <!-- Populated dynamically via JS to be 100% relevant to the active page -->
         </div>
 
-        <!-- Slicer 2: Tier -->
-        <div class="flex items-center space-x-1">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
-          <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-            <button onclick="setSlicer('tier', 'ALL')" id="slicer-tier-ALL" class="slicer-pill active px-2 py-0.5 rounded">All</button>
-            <button onclick="setSlicer('tier', 'Enterprise')" id="slicer-tier-Enterprise" class="slicer-pill px-2 py-0.5 rounded">Ent</button>
-            <button onclick="setSlicer('tier', 'Mid-Market')" id="slicer-tier-Mid-Market" class="slicer-pill px-2 py-0.5 rounded">Mid</button>
-            <button onclick="setSlicer('tier', 'Growth')" id="slicer-tier-Growth" class="slicer-pill px-2 py-0.5 rounded">Growth</button>
-          </div>
-        </div>
+      </header>
 
-        <!-- Slicer 3: Risk Signal -->
-        <div class="flex items-center space-x-1">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Risk Trigger:</span>
-          <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-            <button onclick="setSlicer('trigger', 'ALL')" id="slicer-trigger-ALL" class="slicer-pill active px-2 py-0.5 rounded">All</button>
-            <button onclick="setSlicer('trigger', 'Friction')" id="slicer-trigger-Friction" class="slicer-pill px-2 py-0.5 rounded" title="Support Tickets >= 4">Friction</button>
-            <button onclick="setSlicer('trigger', 'Inactivity')" id="slicer-trigger-Inactivity" class="slicer-pill px-2 py-0.5 rounded" title="Inactive >= 14 Days">Dormant</button>
-          </div>
-        </div>
+      <!-- DYNAMIC PAGES CONTAINER (Strict 100vh flex-1 height) -->
+      <main class="flex-1 min-h-0 relative overflow-hidden">
 
-        <!-- Slicer 4: Status -->
-        <div class="flex items-center space-x-1">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Status:</span>
-          <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-            <button onclick="setSlicer('status', 'ALL')" id="slicer-status-ALL" class="slicer-pill active px-2 py-0.5 rounded">All</button>
-            <button onclick="setSlicer('status', 'Active')" id="slicer-status-Active" class="slicer-pill px-2 py-0.5 rounded">Active</button>
-            <button onclick="setSlicer('status', 'Churned')" id="slicer-status-Churned" class="slicer-pill px-2 py-0.5 rounded">Churned</button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Slicer Match Summary & Reset -->
-      <div class="flex items-center space-x-2 shrink-0">
-        <span id="slicerMatchBadge" class="px-2 py-0.5 rounded-full bg-emerald-50 text-sidebar font-mono text-[10px] font-extrabold border border-emerald-200">
-          5,000 Accounts (100%)
-        </span>
-        <button onclick="resetAllSlicers()" class="text-[10px] font-bold text-slate-500 hover:text-rose-600 flex items-center space-x-1 px-1.5 py-0.5 rounded hover:bg-slate-100 transition">
-          <i data-lucide="rotate-ccw" class="w-2.5 h-2.5"></i>
-          <span>Reset</span>
-        </button>
-      </div>
-
-    </section>
-
-    <!-- DYNAMIC DASHBOARD PAGES CONTAINER (Exact 100vh flex-1 height) -->
-    <main class="flex-1 min-h-0 relative overflow-hidden">
-
-      <!-- ========================================== -->
-      <!-- PAGE 1: HOME (EXECUTIVE OVERVIEW) -->
-      <!-- ========================================== -->
-      <div id="page-home" class="h-full flex flex-col gap-2.5">
-        
-        <!-- Row 1: 4 Executive KPI Metric Cards -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
+        <!-- ========================================== -->
+        <!-- PAGE 1: HOME OVERVIEW -->
+        <!-- ========================================== -->
+        <div id="page-home" class="h-full flex flex-col gap-2.5">
           
-          <!-- Card 1: Active MRR -->
-          <div class="bg-mustard-500 rounded-2xl p-3 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-20">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-white/80 block">Active Portfolio MRR</span>
-                <div id="kpiActiveMRR" class="text-xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">$1,933,837</div>
-              </div>
-              <div class="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-white">
-                <i data-lucide="trending-up" class="w-4 h-4"></i>
-              </div>
-            </div>
-            <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/20">
-              <span id="kpiActiveAccounts" class="text-white/90">3,765 Accounts Active</span>
-              <span class="font-mono bg-white/20 px-1.5 py-0.2 rounded-full font-bold">Avg $513/mo</span>
-            </div>
-          </div>
-
-          <!-- Card 2: Lost Leakage ARR -->
-          <div class="bg-sageCard rounded-2xl p-3 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-20">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-white/80 block">Annualized Lost Leakage</span>
-                <div id="kpiLeakageARR" class="text-xl font-black font-mono tracking-tight text-mustard-300 leading-tight mt-0.5">$7,845,590</div>
-              </div>
-              <div class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-rose-300">
-                <i data-lucide="shield-alert" class="w-4 h-4"></i>
-              </div>
-            </div>
-            <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/15">
-              <span id="kpiChurnedAccounts" class="text-white/80">1,235 Churned Exits</span>
-              <span class="font-mono bg-rose-500/25 text-rose-200 px-1.5 py-0.2 rounded-full font-bold">-$653.8k/mo</span>
-            </div>
-          </div>
-
-          <!-- Card 3: Portfolio Churn Rate -->
-          <div class="bg-white rounded-2xl p-3 text-slate-800 shadow-soft border border-slate-200/70 flex flex-col justify-between h-20">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 block">Baseline Churn Rate</span>
-                <div id="kpiChurnRate" class="text-xl font-black font-mono tracking-tight text-sidebar leading-tight mt-0.5">24.70%</div>
-              </div>
-              <div class="w-7 h-7 rounded-xl bg-amber-50 text-mustard-600 flex items-center justify-center border border-amber-200">
-                <i data-lucide="pie-chart" class="w-4 h-4"></i>
-              </div>
-            </div>
-            <div class="flex items-center justify-between text-[10px] pt-1 border-t border-slate-100">
-              <span class="text-slate-500">M2M Risk Rate: 31.8%</span>
-              <span class="font-mono text-emerald-600 font-bold">Target &lt;15%</span>
-            </div>
-          </div>
-
-          <!-- Card 4: Priority At-Risk Accounts -->
-          <div class="bg-darkCard rounded-2xl p-3 text-white shadow-soft flex flex-col justify-between h-20">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-white/70 block">Priority At-Risk Accounts</span>
-                <div id="kpiRiskCount" class="text-xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">96 Accounts</div>
-              </div>
-              <div class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-mustard-400">
-                <i data-lucide="flame" class="w-4 h-4"></i>
-              </div>
-            </div>
-            <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/10">
-              <span id="kpiRiskMRR" class="text-mustard-300 font-bold font-mono">$37,420 Immediate MRR</span>
-              <button onclick="switchPage('triage')" class="text-white hover:underline font-semibold flex items-center space-x-1">
-                <span>Inspect</span>
-                <i data-lucide="arrow-right" class="w-2.5 h-2.5"></i>
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Row 2: 4 Visual Cards (Fits Remaining 100vh Height) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
-          
-          <!-- Left Column: Contract Donut + Dual Bar Velocity (5 cols) -->
-          <div class="lg:col-span-5 flex flex-col gap-2.5 h-full min-h-0">
+          <!-- Top 4 Executive KPI Cards -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
             
-            <!-- Visual 1: Contract Commitment Donut -->
-            <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
-              <div class="flex items-center justify-between shrink-0">
+            <div class="bg-mustard-500 rounded-2xl p-3 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-20">
+              <div class="flex items-start justify-between">
                 <div>
-                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Contract Share &amp; Odds Multiplier</h3>
-                  <p class="text-[10px] text-slate-400">Commitment tier breakdown across portfolio</p>
+                  <span class="text-[10px] font-semibold uppercase tracking-wider text-white/80 block">Active Portfolio MRR</span>
+                  <div id="kpiActiveMRR" class="text-xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">$1,933,837</div>
                 </div>
-                <span class="px-2 py-0.5 rounded-full bg-amber-50 text-mustard-600 font-mono font-bold text-[9px] border border-amber-200">
-                  4.27x Churn Odds
+                <div class="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                  <i data-lucide="trending-up" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/20">
+                <span id="kpiActiveAccounts" class="text-white/90">3,765 Accounts Active</span>
+                <span id="kpiAvgMRR" class="font-mono bg-white/20 px-1.5 py-0.2 rounded-full font-bold">Avg $513/mo</span>
+              </div>
+            </div>
+
+            <div class="bg-sageCard rounded-2xl p-3 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-20">
+              <div class="flex items-start justify-between">
+                <div>
+                  <span class="text-[10px] font-semibold uppercase tracking-wider text-white/80 block">Annualized Lost Leakage</span>
+                  <div id="kpiLeakageARR" class="text-xl font-black font-mono tracking-tight text-mustard-300 leading-tight mt-0.5">$7,845,590</div>
+                </div>
+                <div class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-rose-300">
+                  <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/15">
+                <span id="kpiChurnedAccounts" class="text-white/80">1,235 Churned Exits</span>
+                <span id="kpiLostMRR" class="font-mono bg-rose-500/25 text-rose-200 px-1.5 py-0.2 rounded-full font-bold">-$653.8k/mo</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-3 text-slate-800 shadow-soft border border-slate-200/70 flex flex-col justify-between h-20">
+              <div class="flex items-start justify-between">
+                <div>
+                  <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 block">Baseline Churn Rate</span>
+                  <div id="kpiChurnRate" class="text-xl font-black font-mono tracking-tight text-sidebar leading-tight mt-0.5">24.70%</div>
+                </div>
+                <div class="w-7 h-7 rounded-xl bg-amber-50 text-mustard-600 flex items-center justify-center border border-amber-200">
+                  <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-slate-100">
+                <span id="kpiM2mRateLabel" class="text-slate-500">M2M Risk: 31.8%</span>
+                <span class="font-mono text-emerald-600 font-bold">Target &lt;15%</span>
+              </div>
+            </div>
+
+            <div class="bg-darkCard rounded-2xl p-3 text-white shadow-soft flex flex-col justify-between h-20">
+              <div class="flex items-start justify-between">
+                <div>
+                  <span class="text-[10px] font-semibold uppercase tracking-wider text-white/70 block">Priority At-Risk Accounts</span>
+                  <div id="kpiRiskCount" class="text-xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">96 Accounts</div>
+                </div>
+                <div class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-mustard-400">
+                  <i data-lucide="flame" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/10">
+                <span id="kpiRiskMRR" class="text-mustard-300 font-bold font-mono">$37,420 Immediate MRR</span>
+                <button onclick="switchPage('triage')" class="text-white hover:underline font-semibold flex items-center space-x-1">
+                  <span>Triage</span>
+                  <i data-lucide="arrow-right" class="w-2.5 h-2.5"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Visuals Split (5 cols Donut/Velocity + 7 cols Tickets/Spline) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+            
+            <!-- Left 5 Cols -->
+            <div class="lg:col-span-5 flex flex-col gap-2.5 h-full min-h-0">
+              
+              <!-- Visual 1: Donut -->
+              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
+                <div class="flex items-center justify-between shrink-0">
+                  <div>
+                    <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Contract Commitment Share</h3>
+                    <p class="text-[10px] text-slate-400">Distribution across active portfolio filter</p>
+                  </div>
+                  <span id="homeDonutOddsBadge" class="px-2 py-0.5 rounded-full bg-amber-50 text-mustard-600 font-mono font-bold text-[9px] border border-amber-200">
+                    4.27x Churn Odds
+                  </span>
+                </div>
+
+                <div class="relative flex-1 min-h-0 flex items-center justify-center py-1">
+                  <canvas id="contractShareChart"></canvas>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span class="text-[11px] font-black text-slate-700">Contract</span>
+                    <span class="text-[9px] text-slate-400 font-medium">Split</span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-1.5 text-center text-xs shrink-0 pt-1 border-t border-slate-100">
+                  <div class="p-1 rounded-xl bg-amber-50/70 border border-amber-100">
+                    <span class="text-[9px] text-mustard-600 font-bold block">M2M</span>
+                    <span id="donutStatM2M" class="font-mono font-black text-slate-800 text-[11px]">54.2%</span>
+                  </div>
+                  <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
+                    <span class="text-[9px] text-slate-500 font-bold block">1-Year</span>
+                    <span id="donutStat1Yr" class="font-mono font-black text-slate-800 text-[11px]">27.6%</span>
+                  </div>
+                  <div class="p-1 rounded-xl bg-emerald-50/70 border border-emerald-100">
+                    <span class="text-[9px] text-tealAccent font-bold block">2-Year</span>
+                    <span id="donutStat2Yr" class="font-mono font-black text-slate-800 text-[11px]">18.2%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Visual 2: Dual Bar Velocity -->
+              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
+                <div class="flex items-center justify-between shrink-0">
+                  <div>
+                    <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Retention Velocity Benchmark</h3>
+                    <p class="text-[10px] text-slate-400">Monthly Churn (%) vs Benchmark Target (%)</p>
+                  </div>
+                  <div class="flex items-center space-x-2 text-[10px]">
+                    <span class="flex items-center space-x-1">
+                      <span class="w-2 h-2 rounded-full bg-mustard-500"></span>
+                      <span id="barLegendSegment" class="text-slate-500">Segment (31.8%)</span>
+                    </span>
+                    <span class="flex items-center space-x-1">
+                      <span class="w-2 h-2 rounded-full bg-sidebar"></span>
+                      <span class="text-slate-500">Target (9.9%)</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex-1 min-h-0 w-full pt-1">
+                  <canvas id="verticalStatsChart"></canvas>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right 7 Cols -->
+            <div class="lg:col-span-7 flex flex-col gap-2.5 h-full min-h-0">
+              
+              <!-- Visual 3: Priority Accounts Flight Tickets (Internal Scroll) -->
+              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col flex-1 min-h-0">
+                <div class="flex items-center justify-between shrink-0 pb-1.5 border-b border-slate-100">
+                  <div class="flex items-center space-x-2">
+                    <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Priority Risk Accounts</h2>
+                    <span id="homePriorityCountTag" class="px-2 py-0.2 rounded-full bg-rose-50 text-rose-600 font-bold text-[9px] border border-rose-200">
+                      7 Immediate Actions
+                    </span>
+                  </div>
+                  <button onclick="switchPage('triage')" class="text-[10px] font-bold text-mustard-600 hover:underline">
+                    View Complete Triage List &rarr;
+                  </button>
+                </div>
+
+                <div class="grid grid-cols-12 text-[9px] font-extrabold text-slate-400 uppercase tracking-wider px-3 py-1 shrink-0">
+                  <div class="col-span-4">Account &amp; CSM</div>
+                  <div class="col-span-3">Contract &amp; Trigger</div>
+                  <div class="col-span-2 text-center">Inactivity</div>
+                  <div class="col-span-2 text-right">At-Risk MRR</div>
+                  <div class="col-span-1 text-right">Audit</div>
+                </div>
+
+                <div class="flex-1 min-h-0 overflow-y-auto space-y-1.5 pr-1" id="overviewTicketsContainer">
+                  <!-- Dynamically populated via JS -->
+                </div>
+              </div>
+
+              <!-- Visual 4: Longitudinal Spline Chart -->
+              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
+                <div class="flex items-center justify-between shrink-0">
+                  <div>
+                    <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Retention Trajectory</h3>
+                    <p class="text-[10px] text-slate-400">Decay curves across 30 cohorts responding to active filter</p>
+                  </div>
+                  <div class="px-2.5 py-0.5 rounded-full bg-sidebar text-white text-[10px] font-mono shadow-sm flex items-center space-x-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-mustard-400"></span>
+                    <span id="splineBadgeLabel">M6 Benchmark: <strong>84.2%</strong></span>
+                  </div>
+                </div>
+
+                <div class="flex-1 min-h-0 w-full pt-1">
+                  <canvas id="retentionSplineChart"></canvas>
+                </div>
+
+                <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100 shrink-0">
+                  <div class="flex items-center space-x-3">
+                    <span class="flex items-center space-x-1">
+                      <span class="w-2.5 h-1 bg-mustard-500 rounded-full"></span>
+                      <span>Filtered Cohort Survival</span>
+                    </span>
+                    <span class="flex items-center space-x-1">
+                      <span class="w-2.5 h-1 bg-sidebar rounded-full"></span>
+                      <span>M2M Decay Cliff</span>
+                    </span>
+                  </div>
+                  <span class="font-mono text-slate-400 text-[9px]">CTE 02_cohort_retention.sql</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PAGE 2: COHORT SURVIVAL & CLV -->
+        <!-- ========================================== -->
+        <div id="page-cohorts" class="hidden h-full flex flex-col gap-2.5">
+          
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
+            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 3 Survival</span>
+                <span id="cohortKpiM3" class="text-lg font-mono font-black text-sidebar">91.4%</span>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">&uarr; +2.1% YoY</span>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 6 Retention</span>
+                <span id="cohortKpiM6" class="text-lg font-mono font-black text-sidebar">84.2%</span>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Inflection Point</span>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 12 Renewal</span>
+                <span id="cohortKpiM12" class="text-lg font-mono font-black text-sidebar">76.8%</span>
+              </div>
+              <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">Annual Target</span>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-slate-400 block">Portfolio LTV / CAC</span>
+                <span id="cohortKpiLtv" class="text-lg font-mono font-black text-tealAccent">4.82x</span>
+              </div>
+              <span class="text-[10px] font-bold text-tealAccent bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100">&gt;3.0x Benchmark</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+            
+            <!-- Left: Matrix (7 cols) -->
+            <div class="lg:col-span-7 bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col h-full min-h-0">
+              <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100">
+                <div>
+                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Cohort Retention Matrix</h3>
+                  <p class="text-[10px] text-slate-400">Tracking customer survival brackets across monthly acquisition cohorts</p>
+                </div>
+                <span id="cohortTenureBadge" class="text-[10px] font-mono text-mustard-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 font-bold">
+                  Average Tenure: 17.5 Mo
                 </span>
               </div>
 
-              <!-- Centered Donut Canvas -->
-              <div class="relative flex-1 min-h-0 flex items-center justify-center py-1">
-                <canvas id="contractShareChart"></canvas>
-                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-[11px] font-black text-slate-700">Contract</span>
-                  <span class="text-[9px] text-slate-400 font-medium">Distribution</span>
+              <div class="flex-1 min-h-0 overflow-y-auto pt-1">
+                <table class="w-full text-left text-[11px] font-mono">
+                  <thead class="sticky top-0 bg-slate-50 text-[10px] text-slate-500 uppercase tracking-wider border-b border-slate-100 z-10">
+                    <tr>
+                      <th class="py-2 px-2.5">Cohort</th>
+                      <th class="py-2 px-2.5">Signups</th>
+                      <th class="py-2 px-2.5">M1</th>
+                      <th class="py-2 px-2.5">M3</th>
+                      <th class="py-2 px-2.5">M6</th>
+                      <th class="py-2 px-2.5">M12</th>
+                      <th class="py-2 px-2.5">M18</th>
+                      <th class="py-2 px-2.5 text-right">ARR</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cohortTableBody" class="divide-y divide-slate-100">
+                    <!-- Populated dynamically via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right: CLV Trajectory (5 cols) -->
+            <div class="lg:col-span-5 bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
+              <div class="flex items-center justify-between shrink-0">
+                <div>
+                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Cumulative CLV Trajectory</h3>
+                  <p class="text-[10px] text-slate-400">Lifetime value accumulation ($k) across tenure</p>
                 </div>
+                <span class="text-[10px] font-bold text-sidebar font-mono">24-Mo Horizon</span>
               </div>
 
-              <div class="grid grid-cols-3 gap-1.5 text-center text-xs shrink-0 pt-1 border-t border-slate-100">
-                <div class="p-1 rounded-xl bg-amber-50/70 border border-amber-100">
-                  <span class="text-[9px] text-mustard-600 font-bold block">M2M</span>
-                  <span class="font-mono font-black text-slate-800 text-[11px]">54.2%</span>
+              <div class="flex-1 min-h-0 w-full pt-1">
+                <canvas id="clvTierChart"></canvas>
+              </div>
+
+              <div class="grid grid-cols-3 gap-1.5 text-center text-xs shrink-0 pt-2 border-t border-slate-100">
+                <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
+                  <span class="text-[9px] text-slate-400 font-bold block">Enterprise CLV</span>
+                  <span id="clvStatEnterprise" class="font-mono font-black text-sidebar text-xs">$28,420</span>
                 </div>
                 <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                  <span class="text-[9px] text-slate-500 font-bold block">1-Year</span>
-                  <span class="font-mono font-black text-slate-800 text-[11px]">27.6%</span>
+                  <span class="text-[9px] text-slate-400 font-bold block">Mid-Market CLV</span>
+                  <span id="clvStatMidMarket" class="font-mono font-black text-sidebar text-xs">$14,890</span>
                 </div>
-                <div class="p-1 rounded-xl bg-emerald-50/70 border border-emerald-100">
-                  <span class="text-[9px] text-tealAccent font-bold block">2-Year</span>
-                  <span class="font-mono font-black text-slate-800 text-[11px]">18.2%</span>
+                <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
+                  <span class="text-[9px] text-slate-400 font-bold block">Growth CLV</span>
+                  <span id="clvStatGrowth" class="font-mono font-black text-sidebar text-xs">$7,210</span>
                 </div>
-              </div>
-            </div>
-
-            <!-- Visual 2: Dual Bar Retention Velocity -->
-            <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
-              <div class="flex items-center justify-between shrink-0">
-                <div>
-                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Retention Velocity Benchmark</h3>
-                  <p class="text-[10px] text-slate-400">M2M Churn Rate (%) vs Annual Target (%)</p>
-                </div>
-                <div class="flex items-center space-x-2 text-[10px]">
-                  <span class="flex items-center space-x-1">
-                    <span class="w-2 h-2 rounded-full bg-mustard-500"></span>
-                    <span class="text-slate-500">M2M (31.8%)</span>
-                  </span>
-                  <span class="flex items-center space-x-1">
-                    <span class="w-2 h-2 rounded-full bg-sidebar"></span>
-                    <span class="text-slate-500">Target (9.9%)</span>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Bar Chart Canvas -->
-              <div class="flex-1 min-h-0 w-full pt-1">
-                <canvas id="verticalStatsChart"></canvas>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Right Column: Priority Accounts Flight List + Retention Spline (7 cols) -->
-          <div class="lg:col-span-7 flex flex-col gap-2.5 h-full min-h-0">
-            
-            <!-- Visual 3: Priority Risk Accounts Flight Tickets (Bounded Internal Scroll) -->
-            <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col flex-1 min-h-0">
-              <div class="flex items-center justify-between shrink-0 pb-1.5 border-b border-slate-100">
-                <div class="flex items-center space-x-2">
-                  <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Priority Risk Accounts</h2>
-                  <span class="px-2 py-0.2 rounded-full bg-rose-50 text-rose-600 font-bold text-[9px] border border-rose-200">
-                    CSM Urgent Action Required
-                  </span>
-                </div>
-                <button onclick="switchPage('triage')" class="text-[10px] font-bold text-mustard-600 hover:underline">
-                  Open Full Triage Center &rarr;
-                </button>
-              </div>
-
-              <!-- Table Headers -->
-              <div class="grid grid-cols-12 text-[9px] font-extrabold text-slate-400 uppercase tracking-wider px-3 py-1 shrink-0">
-                <div class="col-span-4">Account &amp; CSM</div>
-                <div class="col-span-3">Contract &amp; Trigger</div>
-                <div class="col-span-2 text-center">Inactivity</div>
-                <div class="col-span-2 text-right">At-Risk MRR</div>
-                <div class="col-span-1 text-right">Audit</div>
-              </div>
-
-              <!-- Internally Scrollable Ticket Rows -->
-              <div class="flex-1 min-h-0 overflow-y-auto space-y-1.5 pr-1" id="overviewTicketsContainer">
-                <!-- Dynamically populated via JS -->
-              </div>
-            </div>
-
-            <!-- Visual 4: Longitudinal Retention Wave Spline Schedule -->
-            <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
-              <div class="flex items-center justify-between shrink-0">
-                <div>
-                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Retention Trajectory</h3>
-                  <p class="text-[10px] text-slate-400">Decay curves across 30 cohorts with multi-year survival</p>
-                </div>
-                <div class="px-2.5 py-0.5 rounded-full bg-sidebar text-white text-[10px] font-mono shadow-sm flex items-center space-x-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-mustard-400"></span>
-                  <span>M6 Benchmark: <strong>84.2%</strong></span>
-                </div>
-              </div>
-
-              <!-- Spline Chart Canvas -->
-              <div class="flex-1 min-h-0 w-full pt-1">
-                <canvas id="retentionSplineChart"></canvas>
-              </div>
-
-              <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100 shrink-0">
-                <div class="flex items-center space-x-3">
-                  <span class="flex items-center space-x-1">
-                    <span class="w-2.5 h-1 bg-mustard-500 rounded-full"></span>
-                    <span>Multi-Year Cohort Survival</span>
-                  </span>
-                  <span class="flex items-center space-x-1">
-                    <span class="w-2.5 h-1 bg-sidebar rounded-full"></span>
-                    <span>M2M Decay Cliff</span>
-                  </span>
-                </div>
-                <span class="font-mono text-slate-400 text-[9px]">CTE 02_cohort_retention.sql</span>
               </div>
             </div>
 
@@ -506,406 +590,222 @@
 
         </div>
 
-      </div>
-
-      <!-- ========================================== -->
-      <!-- PAGE 2: COHORT SURVIVAL & CLV MATRIX -->
-      <!-- ========================================== -->
-      <div id="page-cohorts" class="hidden h-full flex flex-col gap-2.5">
-        
-        <!-- Cohort Summary Metrics Row -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
-          <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
-            <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 3 Retention</span>
-              <span class="text-lg font-mono font-black text-sidebar">91.4%</span>
-            </div>
-            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">&uarr; +2.1% YoY</span>
-          </div>
-
-          <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
-            <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 6 Retention</span>
-              <span class="text-lg font-mono font-black text-sidebar">84.2%</span>
-            </div>
-            <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Inflection Gate</span>
-          </div>
-
-          <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
-            <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 12 Renewal</span>
-              <span class="text-lg font-mono font-black text-sidebar">76.8%</span>
-            </div>
-            <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">Annual Target</span>
-          </div>
-
-          <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
-            <div>
-              <span class="text-[9px] uppercase font-bold text-slate-400 block">Portfolio LTV / CAC</span>
-              <span class="text-lg font-mono font-black text-tealAccent">4.82x</span>
-            </div>
-            <span class="text-[10px] font-bold text-tealAccent bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100">&gt;3.0x Benchmark</span>
-          </div>
-        </div>
-
-        <!-- Main Cohort Split: Heatmap Table (7 cols) + CLV Curves (5 cols) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+        <!-- ========================================== -->
+        <!-- PAGE 3: RISK DRIVERS & TRIAGE -->
+        <!-- ========================================== -->
+        <div id="page-triage" class="hidden h-full flex flex-col gap-2.5">
           
-          <!-- Left: Longitudinal Cohort Survival Matrix (Internal Scroll) -->
-          <div class="lg:col-span-7 bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col h-full min-h-0">
-            <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 shrink-0">
+            <div class="p-2.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between">
               <div>
-                <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Cohort Retention Matrix</h3>
-                <p class="text-[10px] text-slate-400">Tracking customer survival brackets across monthly acquisition cohorts</p>
+                <span class="text-[9px] font-extrabold text-mustard-700 uppercase tracking-wider block">Contract Exposure</span>
+                <span class="text-xs font-bold text-slate-800">Month-to-Month Term</span>
               </div>
-              <span class="text-[10px] font-mono text-mustard-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 font-bold">
-                Average Tenure: 17.5 Mo
-              </span>
+              <div class="text-right">
+                <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-mustard-500/20">4.27x Odds</span>
+                <span class="text-[9px] text-slate-500 block mt-0.5">31.8% vs 9.9% Baseline</span>
+              </div>
             </div>
 
-            <!-- Bounded Matrix Table -->
+            <div class="p-2.5 rounded-2xl bg-rose-50/80 border border-rose-200/80 flex items-center justify-between">
+              <div>
+                <span class="text-[9px] font-extrabold text-rose-700 uppercase tracking-wider block">Support Friction</span>
+                <span class="text-xs font-bold text-slate-800">Ticket Surge (&ge;4 in 30d)</span>
+              </div>
+              <div class="text-right">
+                <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-rose-500/20">2.70x Odds</span>
+                <span class="text-[9px] text-slate-500 block mt-0.5">44.2% Churn Rate</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <div>
+                <span class="text-[9px] font-extrabold text-slate-700 uppercase tracking-wider block">Dormancy Cliff</span>
+                <span class="text-xs font-bold text-slate-800">Inactivity (&ge;14 Days)</span>
+              </div>
+              <div class="text-right">
+                <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-slate-200">2.53x Odds</span>
+                <span class="text-[9px] text-slate-500 block mt-0.5">43.4% Churn Rate</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col flex-1 min-h-0">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-2 shrink-0 border-b border-slate-100">
+              <div>
+                <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Operational Risk Triage Center</h2>
+                <p class="text-[10px] text-slate-400">Ranked by monthly MRR exposure &bull; Click any account row for 360-degree audit</p>
+              </div>
+
+              <div class="flex items-center space-x-2 text-xs">
+                <div class="relative">
+                  <i data-lucide="search" class="w-3 h-3 text-slate-400 absolute left-2.5 top-2.5"></i>
+                  <input 
+                    type="text" 
+                    id="crmSearchInput" 
+                    oninput="filterCrmTable()" 
+                    placeholder="Search account, CSM or ID..." 
+                    class="pl-8 pr-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-mustard-400 text-slate-700 w-56"
+                  />
+                </div>
+                <span id="crmPaginationCount" class="text-[10px] font-mono text-slate-400">7 Accounts</span>
+              </div>
+            </div>
+
             <div class="flex-1 min-h-0 overflow-y-auto pt-1">
-              <table class="w-full text-left text-[11px] font-mono">
-                <thead class="sticky top-0 bg-slate-50 text-[10px] text-slate-500 uppercase tracking-wider border-b border-slate-100">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-sm text-[10px] text-slate-400 font-extrabold uppercase tracking-wider border-b border-slate-100 z-10">
                   <tr>
-                    <th class="py-2 px-2.5">Cohort</th>
-                    <th class="py-2 px-2.5">Accounts</th>
-                    <th class="py-2 px-2.5">M1</th>
-                    <th class="py-2 px-2.5">M3</th>
-                    <th class="py-2 px-2.5">M6</th>
-                    <th class="py-2 px-2.5">M12</th>
-                    <th class="py-2 px-2.5">M18</th>
-                    <th class="py-2 px-2.5 text-right">ARR</th>
+                    <th class="py-2 px-3">Account &amp; CSM</th>
+                    <th class="py-2 px-3">Tier</th>
+                    <th class="py-2 px-3">Contract</th>
+                    <th class="py-2 px-3">Monthly MRR</th>
+                    <th class="py-2 px-3">Inactivity</th>
+                    <th class="py-2 px-3">Tickets (30d)</th>
+                    <th class="py-2 px-3">Prescriptive Action</th>
+                    <th class="py-2 px-3 text-right">Audit</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
-                  <tr>
-                    <td class="py-2 px-2.5 font-bold text-slate-800">2024-01</td>
-                    <td class="py-2 px-2.5 text-slate-600">175</td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">98%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">92%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">85%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">78%</span></td>
-                    <td class="py-2 px-2.5 text-slate-400">-</td>
-                    <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$1,076k</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-2.5 font-bold text-slate-800">2023-11</td>
-                    <td class="py-2 px-2.5 text-slate-600">162</td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">97%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">91%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">83%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">76%</span></td>
-                    <td class="py-2 px-2.5 text-slate-400">-</td>
-                    <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$994k</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-2.5 font-bold text-slate-800">2023-09</td>
-                    <td class="py-2 px-2.5 text-slate-600">170</td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">96%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">89%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">81%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">74%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 font-bold">67%</span></td>
-                    <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$1,042k</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-2.5 font-bold text-slate-800">2023-07</td>
-                    <td class="py-2 px-2.5 text-slate-600">180</td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">96%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">88%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">80%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">73%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 font-bold">66%</span></td>
-                    <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$1,107k</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-2.5 font-bold text-slate-800">2023-05</td>
-                    <td class="py-2 px-2.5 text-slate-600">165</td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">97%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">90%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">82%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">75%</span></td>
-                    <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 font-bold">68%</span></td>
-                    <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$1,015k</td>
-                  </tr>
+                <tbody id="crmTableBody" class="divide-y divide-slate-100">
+                  <!-- Populated via JS -->
                 </tbody>
               </table>
             </div>
-          </div>
 
-          <!-- Right: CLV Accumulation Chart & Contract Lifetime Stats -->
-          <div class="lg:col-span-5 bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
-            <div class="flex items-center justify-between shrink-0">
-              <div>
-                <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">CLV Trajectory by Tier</h3>
-                <p class="text-[10px] text-slate-400">Cumulative customer value accumulation ($k)</p>
-              </div>
-              <span class="text-[10px] font-bold text-sidebar font-mono">24-Month Run-rate</span>
-            </div>
-
-            <div class="flex-1 min-h-0 w-full pt-1">
-              <canvas id="clvTierChart"></canvas>
-            </div>
-
-            <div class="grid grid-cols-3 gap-1.5 text-center text-xs shrink-0 pt-2 border-t border-slate-100">
-              <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[9px] text-slate-400 font-bold block">Enterprise CLV</span>
-                <span class="font-mono font-black text-sidebar text-xs">$28,420</span>
-              </div>
-              <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[9px] text-slate-400 font-bold block">Mid-Market CLV</span>
-                <span class="font-mono font-black text-sidebar text-xs">$14,890</span>
-              </div>
-              <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[9px] text-slate-400 font-bold block">Growth CLV</span>
-                <span class="font-mono font-black text-sidebar text-xs">$7,210</span>
-              </div>
+            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-100 shrink-0">
+              <span>Window Ranking: DENSE_RANK() OVER (ORDER BY monthly_charges DESC)</span>
+              <span class="font-mono text-sidebar font-semibold">SQLite Analytical Store</span>
             </div>
           </div>
 
         </div>
 
-      </div>
-
-      <!-- ========================================== -->
-      <!-- PAGE 3: RISK DRIVERS & TRIAGE -->
-      <!-- ========================================== -->
-      <div id="page-triage" class="hidden h-full flex flex-col gap-2.5">
-        
-        <!-- Top Odds Multipliers Summary Bar -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 shrink-0">
+        <!-- ========================================== -->
+        <!-- PAGE 4: STRATEGIC RECOMMENDATIONS & ROI -->
+        <!-- ========================================== -->
+        <div id="page-recommendations" class="hidden h-full flex flex-col gap-2.5">
           
-          <!-- Multiplier 1 -->
-          <div class="p-2.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between">
-            <div>
-              <span class="text-[9px] font-extrabold text-mustard-700 uppercase tracking-wider block">Contract Exposure</span>
-              <span class="text-xs font-bold text-slate-800">Month-to-Month Term</span>
-            </div>
-            <div class="text-right">
-              <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-mustard-500/20">4.27x Odds</span>
-              <span class="text-[9px] text-slate-500 block mt-0.5">31.8% vs 9.9% Baseline</span>
-            </div>
-          </div>
-
-          <!-- Multiplier 2 -->
-          <div class="p-2.5 rounded-2xl bg-rose-50/80 border border-rose-200/80 flex items-center justify-between">
-            <div>
-              <span class="text-[9px] font-extrabold text-rose-700 uppercase tracking-wider block">Support Friction</span>
-              <span class="text-xs font-bold text-slate-800">Ticket Surge (&ge;4 in 30d)</span>
-            </div>
-            <div class="text-right">
-              <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-rose-500/20">2.70x Odds</span>
-              <span class="text-[9px] text-slate-500 block mt-0.5">44.2% Churn Rate</span>
-            </div>
-          </div>
-
-          <!-- Multiplier 3 -->
-          <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-            <div>
-              <span class="text-[9px] font-extrabold text-slate-700 uppercase tracking-wider block">Dormancy Cliff</span>
-              <span class="text-xs font-bold text-slate-800">Inactivity (&ge;14 Days)</span>
-            </div>
-            <div class="text-right">
-              <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-slate-200">2.53x Odds</span>
-              <span class="text-[9px] text-slate-500 block mt-0.5">43.4% Churn Rate</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- CRM Risk Triage Table (Internal Scroll to fit 100vh) -->
-        <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col flex-1 min-h-0">
-          
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-2 shrink-0 border-b border-slate-100">
-            <div>
-              <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Operational Risk Triage Center</h2>
-              <p class="text-[10px] text-slate-400">Ranked by monthly MRR exposure &bull; Click any account row for 360-degree audit</p>
-            </div>
-
-            <div class="flex items-center space-x-2 text-xs">
-              <div class="relative">
-                <i data-lucide="search" class="w-3 h-3 text-slate-400 absolute left-2.5 top-2.5"></i>
-                <input 
-                  type="text" 
-                  id="crmSearchInput" 
-                  oninput="filterCrmTable()" 
-                  placeholder="Search account, CSM or ID..." 
-                  class="pl-8 pr-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-mustard-400 text-slate-700 w-56"
-                />
-              </div>
-
-              <span id="crmPaginationCount" class="text-[10px] font-mono text-slate-400">7 Accounts</span>
-            </div>
-          </div>
-
-          <!-- Bounded Scrollable Table Body -->
-          <div class="flex-1 min-h-0 overflow-y-auto pt-1">
-            <table class="w-full text-left text-xs border-collapse">
-              <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-sm text-[10px] text-slate-400 font-extrabold uppercase tracking-wider border-b border-slate-100 z-10">
-                <tr>
-                  <th class="py-2 px-3">Account &amp; CSM</th>
-                  <th class="py-2 px-3">Tier</th>
-                  <th class="py-2 px-3">Contract</th>
-                  <th class="py-2 px-3">Monthly MRR</th>
-                  <th class="py-2 px-3">Inactivity</th>
-                  <th class="py-2 px-3">Tickets (30d)</th>
-                  <th class="py-2 px-3">Prescriptive Action</th>
-                  <th class="py-2 px-3 text-right">Audit</th>
-                </tr>
-              </thead>
-              <tbody id="crmTableBody" class="divide-y divide-slate-100">
-                <!-- Populated via JS -->
-              </tbody>
-            </table>
-          </div>
-
-          <div class="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-100 shrink-0">
-            <span>Window Ranking: DENSE_RANK() OVER (ORDER BY monthly_charges DESC)</span>
-            <span class="font-mono text-sidebar font-semibold">SQLite Analytical Store</span>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- ========================================== -->
-      <!-- PAGE 4: STRATEGIC RECOMMENDATIONS & ROI -->
-      <!-- ========================================== -->
-      <div id="page-recommendations" class="hidden h-full flex flex-col gap-2.5">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
-          
-          <!-- Left Column: 3 Executive Action Pillars (6 cols) -->
-          <div class="lg:col-span-6 bg-white rounded-2xl p-3.5 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
             
-            <div class="shrink-0 pb-1.5 border-b border-slate-100">
-              <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Strategic Recommendations Playbook</h2>
-              <p class="text-[10px] text-slate-400">Data-driven interventions directly addressing the 3 primary churn drivers</p>
+            <!-- Left 6 Cols: Playbook -->
+            <div class="lg:col-span-6 bg-white rounded-2xl p-3.5 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
+              <div class="shrink-0 pb-1.5 border-b border-slate-100">
+                <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Strategic Recommendations Playbook</h2>
+                <p class="text-[10px] text-slate-400">Targeted interventions directly addressing the 3 primary churn drivers</p>
+              </div>
+
+              <div class="flex-1 min-h-0 overflow-y-auto space-y-2 py-1 pr-1">
+                
+                <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold text-mustard-700 uppercase tracking-wider">Pillar 1: Structural Contract Shift</span>
+                    <span class="text-[10px] font-mono font-bold text-sidebar bg-mustard-500/20 px-2 py-0.5 rounded-md">Eliminate 4.27x Odds</span>
+                  </div>
+                  <h3 class="text-xs font-bold text-slate-800">Targeted Annual Agreement Incentive (15% Rebate)</h3>
+                  <p class="text-[11px] text-slate-600 leading-relaxed">
+                    With Month-to-Month accounts driving <strong>$5.1M (65%)</strong> of annualized revenue leakage, offer a 15% discount for converting to 1-year commitments. Transitioning 20% of M2M contracts secures over <strong>$450k in annual ARR</strong>.
+                  </p>
+                </div>
+
+                <div class="p-3 rounded-2xl bg-rose-50/70 border border-rose-200/80 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold text-rose-700 uppercase tracking-wider">Pillar 2: Rapid Technical Triage</span>
+                    <span class="text-[10px] font-mono font-bold text-sidebar bg-rose-500/20 px-2 py-0.5 rounded-md">48-Hour SLA</span>
+                  </div>
+                  <h3 class="text-xs font-bold text-slate-800">Deploy Solutions Engineers for Ticket Surges (&ge;4)</h3>
+                  <p class="text-[11px] text-slate-600 leading-relaxed">
+                    Accounts logging 4+ support tickets exhibit a <strong>44.2% churn rate</strong> (2.70x odds). These represent integration blockers rather than churn intent. Dispatch a senior solution engineer within 48 hours.
+                  </p>
+                </div>
+
+                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Pillar 3: Dormancy Early Warning</span>
+                    <span class="text-[10px] font-mono font-bold text-sidebar bg-slate-200 px-2 py-0.5 rounded-md">Day 7 Warning Trigger</span>
+                  </div>
+                  <h3 class="text-xs font-bold text-slate-800">Pre-empt the 14-Day Inactivity Disengagement Cliff</h3>
+                  <p class="text-[11px] text-slate-600 leading-relaxed">
+                    Crossing 14 days of inactivity spikes churn to <strong>43.4%</strong>. Automate customer success playbooks to ping department champions at Day 7 to reassign idle seats before disengagement becomes permanent.
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 shrink-0">
+                <span>Executive Briefing &bull; Prepared by Peter Akpan</span>
+                <span class="font-mono text-mustard-600 font-bold">Pann Labs Enterprise Analytics</span>
+              </div>
             </div>
 
-            <div class="flex-1 min-h-0 overflow-y-auto space-y-2 py-1 pr-1">
-              
-              <!-- Recommendation Pillar 1 -->
-              <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-mustard-700 uppercase tracking-wider">Pillar 1: Structural Contract Shift</span>
-                  <span class="text-[10px] font-mono font-bold text-sidebar bg-mustard-500/20 px-2 py-0.5 rounded-md">Eliminate 4.27x Odds</span>
-                </div>
-                <h3 class="text-xs font-bold text-slate-800">Targeted Annual Agreement Incentive (15% Rebate)</h3>
-                <p class="text-[11px] text-slate-600 leading-relaxed">
-                  With Month-to-Month accounts driving <strong>$5.1M (65%)</strong> of annualized revenue leakage, offer a 15% discount for converting to 1-year commitments. 
-                  Transitioning just 20% of M2M contracts secures over <strong>$450k in annual ARR</strong>.
-                </p>
+            <!-- Right 6 Cols: Simulator -->
+            <div class="lg:col-span-6 bg-white rounded-2xl p-3.5 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
+              <div class="shrink-0 pb-1.5 border-b border-slate-100">
+                <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Retention Rescue Program ROI Simulator</h2>
+                <p class="text-[10px] text-slate-400">Financial model dedicating Solutions Engineers to rescue prioritized accounts</p>
               </div>
 
-              <!-- Recommendation Pillar 2 -->
-              <div class="p-3 rounded-2xl bg-rose-50/70 border border-rose-200/80 space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-rose-700 uppercase tracking-wider">Pillar 2: Rapid Technical Triage</span>
-                  <span class="text-[10px] font-mono font-bold text-sidebar bg-rose-500/20 px-2 py-0.5 rounded-md">48-Hour SLA</span>
+              <div class="space-y-3 py-1">
+                
+                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                  <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
+                    <span>Target Cohort Rescue Rate:</span>
+                    <span id="pageSliderDisplay" class="text-mustard-600 font-mono text-sm font-black">35%</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    id="pageRescueSlider" 
+                    min="5" 
+                    max="80" 
+                    value="35" 
+                    oninput="updatePageSimulation()" 
+                    class="w-full accent-mustard-500 h-2 bg-slate-200 rounded-lg cursor-pointer"
+                  >
+                  <div class="flex justify-between text-[9px] font-mono text-slate-400 mt-1">
+                    <span>5% Conservative</span>
+                    <span>35% Baseline Target</span>
+                    <span>80% Stretch Goal</span>
+                  </div>
                 </div>
-                <h3 class="text-xs font-bold text-slate-800">Deploy Solutions Engineers for Ticket Surges (&ge;4)</h3>
-                <p class="text-[11px] text-slate-600 leading-relaxed">
-                  Accounts logging 4+ support tickets exhibit a <strong>44.2% churn rate</strong> (2.70x odds). These represent integration and API bugs, not disinterest. 
-                  Trigger an automated SLA to dispatch a technical architect within 48 hours.
-                </p>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                  <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-center">
+                    <span class="text-[9px] uppercase font-bold text-amber-800 block">Preserved Monthly MRR</span>
+                    <span id="pageSimMonthly" class="text-lg font-mono font-black text-mustard-600 mt-0.5 block">+$13,097</span>
+                  </div>
+                  <div class="p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-center">
+                    <span class="text-[9px] uppercase font-bold text-emerald-800 block">Preserved Annual ARR</span>
+                    <span id="pageSimAnnual" class="text-lg font-mono font-black text-tealAccent mt-0.5 block">+$157,164</span>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-sidebar text-[11px]">Net Program Return on Investment</span>
+                    <span id="pageSimRoiBadge" class="font-mono font-black text-emerald-600 text-xs">5.2x ROI</span>
+                  </div>
+                  <p id="pageSimRoiText" class="text-[11px] text-slate-600 leading-relaxed">
+                    Dedicating two Senior Solutions Engineers costs approximately $30,000 in dedicated hours, unlocking over <strong>$157,000 in net preserved ARR</strong>.
+                  </p>
+                </div>
+
               </div>
 
-              <!-- Recommendation Pillar 3 -->
-              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Pillar 3: Dormancy Early Warning</span>
-                  <span class="text-[10px] font-mono font-bold text-sidebar bg-slate-200 px-2 py-0.5 rounded-md">Day 7 Warning Trigger</span>
-                </div>
-                <h3 class="text-xs font-bold text-slate-800">Pre-empt the 14-Day Inactivity Disengagement Cliff</h3>
-                <p class="text-[11px] text-slate-600 leading-relaxed">
-                  Crossing 14 days of inactivity spikes churn to <strong>43.4%</strong>. Automate customer success playbooks to ping team champions at Day 7 to reassign idle seats before dormancy becomes permanent.
-                </p>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between shrink-0">
+                <span class="text-[10px] text-slate-400 font-mono">Sensitivity Model &bull; 96 Accounts</span>
+                <button onclick="openInterventionModal()" class="px-3.5 py-1.5 bg-sidebar hover:bg-sidebarHover text-white font-bold text-xs rounded-xl shadow flex items-center space-x-1.5 transition">
+                  <i data-lucide="zap" class="w-3 h-3 text-mustard-400"></i>
+                  <span>Deploy Rescue Playbook</span>
+                </button>
               </div>
-
-            </div>
-
-            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 shrink-0">
-              <span>Executive Briefing &bull; Prepared by Peter Akpan</span>
-              <span class="font-mono text-mustard-600 font-bold">Pann Labs Enterprise Analytics</span>
-            </div>
-
-          </div>
-
-          <!-- Right Column: Interactive ROI Rescue Simulator (6 cols) -->
-          <div class="lg:col-span-6 bg-white rounded-2xl p-3.5 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
-            
-            <div class="shrink-0 pb-1.5 border-b border-slate-100">
-              <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Retention Rescue Program ROI Simulator</h2>
-              <p class="text-[10px] text-slate-400">Financial model dedicating Customer Success Engineers to rescue high-risk accounts</p>
-            </div>
-
-            <div class="space-y-3 py-1">
-              
-              <!-- Slider Control -->
-              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
-                <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
-                  <span>Target Cohort Rescue Rate:</span>
-                  <span id="pageSliderDisplay" class="text-mustard-600 font-mono text-sm font-black">35%</span>
-                </div>
-                <input 
-                  type="range" 
-                  id="pageRescueSlider" 
-                  min="5" 
-                  max="80" 
-                  value="35" 
-                  oninput="updatePageSimulation()" 
-                  class="w-full accent-mustard-500 h-2 bg-slate-200 rounded-lg cursor-pointer"
-                >
-                <div class="flex justify-between text-[9px] font-mono text-slate-400 mt-1">
-                  <span>5% Conservative</span>
-                  <span>35% Baseline Target</span>
-                  <span>80% Stretch Goal</span>
-                </div>
-              </div>
-
-              <!-- Output Cards -->
-              <div class="grid grid-cols-2 gap-2.5">
-                <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-center">
-                  <span class="text-[9px] uppercase font-bold text-amber-800 block">Preserved Monthly MRR</span>
-                  <span id="pageSimMonthly" class="text-lg font-mono font-black text-mustard-600 mt-0.5 block">+$13,097</span>
-                </div>
-                <div class="p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-center">
-                  <span class="text-[9px] uppercase font-bold text-emerald-800 block">Preserved Annual ARR</span>
-                  <span id="pageSimAnnual" class="text-lg font-mono font-black text-tealAccent mt-0.5 block">+$157,164</span>
-                </div>
-              </div>
-
-              <!-- Net Return on Investment Callout -->
-              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-sidebar text-[11px]">Net Program Return on Investment</span>
-                  <span class="font-mono font-black text-emerald-600 text-xs">5.2x ROI</span>
-                </div>
-                <p class="text-[11px] text-slate-600 leading-relaxed">
-                  Dedicating two Senior Solutions Engineers to service the 96 prioritized accounts costs approximately $30,000 in dedicated hours, unlocking over <strong>$157,000 in net preserved ARR</strong>.
-                </p>
-              </div>
-
-            </div>
-
-            <!-- Action Button -->
-            <div class="pt-2 border-t border-slate-100 flex items-center justify-between shrink-0">
-              <span class="text-[10px] text-slate-400 font-mono">Sensitivity Model &bull; 96 Accounts</span>
-              <button onclick="openInterventionModal()" class="px-3.5 py-1.5 bg-sidebar hover:bg-sidebarHover text-white font-bold text-xs rounded-xl shadow flex items-center space-x-1.5 transition">
-                <i data-lucide="zap" class="w-3 h-3 text-mustard-400"></i>
-                <span>Deploy Rescue Playbook</span>
-              </button>
             </div>
 
           </div>
 
         </div>
 
-      </div>
+      </main>
 
-    </main>
+    </section>
 
   </div>
 
@@ -930,7 +830,6 @@
         </button>
       </div>
 
-      <!-- Quick Metrics Grid -->
       <div class="grid grid-cols-3 gap-2">
         <div class="bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
           <span class="text-[9px] uppercase font-bold text-slate-400 block">MRR Exposure</span>
@@ -946,7 +845,6 @@
         </div>
       </div>
 
-      <!-- Prescribed Action Banner -->
       <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-0.5">
         <span class="font-bold text-amber-800 uppercase tracking-wider block text-[9px]">Prescribed Action Required</span>
         <p id="drawerPrescriptive" class="text-slate-700 font-medium text-[11px]">
@@ -954,7 +852,6 @@
         </p>
       </div>
 
-      <!-- Account Diagnostics -->
       <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-xs space-y-1.5 font-medium">
         <div class="flex justify-between">
           <span class="text-slate-400 text-[11px]">Contract Commitment:</span>
@@ -970,7 +867,6 @@
         </div>
       </div>
 
-      <!-- Action Buttons -->
       <div class="flex items-center space-x-2 pt-1">
         <button onclick="triggerDossierAction('engineer')" class="flex-1 py-2 rounded-xl bg-sidebar text-white text-xs font-bold hover:bg-sidebarHover shadow flex items-center justify-center space-x-1.5 transition">
           <i data-lucide="wrench" class="w-3 h-3"></i>
@@ -1026,7 +922,7 @@
     </div>
   </div>
 
-  <!-- TOAST MESSAGE -->
+  <!-- TOAST NOTIFICATION -->
   <div id="toastMessage" class="fixed bottom-4 right-4 z-50 transform translate-y-20 opacity-0 transition duration-300 pointer-events-none">
     <div class="bg-sidebar text-white px-3.5 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold border border-white/10">
       <i data-lucide="check" class="w-3.5 h-3.5 text-mustard-400"></i>
@@ -1034,7 +930,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT LOGIC -->
+  <!-- CORE INTERACTIVE LOGIC & DYNAMIC CHART REACTIVITY -->
   <script>
     // Master accounts dataset based on repository telemetry
     const RAW_ACCOUNTS = [
@@ -1145,7 +1041,17 @@
       }
     ];
 
-    // SQL repository queries
+    // Master Cohort Matrix Dataset
+    const RAW_COHORTS = [
+      { month: "2024-01", signups: 175, m1: 98, m3: 92, m6: 85, m12: 78, m18: null, arr: 1076, tier: "Enterprise", contract: "Annual" },
+      { month: "2023-11", signups: 162, m1: 97, m3: 91, m6: 83, m12: 76, m18: null, arr: 994, tier: "Mid-Market", contract: "Annual" },
+      { month: "2023-09", signups: 170, m1: 96, m3: 89, m6: 81, m12: 74, m18: 67, arr: 1042, tier: "Growth", contract: "M2M" },
+      { month: "2023-07", signups: 180, m1: 96, m3: 88, m6: 80, m12: 73, m18: 66, arr: 1107, tier: "Enterprise", contract: "Annual" },
+      { month: "2023-05", signups: 165, m1: 97, m3: 90, m6: 82, m12: 75, m18: 68, arr: 1015, tier: "Mid-Market", contract: "M2M" },
+      { month: "2023-03", signups: 158, m1: 95, m3: 87, m6: 79, m12: 71, m18: 64, arr: 970, tier: "Growth", contract: "M2M" }
+    ];
+
+    // SQL repository scripts
     const SQL_SCRIPTS = {
       1: {
         title: "01_schema_setup.sql",
@@ -1233,9 +1139,16 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
 
     // State
     let currentPage = 'home';
-    let activeSlicers = { contract: 'ALL', tier: 'ALL', trigger: 'ALL', status: 'ALL' };
     let currentSqlScriptId = 1;
     let selectedDossierAccount = RAW_ACCOUNTS[0];
+
+    // Page-specific filter states
+    const pageFilters = {
+      home: { contract: 'ALL', tier: 'ALL', status: 'ALL' },
+      cohorts: { tier: 'ALL', commitment: 'ALL', horizon: 'ALL' },
+      triage: { trigger: 'ALL', tier: 'ALL', contract: 'ALL', search: '' },
+      recommendations: { focus: 'ALL', capacity: '2' }
+    };
 
     // Chart instances
     let verticalStatsChartInstance = null;
@@ -1243,83 +1156,246 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     let retentionSplineChartInstance = null;
     let clvTierChartInstance = null;
 
+    // Switch Page
     function switchPage(pageId) {
       const pageIds = ['home', 'cohorts', 'triage', 'recommendations'];
+      const pageInfo = {
+        home: { title: "Executive Telemetry Overview", sub: "B2B SaaS Churn Audit &bull; 5,000 Accounts &bull; Longitudinal OLAP" },
+        cohorts: { title: "Cohort Survival & CLV Analysis", sub: "Tenure Decay Curves & Multi-Year Customer Lifetime Value" },
+        triage: { title: "Risk Drivers & Account Triage", sub: "Operational Matrix Identifying High Friction & Dormancy Flags" },
+        recommendations: { title: "Strategic Recommendations & ROI", sub: "Data-Driven Action Playbook & Preserved ARR Sensitivity Model" }
+      };
+
       currentPage = pageId;
 
       pageIds.forEach(id => {
-        const pageEl = document.getElementById(`page-${id}`);
-        if (pageEl) pageEl.classList.add('hidden');
+        const pEl = document.getElementById(`page-${id}`);
+        if (pEl) pEl.classList.add('hidden');
 
-        const tabBtn = document.getElementById(`tab-btn-${id}`);
-        if (tabBtn) {
-          tabBtn.className = "page-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5";
+        const navBtn = document.getElementById(`nav-btn-${id}`);
+        if (navBtn) {
+          navBtn.className = "w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn";
         }
       });
 
       const activeEl = document.getElementById(`page-${pageId}`);
       if (activeEl) activeEl.classList.remove('hidden');
 
-      const activeTabBtn = document.getElementById(`tab-btn-${pageId}`);
-      if (activeTabBtn) {
-        activeTabBtn.className = "page-tab-btn active px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5";
+      const activeNavBtn = document.getElementById(`nav-btn-${pageId}`);
+      if (activeNavBtn) {
+        if (pageId === 'triage') {
+          activeNavBtn.className = "w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-xl nav-side-btn active";
+        } else {
+          activeNavBtn.className = "w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn active";
+        }
       }
 
-      if (pageId === 'cohorts' && !clvTierChartInstance) {
-        setTimeout(initClvTierChart, 50);
+      // Update titles
+      document.getElementById('pageHeaderTitle').innerHTML = pageInfo[pageId].title;
+      document.getElementById('pageHeaderSubtitle').innerHTML = pageInfo[pageId].sub;
+
+      // Render the page-specific slicer bar
+      renderPageSlicers();
+
+      // Initialize or refresh charts
+      if (pageId === 'home') {
+        applyHomeFilters();
+      } else if (pageId === 'cohorts') {
+        if (!clvTierChartInstance) setTimeout(initClvTierChart, 60);
+        applyCohortFilters();
+      } else if (pageId === 'triage') {
+        applyTriageFilters();
+      } else if (pageId === 'recommendations') {
+        applyRecommendationsFilters();
       }
 
       lucide.createIcons();
     }
 
-    function setSlicer(dimension, value) {
-      activeSlicers[dimension] = value;
+    // Render Page Slicers (Only relevant slicers per page)
+    function renderPageSlicers() {
+      const container = document.getElementById('pageSlicersContainer');
+      container.innerHTML = '';
 
-      const validValues = {
-        contract: ['ALL', 'Month-to-Month', '1-Year', '2-Year'],
-        tier: ['ALL', 'Enterprise', 'Mid-Market', 'Growth'],
-        trigger: ['ALL', 'Friction', 'Inactivity'],
-        status: ['ALL', 'Active', 'Churned']
-      }[dimension];
+      if (currentPage === 'home') {
+        container.innerHTML = `
+          <!-- Slicer 1: Contract -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Contract:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setHomeSlicer('contract', 'ALL')" class="slicer-pill ${pageFilters.home.contract === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setHomeSlicer('contract', 'Month-to-Month')" class="slicer-pill ${pageFilters.home.contract === 'Month-to-Month' ? 'active' : ''} px-2 py-0.5 rounded">M2M</button>
+              <button onclick="setHomeSlicer('contract', '1-Year')" class="slicer-pill ${pageFilters.home.contract === '1-Year' ? 'active' : ''} px-2 py-0.5 rounded">1-Yr</button>
+              <button onclick="setHomeSlicer('contract', '2-Year')" class="slicer-pill ${pageFilters.home.contract === '2-Year' ? 'active' : ''} px-2 py-0.5 rounded">2-Yr</button>
+            </div>
+          </div>
 
-      validValues.forEach(v => {
-        const btn = document.getElementById(`slicer-${dimension}-${v}`);
-        if (btn) {
-          if (v === value) {
-            btn.className = "slicer-pill active px-2 py-0.5 rounded";
-          } else {
-            btn.className = "slicer-pill px-2 py-0.5 rounded";
-          }
-        }
-      });
+          <!-- Slicer 2: Tier -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setHomeSlicer('tier', 'ALL')" class="slicer-pill ${pageFilters.home.tier === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setHomeSlicer('tier', 'Enterprise')" class="slicer-pill ${pageFilters.home.tier === 'Enterprise' ? 'active' : ''} px-2 py-0.5 rounded">Ent</button>
+              <button onclick="setHomeSlicer('tier', 'Mid-Market')" class="slicer-pill ${pageFilters.home.tier === 'Mid-Market' ? 'active' : ''} px-2 py-0.5 rounded">Mid</button>
+              <button onclick="setHomeSlicer('tier', 'Growth')" class="slicer-pill ${pageFilters.home.tier === 'Growth' ? 'active' : ''} px-2 py-0.5 rounded">Growth</button>
+            </div>
+          </div>
 
-      applySlicersToDashboard();
+          <!-- Slicer 3: Status -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Status:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setHomeSlicer('status', 'ALL')" class="slicer-pill ${pageFilters.home.status === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setHomeSlicer('status', 'Active')" class="slicer-pill ${pageFilters.home.status === 'Active' ? 'active' : ''} px-2 py-0.5 rounded">Active</button>
+              <button onclick="setHomeSlicer('status', 'Churned')" class="slicer-pill ${pageFilters.home.status === 'Churned' ? 'active' : ''} px-2 py-0.5 rounded">Churned</button>
+            </div>
+          </div>
+
+          <span id="homeMatchCounter" class="px-2 py-0.5 rounded-full bg-emerald-50 text-sidebar font-mono text-[10px] font-extrabold border border-emerald-200 ml-1">
+            5,000 Accounts (100%)
+          </span>
+        `;
+      } else if (currentPage === 'cohorts') {
+        container.innerHTML = `
+          <!-- Cohort Slicer 1: Tier -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setCohortSlicer('tier', 'ALL')" class="slicer-pill ${pageFilters.cohorts.tier === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setCohortSlicer('tier', 'Enterprise')" class="slicer-pill ${pageFilters.cohorts.tier === 'Enterprise' ? 'active' : ''} px-2 py-0.5 rounded">Enterprise</button>
+              <button onclick="setCohortSlicer('tier', 'Mid-Market')" class="slicer-pill ${pageFilters.cohorts.tier === 'Mid-Market' ? 'active' : ''} px-2 py-0.5 rounded">Mid-Market</button>
+              <button onclick="setCohortSlicer('tier', 'Growth')" class="slicer-pill ${pageFilters.cohorts.tier === 'Growth' ? 'active' : ''} px-2 py-0.5 rounded">Growth</button>
+            </div>
+          </div>
+
+          <!-- Cohort Slicer 2: Commitment -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Commitment:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setCohortSlicer('commitment', 'ALL')" class="slicer-pill ${pageFilters.cohorts.commitment === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setCohortSlicer('commitment', 'Annual')" class="slicer-pill ${pageFilters.cohorts.commitment === 'Annual' ? 'active' : ''} px-2 py-0.5 rounded">Annual / 2-Yr</button>
+              <button onclick="setCohortSlicer('commitment', 'M2M')" class="slicer-pill ${pageFilters.cohorts.commitment === 'M2M' ? 'active' : ''} px-2 py-0.5 rounded">Month-to-Month</button>
+            </div>
+          </div>
+
+          <!-- Cohort Slicer 3: Horizon -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Horizon:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setCohortSlicer('horizon', 'ALL')" class="slicer-pill ${pageFilters.cohorts.horizon === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setCohortSlicer('horizon', '12M')" class="slicer-pill ${pageFilters.cohorts.horizon === '12M' ? 'active' : ''} px-2 py-0.5 rounded">12-Mo</button>
+              <button onclick="setCohortSlicer('horizon', '24M')" class="slicer-pill ${pageFilters.cohorts.horizon === '24M' ? 'active' : ''} px-2 py-0.5 rounded">24-Mo</button>
+            </div>
+          </div>
+
+          <span class="px-2 py-0.5 rounded-full bg-teal-50 text-tealAccent font-mono text-[10px] font-extrabold border border-teal-200 ml-1">
+            30 Longitudinal Cohorts
+          </span>
+        `;
+      } else if (currentPage === 'triage') {
+        container.innerHTML = `
+          <!-- Triage Slicer 1: Risk Trigger -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Trigger Signal:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setTriageSlicer('trigger', 'ALL')" class="slicer-pill ${pageFilters.triage.trigger === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setTriageSlicer('trigger', 'Friction')" class="slicer-pill ${pageFilters.triage.trigger === 'Friction' ? 'active' : ''} px-2 py-0.5 rounded" title="4+ Support Tickets">Friction (4+ Tix)</button>
+              <button onclick="setTriageSlicer('trigger', 'Inactivity')" class="slicer-pill ${pageFilters.triage.trigger === 'Inactivity' ? 'active' : ''} px-2 py-0.5 rounded" title="14+ Days Inactive">Dormant (14+ Days)</button>
+            </div>
+          </div>
+
+          <!-- Triage Slicer 2: Tier -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setTriageSlicer('tier', 'ALL')" class="slicer-pill ${pageFilters.triage.tier === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
+              <button onclick="setTriageSlicer('tier', 'Enterprise')" class="slicer-pill ${pageFilters.triage.tier === 'Enterprise' ? 'active' : ''} px-2 py-0.5 rounded">Enterprise</button>
+              <button onclick="setTriageSlicer('tier', 'Mid-Market')" class="slicer-pill ${pageFilters.triage.tier === 'Mid-Market' ? 'active' : ''} px-2 py-0.5 rounded">Mid-Market</button>
+            </div>
+          </div>
+
+          <span id="triageMatchCounter" class="px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 font-mono text-[10px] font-extrabold border border-rose-200 ml-1">
+            96 At-Risk
+          </span>
+        `;
+      } else if (currentPage === 'recommendations') {
+        container.innerHTML = `
+          <!-- Recommendations Slicer 1: Focus Segment -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Intervention Focus:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setRecommendationsSlicer('focus', 'ALL')" class="slicer-pill ${pageFilters.recommendations.focus === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All Critical</button>
+              <button onclick="setRecommendationsSlicer('focus', 'M2M')" class="slicer-pill ${pageFilters.recommendations.focus === 'M2M' ? 'active' : ''} px-2 py-0.5 rounded">M2M Conversion</button>
+              <button onclick="setRecommendationsSlicer('focus', 'Friction')" class="slicer-pill ${pageFilters.recommendations.focus === 'Friction' ? 'active' : ''} px-2 py-0.5 rounded">Support Friction</button>
+              <button onclick="setRecommendationsSlicer('focus', 'Dormancy')" class="slicer-pill ${pageFilters.recommendations.focus === 'Dormancy' ? 'active' : ''} px-2 py-0.5 rounded">Dormant Accounts</button>
+            </div>
+          </div>
+
+          <!-- Recommendations Slicer 2: CSM Dedicated Capacity -->
+          <div class="flex items-center space-x-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">CSM Capacity:</span>
+            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
+              <button onclick="setRecommendationsSlicer('capacity', '1')" class="slicer-pill ${pageFilters.recommendations.capacity === '1' ? 'active' : ''} px-2 py-0.5 rounded">1 CSM</button>
+              <button onclick="setRecommendationsSlicer('capacity', '2')" class="slicer-pill ${pageFilters.recommendations.capacity === '2' ? 'active' : ''} px-2 py-0.5 rounded">2 CSMs</button>
+              <button onclick="setRecommendationsSlicer('capacity', '3')" class="slicer-pill ${pageFilters.recommendations.capacity === '3' ? 'active' : ''} px-2 py-0.5 rounded">3 CSMs</button>
+            </div>
+          </div>
+
+          <span class="px-2 py-0.5 rounded-full bg-amber-50 text-mustard-700 font-mono text-[10px] font-extrabold border border-amber-200 ml-1">
+            Financial Sensitivity
+          </span>
+        `;
+      }
     }
 
-    function resetAllSlicers() {
-      activeSlicers = { contract: 'ALL', tier: 'ALL', trigger: 'ALL', status: 'ALL' };
-      ['contract', 'tier', 'trigger', 'status'].forEach(dim => setSlicer(dim, 'ALL'));
-      showToast("All dashboard slicers reset to baseline");
+    // Reset current page filters
+    function resetActivePageFilters() {
+      if (currentPage === 'home') {
+        pageFilters.home = { contract: 'ALL', tier: 'ALL', status: 'ALL' };
+        applyHomeFilters();
+      } else if (currentPage === 'cohorts') {
+        pageFilters.cohorts = { tier: 'ALL', commitment: 'ALL', horizon: 'ALL' };
+        applyCohortFilters();
+      } else if (currentPage === 'triage') {
+        pageFilters.triage = { trigger: 'ALL', tier: 'ALL', contract: 'ALL', search: '' };
+        applyTriageFilters();
+      } else if (currentPage === 'recommendations') {
+        pageFilters.recommendations = { focus: 'ALL', capacity: '2' };
+        document.getElementById('pageRescueSlider').value = 35;
+        applyRecommendationsFilters();
+      }
+      renderPageSlicers();
+      showToast(`Filters for ${currentPage.toUpperCase()} reset to baseline`);
     }
 
-    function applySlicersToDashboard() {
-      const filtered = RAW_ACCOUNTS.filter(acc => {
-        const matchContract = (activeSlicers.contract === 'ALL') || (acc.contract === activeSlicers.contract);
-        const matchTier = (activeSlicers.tier === 'ALL') || (acc.tier === activeSlicers.tier);
-        const matchTrigger = (activeSlicers.trigger === 'ALL') || (acc.trigger === activeSlicers.trigger);
-        const matchStatus = (activeSlicers.status === 'ALL') || (acc.status === activeSlicers.status);
-        return matchContract && matchTier && matchTrigger && matchStatus;
+    // ==========================================
+    // PAGE 1: HOME SLICER HANDLERS & REACTIVITY
+    // ==========================================
+    function setHomeSlicer(key, value) {
+      pageFilters.home[key] = value;
+      renderPageSlicers();
+      applyHomeFilters();
+    }
+
+    function applyHomeFilters() {
+      const f = pageFilters.home;
+
+      // Filter accounts
+      const filtered = RAW_ACCOUNTS.filter(a => {
+        const matchContract = (f.contract === 'ALL') || (a.contract === f.contract);
+        const matchTier = (f.tier === 'ALL') || (a.tier === f.tier);
+        const matchStatus = (f.status === 'ALL') || (a.status === f.status);
+        return matchContract && matchTier && matchStatus;
       });
 
+      // Scale factors for realistic responsiveness
       let scale = 1.0;
-      if (activeSlicers.contract === 'Month-to-Month') scale *= 0.542;
-      if (activeSlicers.contract === '1-Year') scale *= 0.276;
-      if (activeSlicers.contract === '2-Year') scale *= 0.182;
-      if (activeSlicers.tier === 'Enterprise') scale *= 0.38;
-      if (activeSlicers.tier === 'Mid-Market') scale *= 0.42;
-      if (activeSlicers.tier === 'Growth') scale *= 0.20;
-      if (activeSlicers.trigger === 'Friction') scale *= 0.32;
-      if (activeSlicers.trigger === 'Inactivity') scale *= 0.28;
+      if (f.contract === 'Month-to-Month') scale *= 0.542;
+      if (f.contract === '1-Year') scale *= 0.276;
+      if (f.contract === '2-Year') scale *= 0.182;
+      if (f.tier === 'Enterprise') scale *= 0.38;
+      if (f.tier === 'Mid-Market') scale *= 0.42;
+      if (f.tier === 'Growth') scale *= 0.20;
 
       const totalMatched = Math.round(5000 * scale);
       const activeMatched = Math.round(3765 * scale);
@@ -1328,24 +1404,239 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       const riskCountMatched = Math.max(1, Math.round(96 * scale));
       const riskMRRMatched = Math.round(37420 * scale);
 
-      document.getElementById('slicerMatchBadge').textContent = `${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
+      // Churn rate calculation based on contract selection
+      let churnRate = 24.7;
+      if (f.contract === 'Month-to-Month') churnRate = 31.8;
+      if (f.contract === '1-Year') churnRate = 16.4;
+      if (f.contract === '2-Year') churnRate = 9.9;
+      if (f.tier === 'Enterprise') churnRate -= 3.2;
+      if (f.tier === 'Growth') churnRate += 4.5;
+      churnRate = Math.max(8.0, Math.min(45.0, churnRate));
+
+      // Update KPI Cards
       document.getElementById('kpiActiveMRR').textContent = `$${mrrMatched.toLocaleString('en-US')}`;
       document.getElementById('kpiActiveAccounts').textContent = `${activeMatched.toLocaleString('en-US')} Accounts Active`;
       document.getElementById('kpiLeakageARR').textContent = `$${leakageMatched.toLocaleString('en-US')}`;
+      document.getElementById('kpiChurnRate').textContent = `${churnRate.toFixed(1)}%`;
       document.getElementById('kpiRiskCount').textContent = `${riskCountMatched} Accounts`;
       document.getElementById('kpiRiskMRR').textContent = `$${riskMRRMatched.toLocaleString('en-US')} Immediate MRR`;
-      document.getElementById('tabBadgeRisk').textContent = riskCountMatched;
+      document.getElementById('navBadgeRisk').textContent = riskCountMatched;
 
+      const counterEl = document.getElementById('homeMatchCounter');
+      if (counterEl) counterEl.textContent = `${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
+
+      // Update Donut Chart
+      if (contractShareChartInstance) {
+        let donutData = [54.2, 27.6, 18.2];
+        if (f.tier === 'Enterprise') donutData = [38.5, 34.2, 27.3];
+        if (f.tier === 'Mid-Market') donutData = [55.1, 28.3, 16.6];
+        if (f.tier === 'Growth') donutData = [72.4, 18.6, 9.0];
+
+        if (f.contract === 'Month-to-Month') donutData = [100.0, 0, 0];
+        if (f.contract === '1-Year') donutData = [0, 100.0, 0];
+        if (f.contract === '2-Year') donutData = [0, 0, 100.0];
+
+        contractShareChartInstance.data.datasets[0].data = donutData;
+        contractShareChartInstance.update();
+
+        document.getElementById('donutStatM2M').textContent = `${donutData[0].toFixed(0)}%`;
+        document.getElementById('donutStat1Yr').textContent = `${donutData[1].toFixed(0)}%`;
+        document.getElementById('donutStat2Yr').textContent = `${donutData[2].toFixed(0)}%`;
+      }
+
+      // Update Dual Bar Retention Velocity Chart
+      if (verticalStatsChartInstance) {
+        let segmentBarData = [4.4, 7.2, 6.3, 4.8, 2.1, 5.8];
+        if (f.contract === 'Month-to-Month') segmentBarData = [6.8, 8.4, 7.9, 6.2, 5.1, 7.4];
+        if (f.contract === '1-Year') segmentBarData = [2.8, 3.4, 3.1, 2.9, 1.8, 2.6];
+        if (f.contract === '2-Year') segmentBarData = [1.2, 1.8, 1.4, 1.1, 0.9, 1.5];
+
+        verticalStatsChartInstance.data.datasets[0].data = segmentBarData;
+        verticalStatsChartInstance.data.datasets[0].label = f.contract === 'ALL' ? 'Portfolio Churn Rate (%)' : `${f.contract} Churn (%)`;
+        verticalStatsChartInstance.update();
+
+        const legendLabel = document.getElementById('barLegendSegment');
+        if (legendLabel) legendLabel.textContent = `${f.contract === 'ALL' ? 'Portfolio' : f.contract} (${churnRate.toFixed(1)}%)`;
+      }
+
+      // Update Retention Spline Chart
+      if (retentionSplineChartInstance) {
+        let survivalCurve = [3.2, 4.4, 3.8, 5.8, 6.4, 4.2];
+        if (f.tier === 'Enterprise') survivalCurve = [4.8, 5.6, 5.2, 6.5, 6.8, 5.9];
+        if (f.tier === 'Growth') survivalCurve = [2.1, 3.2, 2.8, 4.1, 4.6, 3.4];
+        if (f.contract === 'Month-to-Month') survivalCurve = [2.4, 3.5, 3.0, 4.4, 4.8, 3.6];
+
+        retentionSplineChartInstance.data.datasets[0].data = survivalCurve;
+        retentionSplineChartInstance.update();
+
+        const badgeLabel = document.getElementById('splineBadgeLabel');
+        if (badgeLabel) {
+          const m6Rate = (84.2 * (scale > 0.5 ? 1 : 0.94)).toFixed(1);
+          badgeLabel.innerHTML = `M6 Benchmark: <strong>${m6Rate}%</strong>`;
+        }
+      }
+
+      // Render flight cards
       renderOverviewTickets(filtered);
-      renderCrmTable(filtered);
     }
 
+    // ==========================================
+    // PAGE 2: COHORT SLICER HANDLERS & REACTIVITY
+    // ==========================================
+    function setCohortSlicer(key, value) {
+      pageFilters.cohorts[key] = value;
+      renderPageSlicers();
+      applyCohortFilters();
+    }
+
+    function applyCohortFilters() {
+      const f = pageFilters.cohorts;
+
+      let filteredCohorts = RAW_COHORTS.filter(c => {
+        const matchTier = (f.tier === 'ALL') || (c.tier === f.tier);
+        const matchCommitment = (f.commitment === 'ALL') || (c.contract === f.commitment);
+        return matchTier && matchCommitment;
+      });
+
+      if (f.horizon === '12M') {
+        filteredCohorts = filteredCohorts.slice(0, 3);
+      }
+
+      // Recalculate cohort summary stats
+      let m3Sum = 0, m6Sum = 0, m12Sum = 0, count = filteredCohorts.length;
+      filteredCohorts.forEach(c => {
+        m3Sum += c.m3;
+        m6Sum += c.m6;
+        m12Sum += c.m12;
+      });
+
+      const avgM3 = count ? (m3Sum / count).toFixed(1) : "91.4";
+      const avgM6 = count ? (m6Sum / count).toFixed(1) : "84.2";
+      const avgM12 = count ? (m12Sum / count).toFixed(1) : "76.8";
+
+      document.getElementById('cohortKpiM3').textContent = `${avgM3}%`;
+      document.getElementById('cohortKpiM6').textContent = `${avgM6}%`;
+      document.getElementById('cohortKpiM12').textContent = `${avgM12}%`;
+
+      // Render cohort rows
+      const tbody = document.getElementById('cohortTableBody');
+      tbody.innerHTML = '';
+
+      if (filteredCohorts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-xs text-slate-400">No cohorts match criteria.</td></tr>`;
+      } else {
+        filteredCohorts.forEach(c => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="py-2 px-2.5 font-bold text-slate-800">${c.month}</td>
+            <td class="py-2 px-2.5 text-slate-600">${c.signups}</td>
+            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">${c.m1}%</span></td>
+            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">${c.m3}%</span></td>
+            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">${c.m6}%</span></td>
+            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">${c.m12}%</span></td>
+            <td class="py-2 px-2.5 text-slate-400">${c.m18 ? c.m18 + '%' : '-'}</td>
+            <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$${c.arr}k</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Update CLV Chart if initialized
+      if (clvTierChartInstance) {
+        let mult = 1.0;
+        if (f.commitment === 'Annual') mult = 1.25;
+        if (f.commitment === 'M2M') mult = 0.75;
+
+        clvTierChartInstance.data.datasets[0].data = [1.4, 4.2, 8.5, 16.8, 23.2, 28.4].map(v => +(v * mult).toFixed(1));
+        clvTierChartInstance.data.datasets[1].data = [0.98, 2.9, 5.6, 9.8, 12.6, 14.9].map(v => +(v * mult).toFixed(1));
+        clvTierChartInstance.data.datasets[2].data = [0.75, 2.1, 3.8, 5.4, 6.5, 7.2].map(v => +(v * mult).toFixed(1));
+        clvTierChartInstance.update();
+
+        document.getElementById('clvStatEnterprise').textContent = `$${Math.round(28420 * mult).toLocaleString('en-US')}`;
+        document.getElementById('clvStatMidMarket').textContent = `$${Math.round(14890 * mult).toLocaleString('en-US')}`;
+        document.getElementById('clvStatGrowth').textContent = `$${Math.round(7210 * mult).toLocaleString('en-US')}`;
+      }
+    }
+
+    // ==========================================
+    // PAGE 3: TRIAGE SLICER HANDLERS & REACTIVITY
+    // ==========================================
+    function setTriageSlicer(key, value) {
+      pageFilters.triage[key] = value;
+      renderPageSlicers();
+      applyTriageFilters();
+    }
+
+    function applyTriageFilters() {
+      const f = pageFilters.triage;
+      const q = (document.getElementById('crmSearchInput')?.value || '').toLowerCase();
+
+      const filtered = RAW_ACCOUNTS.filter(a => {
+        const matchTrigger = (f.trigger === 'ALL') || (a.trigger === f.trigger);
+        const matchTier = (f.tier === 'ALL') || (a.tier === f.tier);
+        const matchQuery = !q || a.company.toLowerCase().includes(q) || a.csm.toLowerCase().includes(q) || a.id.toLowerCase().includes(q);
+        return matchTrigger && matchTier && matchQuery;
+      });
+
+      renderCrmTable(filtered);
+
+      const counter = document.getElementById('triageMatchCounter');
+      if (counter) counter.textContent = `${filtered.length} At-Risk`;
+    }
+
+    function filterCrmTable() {
+      applyTriageFilters();
+    }
+
+    // ==========================================
+    // PAGE 4: RECOMMENDATIONS SLICER HANDLERS
+    // ==========================================
+    function setRecommendationsSlicer(key, value) {
+      pageFilters.recommendations[key] = value;
+      renderPageSlicers();
+      applyRecommendationsFilters();
+    }
+
+    function applyRecommendationsFilters() {
+      const f = pageFilters.recommendations;
+      updatePageSimulation();
+    }
+
+    function updatePageSimulation() {
+      const slider = document.getElementById('pageRescueSlider');
+      const rate = parseInt(slider.value, 10);
+      document.getElementById('pageSliderDisplay').textContent = `${rate}%`;
+
+      const f = pageFilters.recommendations;
+      let poolMRR = 37420;
+      if (f.focus === 'M2M') poolMRR = 26500;
+      if (f.focus === 'Friction') poolMRR = 18200;
+      if (f.focus === 'Dormancy') poolMRR = 14800;
+
+      const monthly = Math.round(poolMRR * (rate / 100));
+      const annual = monthly * 12;
+
+      document.getElementById('pageSimMonthly').textContent = `+$${monthly.toLocaleString('en-US')}`;
+      document.getElementById('pageSimAnnual').textContent = `+$${annual.toLocaleString('en-US')}`;
+
+      // Net ROI calculation based on CSM count
+      const csmCount = parseInt(f.capacity, 10) || 2;
+      const csmCost = csmCount * 15000;
+      const netRoi = (annual / csmCost).toFixed(1);
+
+      document.getElementById('pageSimRoiBadge').textContent = `${netRoi}x Net ROI`;
+      document.getElementById('pageSimRoiText').innerHTML = `
+        Dedicating ${csmCount} Senior Solutions Engineers costs approximately $${csmCost.toLocaleString('en-US')} in dedicated hours, unlocking over <strong>$${annual.toLocaleString('en-US')} in net preserved ARR</strong> for a <strong>${netRoi}x return</strong>.
+      `;
+    }
+
+    // Render Overview Tickets on Home
     function renderOverviewTickets(accounts) {
       const container = document.getElementById('overviewTicketsContainer');
       container.innerHTML = '';
 
       if (accounts.length === 0) {
-        container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">No accounts match current slicer selection.</div>`;
+        container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">No priority accounts match current filter.</div>`;
         return;
       }
 
@@ -1401,12 +1692,13 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       lucide.createIcons();
     }
 
+    // Render CRM Triage Table
     function renderCrmTable(accounts) {
       const tbody = document.getElementById('crmTableBody');
       tbody.innerHTML = '';
 
       if (accounts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-xs text-slate-400">No accounts match selected slicers.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-xs text-slate-400">No accounts match selected triage filters.</td></tr>`;
         return;
       }
 
@@ -1439,20 +1731,13 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         `;
         tbody.appendChild(tr);
       });
-      document.getElementById('crmPaginationCount').textContent = `${accounts.length} Accounts`;
+
+      const countEl = document.getElementById('crmPaginationCount');
+      if (countEl) countEl.textContent = `${accounts.length} Accounts Listed`;
       lucide.createIcons();
     }
 
-    function filterCrmTable() {
-      const q = document.getElementById('crmSearchInput').value.toLowerCase();
-      const filtered = RAW_ACCOUNTS.filter(a => {
-        return a.company.toLowerCase().includes(q) || 
-               a.csm.toLowerCase().includes(q) || 
-               a.id.toLowerCase().includes(q);
-      });
-      renderCrmTable(filtered);
-    }
-
+    // Modal & Action Drawer Functions
     function openAccountDrawer(accId) {
       const acc = RAW_ACCOUNTS.find(a => a.id === accId) || RAW_ACCOUNTS[0];
       selectedDossierAccount = acc;
@@ -1487,16 +1772,6 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
 
     function openInterventionModal() {
       openAccountDrawer('ACC-9042');
-    }
-
-    function updatePageSimulation() {
-      const slider = document.getElementById('pageRescueSlider');
-      const rate = parseInt(slider.value, 10);
-      document.getElementById('pageSliderDisplay').textContent = `${rate}%`;
-      const monthly = Math.round(37420 * (rate / 100));
-      const annual = monthly * 12;
-      document.getElementById('pageSimMonthly').textContent = `+$${monthly.toLocaleString('en-US')}`;
-      document.getElementById('pageSimAnnual').textContent = `+$${annual.toLocaleString('en-US')}`;
     }
 
     // SQL Modal Functions
@@ -1543,7 +1818,6 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       container.innerHTML = html;
     }
 
-    // Export Telemetry
     function exportTelemetryJson() {
       const payload = {
         meta: "SaaS Retention Intelligence Telemetry",
@@ -1642,10 +1916,14 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     window.onload = function() {
       lucide.createIcons();
 
+      // Render Home Slicers
+      renderPageSlicers();
+
+      // Initial Tables Render
       renderOverviewTickets(RAW_ACCOUNTS);
       renderCrmTable(RAW_ACCOUNTS);
 
-      // 1. Dual-Bar Retention Stats
+      // 1. Dual-Bar Retention Velocity Chart
       const statsCtx = document.getElementById('verticalStatsChart').getContext('2d');
       verticalStatsChartInstance = new Chart(statsCtx, {
         type: 'bar',
@@ -1653,7 +1931,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
           datasets: [
             {
-              label: 'M2M Churn Rate (%)',
+              label: 'Portfolio Churn Rate (%)',
               data: [4.4, 7.2, 6.3, 4.8, 2.1, 5.8],
               backgroundColor: '#d79b29',
               borderRadius: 4,
@@ -1736,7 +2014,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
           datasets: [
             {
-              label: 'Multi-Year Survival Rate',
+              label: 'Filtered Cohort Survival',
               data: [3.2, 4.4, 3.8, 5.8, 6.4, 4.2],
               borderColor: '#d79b29',
               backgroundColor: mustardGradient,
@@ -1749,7 +2027,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
               pointBorderWidth: 1.5
             },
             {
-              label: 'Month-to-Month Erosion',
+              label: 'M2M Decay Cliff',
               data: [3.1, 2.3, 2.7, 4.1, 3.3, 4.8],
               borderColor: '#264239',
               backgroundColor: 'transparent',
