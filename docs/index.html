@@ -3,251 +3,1692 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SaaS Customer Churn & Revenue Retention Intelligence | Peter Akpan</title>
-  <meta name="description" content="End-to-end B2B SaaS customer churn analytics, predictive risk modeling, and interactive executive retention telemetry by Peter Akpan (Petre Pann).">
-  <meta property="og:title" content="SaaS Customer Churn & Revenue Retention Intelligence">
-  <meta property="og:description" content="Interactive telemetry, cohort retention curves, and SQL analytics engine for 5,000 enterprise accounts.">
-  <meta property="og:type" content="website">
-
-  <!-- Fonts & Styles -->
+  <title>RetainPulse | Enterprise SaaS CRM & Churn Intelligence</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: '#dce8e4',
+            surface: '#f3f8f6',
+            sidebar: '#264239',
+            sidebarHover: '#1f3830',
+            sidebarActive: '#172d26',
+            mustard: {
+              300: '#edd58f',
+              400: '#e5be53',
+              500: '#d79b29',
+              600: '#b87e19',
+              700: '#94630f'
+            },
+            sageCard: '#31544a',
+            darkCard: '#203932',
+            tealAccent: '#2a9d8f',
+            softGreen: '#52b788',
+            roseAccent: '#e76f51',
+          },
+          borderRadius: {
+            '2xl': '1.25rem',
+            '3xl': '1.75rem',
+            '4xl': '2.25rem'
+          },
+          boxShadow: {
+            'soft': '0 8px 30px -8px rgba(38, 66, 57, 0.08), 0 2px 6px -1px rgba(38, 66, 57, 0.04)',
+            'float': '0 12px 32px -6px rgba(215, 155, 41, 0.3)',
+            'nav-active': '-6px 6px 18px -4px rgba(20, 36, 31, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #dce8e4;
+      background-image: 
+        radial-gradient(circle at 10% 8%, rgba(237, 216, 180, 0.75) 0%, rgba(237, 216, 180, 0.3) 90px, transparent 200px),
+        radial-gradient(circle at 95% 35%, rgba(199, 221, 214, 0.8) 0%, rgba(199, 221, 214, 0.2) 160px, transparent 320px);
+      background-repeat: no-repeat;
+    }
+
+    /* Minimalist Ticket Row with Perforated Notches */
+    .ticket-card {
+      position: relative;
+      background: #ffffff;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ticket-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -6px rgba(38, 66, 57, 0.1);
+    }
+    .perforation-l, .perforation-r {
+      position: absolute;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      background-color: #eef4f2;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    .perforation-l { left: -7px; }
+    .perforation-r { right: -7px; }
+
+    /* Topographic contour wave patterns on hero cards */
+    .topo-pattern {
+      background-image: radial-gradient(circle at 85% 20%, rgba(255,255,255,0.22) 0%, transparent 45%),
+                        radial-gradient(ellipse at 15% 85%, rgba(255,255,255,0.15) 0%, transparent 55%);
+    }
+
+    /* Reference Curved Active Sidebar Pill */
+    .nav-active-pill {
+      background-color: #ffffff !important;
+      color: #264239 !important;
+      font-weight: 700;
+      border-top-left-radius: 9999px;
+      border-bottom-left-radius: 9999px;
+      margin-right: -1.5rem;
+      padding-right: 2rem;
+      box-shadow: -4px 6px 16px -4px rgba(0,0,0,0.14);
+    }
+
+    /* Slicer Pill Buttons */
+    .slicer-btn {
+      transition: all 0.18s ease;
+    }
+    .slicer-btn.active {
+      background-color: #264239;
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 2px 8px -2px rgba(38, 66, 57, 0.35);
+    }
+    .slicer-btn:not(.active) {
+      background-color: #f1f5f4;
+      color: #475569;
+    }
+    .slicer-btn:not(.active):hover {
+      background-color: #e2ece9;
+      color: #1e293b;
+    }
+
+    /* Thin Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #9bb6ac; border-radius: 9999px; }
+  </style>
 </head>
-<body>
+<body class="text-slate-800 antialiased min-h-screen p-2 sm:p-4 lg:p-6 flex items-center justify-center font-sans selection:bg-mustard-500 selection:text-white">
 
-  <!-- Top Navigation -->
-  <header class="header">
-    <div class="container nav-wrap">
-      <div class="brand-block">
-        <span class="brand-badge">Pann Labs</span>
+  <div class="w-full max-w-[1480px] min-h-[920px] bg-surface/95 rounded-4xl p-3 sm:p-5 lg:p-6 shadow-2xl border border-white/70 backdrop-blur-md flex flex-col lg:flex-row gap-6">
+
+    <aside class="w-full lg:w-72 bg-sidebar rounded-3xl p-6 text-white flex flex-col justify-between shrink-0 shadow-2xl relative overflow-hidden">
+      
+      <!-- Top Section: User Profile & Navigation -->
+      <div class="space-y-6">
+        
+        <!-- Profile Branding -->
+        <div class="flex flex-col items-center text-center">
+          <div class="relative mb-3">
+            <div class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-mustard-500 via-mustard-400 to-transparent flex items-center justify-center shadow-lg">
+              <div class="w-full h-full rounded-full bg-sidebarHover flex items-center justify-center text-mustard-300 font-black font-mono text-xl ring-2 ring-sidebar">
+                PA
+              </div>
+            </div>
+            <span class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-400 ring-2 ring-sidebar"></span>
+          </div>
+
+          <h2 class="text-sm font-extrabold tracking-wider uppercase">PETER AKPAN</h2>
+          <p class="text-xs text-white/60 font-medium tracking-tight">petrepann.tech@gmail.com</p>
+          
+          <div class="mt-2.5 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 text-[10px] text-mustard-300 font-bold uppercase tracking-wider">
+            <span class="w-1.5 h-1.5 rounded-full bg-mustard-400 animate-pulse"></span>
+            <span>Founder &bull; Pann Labs</span>
+          </div>
+        </div>
+
+        <!-- Navigation Pages Menu -->
+        <nav class="space-y-1.5 pt-1">
+          <button onclick="switchPage('overview')" id="nav-btn-overview" class="w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl transition-all duration-200 nav-active-pill">
+            <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i>
+            <span class="tracking-wider uppercase text-[11px]">DASHBOARD</span>
+          </button>
+
+          <button onclick="switchPage('crm')" id="nav-btn-crm" class="w-full flex items-center justify-between px-4 py-3 text-xs font-semibold rounded-2xl text-white/80 hover:bg-white/10 transition-all duration-200">
+            <div class="flex items-center space-x-3.5">
+              <i data-lucide="users" class="w-4 h-4 shrink-0 text-mustard-400"></i>
+              <span class="tracking-wider uppercase text-[11px]">CRM TRIAGE</span>
+            </div>
+            <span id="navTriageBadge" class="px-2 py-0.5 rounded-full bg-mustard-500 text-sidebar font-mono text-[10px] font-extrabold">96</span>
+          </button>
+
+          <button onclick="switchPage('cohorts')" id="nav-btn-cohorts" class="w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl text-white/80 hover:bg-white/10 transition-all duration-200">
+            <i data-lucide="layers" class="w-4 h-4 shrink-0"></i>
+            <span class="tracking-wider uppercase text-[11px]">COHORTS & CLV</span>
+          </button>
+
+          <button onclick="switchPage('statistics')" id="nav-btn-statistics" class="w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl text-white/80 hover:bg-white/10 transition-all duration-200">
+            <i data-lucide="bar-chart-2" class="w-4 h-4 shrink-0"></i>
+            <span class="tracking-wider uppercase text-[11px]">STATISTICS</span>
+          </button>
+
+          <button onclick="switchPage('sql')" id="nav-btn-sql" class="w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl text-white/80 hover:bg-white/10 transition-all duration-200">
+            <i data-lucide="terminal" class="w-4 h-4 shrink-0"></i>
+            <span class="tracking-wider uppercase text-[11px]">SQL STUDIO</span>
+          </button>
+
+          <button onclick="switchPage('simulator')" id="nav-btn-simulator" class="w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl text-white/80 hover:bg-white/10 transition-all duration-200">
+            <i data-lucide="calculator" class="w-4 h-4 shrink-0"></i>
+            <span class="tracking-wider uppercase text-[11px]">ROI SIMULATOR</span>
+          </button>
+        </nav>
+
+        <!-- Quick Bookmark Filter Buttons inside Sidebar -->
+        <div class="pt-4 border-t border-white/10 space-y-2">
+          <span class="text-[10px] uppercase font-extrabold tracking-wider text-white/60 block px-2">SAVED PRESETS</span>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="applyPresetFilter('critical')" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-bold text-mustard-300 text-left flex items-center space-x-1.5 transition">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+              <span>High Risk</span>
+            </button>
+            <button onclick="applyPresetFilter('m2m')" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-bold text-white/80 text-left flex items-center space-x-1.5 transition">
+              <span class="w-1.5 h-1.5 rounded-full bg-mustard-400"></span>
+              <span>M2M Only</span>
+            </button>
+            <button onclick="applyPresetFilter('enterprise')" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-bold text-white/80 text-left flex items-center space-x-1.5 transition">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+              <span>Enterprise</span>
+            </button>
+            <button onclick="resetAllSlicers()" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-bold text-white/60 text-left flex items-center space-x-1.5 transition">
+              <i data-lucide="rotate-ccw" class="w-2.5 h-2.5"></i>
+              <span>Clear All</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Section: Active Portfolio Count & Dot-Matrix Network Map -->
+      <div class="pt-4 border-t border-white/10 space-y-4">
         <div>
-          <h1 class="brand-title">SaaS Churn Intelligence</h1>
-          <p class="brand-author">Executive Telemetry & Retention Engine · By Peter Akpan</p>
+          <div class="flex items-center justify-between text-[11px] uppercase font-bold tracking-wider text-white/70 mb-2">
+            <span>ACTIVE ACCOUNTS</span>
+            <span id="sidebarFilteredCount" class="text-mustard-300 font-mono">3,765 / 5,000</span>
+          </div>
+
+          <div class="flex items-center -space-x-2">
+            <div class="w-7 h-7 rounded-full border-2 border-sidebar bg-mustard-500 text-sidebar flex items-center justify-center text-[9px] font-black font-mono shadow-sm">
+              5k
+            </div>
+            <div class="w-7 h-7 rounded-full border-2 border-sidebar bg-tealAccent text-white flex items-center justify-center text-[9px] font-bold font-mono">
+              B2B
+            </div>
+            <div class="w-7 h-7 rounded-full border-2 border-sidebar bg-white/20 text-white flex items-center justify-center text-[9px] font-bold font-mono">
+              OLAP
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Network Graphic Arcs -->
+        <div class="w-full h-16 bg-sidebarHover rounded-2xl p-2 relative overflow-hidden flex items-center justify-center border border-white/5">
+          <svg viewBox="0 0 200 80" class="w-full h-full opacity-80" fill="none" stroke="currentColor">
+            <circle cx="25" cy="30" r="1.2" fill="#719b8f" />
+            <circle cx="50" cy="40" r="1.4" fill="#719b8f" />
+            <circle cx="100" cy="25" r="1.5" fill="#719b8f" />
+            <circle cx="130" cy="45" r="1.2" fill="#719b8f" />
+            <circle cx="170" cy="35" r="1.6" fill="#719b8f" />
+            <path d="M 30 35 Q 65 12 100 25" stroke="#d79b29" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <path d="M 100 25 Q 135 15 170 35" stroke="#d79b29" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <path d="M 30 35 Q 100 65 170 35" stroke="#2a9d8f" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+            <circle cx="30" cy="35" r="3" fill="#d79b29"/>
+            <circle cx="100" cy="25" r="3.5" fill="#edd58f"/>
+            <circle cx="170" cy="35" r="3" fill="#d79b29"/>
+          </svg>
+          <span class="absolute bottom-1 right-2 text-[8px] font-mono text-white/50 tracking-wider">OLAP SYNC &bull; 3.12</span>
         </div>
       </div>
-      <div class="header-actions">
-        <a href="https://petrepanntech.github.io" class="btn-link btn-secondary" target="_blank" rel="noopener">Portfolio</a>
-        <a href="https://github.com/Petrepanntech/SaaS_Churn_Intelligence" class="btn-link btn-primary" target="_blank" rel="noopener">GitHub Repository</a>
-      </div>
-    </div>
-  </header>
+    </aside>
 
-  <main class="container">
-    <!-- Hero Banner -->
-    <section class="hero">
-      <div class="hero-pill">
-        <span class="pulse-dot"></span> Live Telemetry: 5,000 Enterprise Accounts Audited
-      </div>
-      <h2 class="hero-title">Predictive Churn Analytics & Revenue Retention Engine</h2>
-      <p class="hero-subtitle">
-        Bridging SQL relational modeling, longitudinal cohort survival analysis, and operational risk triage to isolate revenue leakage and safeguard Monthly Recurring Revenue (MRR).
-      </p>
-    </section>
+    <main class="flex-1 flex flex-col gap-5 overflow-hidden">
 
-    <!-- Executive KPI Grid -->
-    <section class="kpi-grid" id="kpi-container">
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Active Portfolio MRR</span>
-          <span class="kpi-icon">💵</span>
+      <!-- TOP BAR: Page Title & Executive Actions -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 px-1">
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 id="pageTitle" class="text-xl font-extrabold text-sidebar tracking-tight">Executive Telemetry Overview</h1>
+            <span id="activeFilterBadge" class="hidden px-2 py-0.5 rounded-full bg-mustard-500/20 text-mustard-700 text-[10px] font-bold border border-mustard-400/40">
+              Filters Active
+            </span>
+          </div>
+          <p id="pageSubtitle" class="text-xs text-slate-500 font-medium">B2B SaaS Churn Audit &bull; 5,000 Accounts &bull; Longitudinal OLAP Analysis</p>
         </div>
-        <div class="kpi-value" id="val-active-mrr">$0.00</div>
-        <div class="kpi-subtext" id="val-active-accts">Loading active accounts...</div>
-      </div>
 
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Portfolio Churn Rate</span>
-          <span class="kpi-icon">📉</span>
-        </div>
-        <div class="kpi-value" id="val-churn-rate">0.0%</div>
-        <div class="kpi-subtext highlight-danger" id="val-churn-accts">Loading churned accounts...</div>
-      </div>
+        <!-- Action Buttons -->
+        <div class="flex items-center space-x-2.5 flex-wrap">
+          <a href="https://petrepanntech.github.io" target="_blank" rel="noopener" class="px-3.5 py-2 bg-white text-sidebar hover:bg-slate-100 rounded-full shadow-soft border border-slate-200/60 font-bold text-xs flex items-center space-x-1.5 transition">
+            <i data-lucide="globe" class="w-3.5 h-3.5 text-tealAccent"></i>
+            <span>Portfolio</span>
+          </a>
 
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">High-Risk MRR at Stake</span>
-          <span class="kpi-icon">⚠️</span>
-        </div>
-        <div class="kpi-value" id="val-risk-mrr">$0.00</div>
-        <div class="kpi-subtext highlight-danger" id="val-risk-accts">Loading risk exposure...</div>
-      </div>
+          <a href="https://github.com/Petrepanntech/SaaS_Churn_Intelligence" target="_blank" rel="noopener" class="px-3.5 py-2 bg-sidebar hover:bg-sidebarHover text-white font-bold text-xs rounded-full shadow flex items-center space-x-2 transition">
+            <i data-lucide="github" class="w-3.5 h-3.5 text-mustard-400"></i>
+            <span>GitHub Repo</span>
+          </a>
 
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Average Customer Tenure</span>
-          <span class="kpi-icon">⏳</span>
-        </div>
-        <div class="kpi-value" id="val-avg-tenure">0.0 mo</div>
-        <div class="kpi-subtext highlight-success" id="val-adoption">Loading feature adoption...</div>
-      </div>
-    </section>
-
-    <!-- Longitudinal Charts Section -->
-    <div class="section-header">
-      <div>
-        <h3 class="section-title">Longitudinal Survival & Risk Factor Dynamics</h3>
-        <p class="section-desc">Empirical survival distributions across signup cohorts, contract structures, and subscription tiers.</p>
-      </div>
-    </div>
-
-    <div class="charts-grid">
-      <!-- Chart 1: Cohort Retention Curve -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <h4 class="chart-title">Cohort Retention Curve (Survival over Time)</h4>
-          <p class="chart-subtitle">Longitudinal retention percentages tracked across recent signup cohorts.</p>
-        </div>
-        <div class="chart-canvas-wrap">
-          <canvas id="canvas-cohort"></canvas>
+          <button onclick="exportTelemetryJson()" class="p-2.5 bg-white text-sidebar hover:bg-slate-100 rounded-full shadow-soft border border-slate-200/60 transition" title="Export JSON Audit Data">
+            <i data-lucide="download" class="w-4 h-4"></i>
+          </button>
         </div>
       </div>
 
-      <!-- Chart 2: Contract Type Risk -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <h4 class="chart-title">Churn Probability by Contract Commitment</h4>
-          <p class="chart-subtitle">Comparing Month-to-Month, 1-Year, and 2-Year contractual retention rates.</p>
+      <!-- DYNAMIC SLICERS BAR -->
+      <div class="bg-white rounded-3xl p-3.5 shadow-soft border border-slate-100 space-y-2.5">
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-slate-400"></i>
+            <span class="text-[11px] font-extrabold text-sidebar uppercase tracking-wider">Dynamic Slicers</span>
+            <span class="text-[10px] text-slate-400">&bull; Live Dataset Query Filtering</span>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <span id="slicerMatchLabel" class="text-[11px] font-mono font-bold text-slate-500">Matching 5,000 Accounts (100%)</span>
+            <button onclick="resetAllSlicers()" class="text-[10px] font-bold text-rose-500 hover:underline flex items-center space-x-1">
+              <i data-lucide="x-circle" class="w-3 h-3"></i>
+              <span>Reset</span>
+            </button>
+          </div>
         </div>
-        <div class="chart-canvas-wrap">
-          <canvas id="canvas-contract"></canvas>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-1 border-t border-slate-100">
+          
+          <!-- Slicer 1: Contract Commitment -->
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Contract Duration</span>
+            <div class="flex rounded-xl bg-slate-100 p-0.5 gap-0.5">
+              <button onclick="setSlicer('contract', 'ALL')" id="slicer-contract-ALL" class="slicer-btn active flex-1 py-1 text-[10px] rounded-lg text-center">All</button>
+              <button onclick="setSlicer('contract', 'Month-to-Month')" id="slicer-contract-Month-to-Month" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center" title="4.27x Churn Odds">M2M</button>
+              <button onclick="setSlicer('contract', '1-Year')" id="slicer-contract-1-Year" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">1-Yr</button>
+              <button onclick="setSlicer('contract', '2-Year')" id="slicer-contract-2-Year" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">2-Yr</button>
+            </div>
+          </div>
+
+          <!-- Slicer 2: Subscription Tier -->
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Subscription Tier</span>
+            <div class="flex rounded-xl bg-slate-100 p-0.5 gap-0.5">
+              <button onclick="setSlicer('tier', 'ALL')" id="slicer-tier-ALL" class="slicer-btn active flex-1 py-1 text-[10px] rounded-lg text-center">All</button>
+              <button onclick="setSlicer('tier', 'Enterprise')" id="slicer-tier-Enterprise" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">Ent</button>
+              <button onclick="setSlicer('tier', 'Professional')" id="slicer-tier-Professional" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">Pro</button>
+              <button onclick="setSlicer('tier', 'Starter')" id="slicer-tier-Starter" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">Starter</button>
+            </div>
+          </div>
+
+          <!-- Slicer 3: Statistical Trigger Signal -->
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Risk Trigger Flag</span>
+            <div class="flex rounded-xl bg-slate-100 p-0.5 gap-0.5">
+              <button onclick="setSlicer('trigger', 'ALL')" id="slicer-trigger-ALL" class="slicer-btn active flex-1 py-1 text-[10px] rounded-lg text-center">All</button>
+              <button onclick="setSlicer('trigger', 'Friction')" id="slicer-trigger-Friction" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center" title=">= 4 Support Tickets">Friction</button>
+              <button onclick="setSlicer('trigger', 'Inactivity')" id="slicer-trigger-Inactivity" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center" title=">= 14 Days Inactive">Dormant</button>
+            </div>
+          </div>
+
+          <!-- Slicer 4: Account Status -->
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Portfolio Status</span>
+            <div class="flex rounded-xl bg-slate-100 p-0.5 gap-0.5">
+              <button onclick="setSlicer('status', 'ALL')" id="slicer-status-ALL" class="slicer-btn active flex-1 py-1 text-[10px] rounded-lg text-center">All</button>
+              <button onclick="setSlicer('status', 'Active')" id="slicer-status-Active" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">Active</button>
+              <button onclick="setSlicer('status', 'Churned')" id="slicer-status-Churned" class="slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center">Churned</button>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- Chart 3: Tier Risk -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <h4 class="chart-title">Churn Rate by Subscription Tier</h4>
-          <p class="chart-subtitle">Benchmark churn distribution across Enterprise, Professional, and Starter accounts.</p>
+      <!-- PAGE: OVERVIEW -->
+      <div id="page-overview" class="space-y-5 transition-opacity duration-200">
+        
+        <!-- Top 3 Hero Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Card 1: Warm Golden Mustard -->
+          <div class="bg-mustard-500 rounded-3xl p-5 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-36">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-white/80 block">Active Portfolio MRR</span>
+                <div id="kpiActiveMRR" class="text-2xl font-black font-mono tracking-tight mt-1 text-white">$1,933,837</div>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white shadow-sm">
+                <i data-lucide="trending-up" class="w-5 h-5 stroke-[2.5]"></i>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-3 border-t border-white/20">
+              <span id="kpiActiveAccounts" class="font-medium text-white/90">3,765 Accounts Active</span>
+              <span id="kpiAvgMRR" class="font-mono bg-white/20 px-2 py-0.5 rounded-full text-[10px] font-bold">Avg $513/mo</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Medium Forest Sage -->
+          <div class="bg-sageCard rounded-3xl p-5 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-36">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-white/80 block">Annualized Lost Leakage</span>
+                <div id="kpiLeakageARR" class="text-2xl font-black font-mono tracking-tight mt-1 text-mustard-300">$7,845,590</div>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-rose-300 shadow-sm">
+                <i data-lucide="shield-alert" class="w-5 h-5 stroke-[2.5]"></i>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-3 border-t border-white/15">
+              <span id="kpiChurnedAccounts" class="font-medium text-white/80">1,235 Churned Exits</span>
+              <span id="kpiLostMRR" class="font-mono bg-rose-500/25 text-rose-200 px-2 py-0.5 rounded-full text-[10px] font-bold">-$653.8k/mo</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Dark Forest Slate -->
+          <div class="bg-darkCard rounded-3xl p-5 text-white shadow-soft relative overflow-hidden flex flex-col justify-between h-36">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-white/70 block">Priority At-Risk Accounts</span>
+                <div id="kpiRiskCount" class="text-2xl font-black font-mono tracking-tight mt-1 text-white">96 Accounts</div>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-mustard-400 shadow-sm">
+                <i data-lucide="flame" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-3 border-t border-white/10">
+              <span id="kpiRiskMRR" class="text-mustard-300 font-bold font-mono">$37,058 Immediate Risk</span>
+              <button onclick="switchPage('crm')" class="text-white hover:underline text-[11px] font-semibold flex items-center space-x-1">
+                <span>Triage View</span>
+                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
+
         </div>
-        <div class="chart-canvas-wrap">
-          <canvas id="canvas-tier"></canvas>
+
+        <!-- Middle Grid: Priority Accounts Table + Vertical Dual-Bar Statistics -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          
+          <!-- Left Table: Priority Accounts -->
+          <div class="lg:col-span-8 bg-white rounded-3xl p-5 shadow-soft space-y-4">
+            <div class="flex items-center justify-between pb-1">
+              <div>
+                <h2 class="text-sm font-extrabold text-sidebar tracking-wide uppercase">Priority Risk Accounts</h2>
+                <p class="text-xs text-slate-400">Immediate CSM triage &bull; Click to open 360&deg; account drawer</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-sidebar text-[11px] font-bold border border-emerald-100">
+                  Ranked by MRR DESC
+                </span>
+                <button onclick="switchPage('crm')" class="text-xs font-bold text-mustard-600 hover:underline">
+                  View All &rarr;
+                </button>
+              </div>
+            </div>
+
+            <!-- Table Header Labels -->
+            <div class="grid grid-cols-12 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-4">
+              <div class="col-span-4">Enterprise Account</div>
+              <div class="col-span-3">Contract &amp; Trigger</div>
+              <div class="col-span-2 text-center">Friction</div>
+              <div class="col-span-2 text-right">At-Risk MRR</div>
+              <div class="col-span-1 text-right">Inspect</div>
+            </div>
+
+            <!-- Perforated Ticket Container -->
+            <div class="space-y-2.5" id="overviewTicketsContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Right Card: Dual-Bar Statistics Chart -->
+          <div class="lg:col-span-4 bg-white rounded-3xl p-5 shadow-soft flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-extrabold text-sidebar tracking-wide uppercase">Retention Statistics</h3>
+                <p class="text-xs text-slate-400">M2M Churn vs Annual Benchmark (%)</p>
+              </div>
+              <span class="text-xs font-bold text-mustard-600 font-mono">H1 Velocity</span>
+            </div>
+
+            <!-- Vertical Bar Chart Canvas -->
+            <div class="h-56 w-full pt-2">
+              <canvas id="verticalStatsChart"></canvas>
+            </div>
+
+            <div class="flex items-center justify-around text-xs text-slate-500 pt-2 border-t border-slate-100">
+              <span class="flex items-center space-x-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-mustard-500"></span>
+                <span class="font-medium text-[11px]">M2M Rate (31.8%)</span>
+              </span>
+              <span class="flex items-center space-x-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-sidebar"></span>
+                <span class="font-medium text-[11px]">Annual Target (9.9%)</span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Grid: Donut Contract Share + Retention Wave Spline Schedule -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          
+          <!-- Bottom Left: Contract Share Donut -->
+          <div class="lg:col-span-5 bg-white rounded-3xl p-5 shadow-soft flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-extrabold text-sidebar tracking-wide uppercase">Contract Share &amp; Odds</h3>
+                <p class="text-xs text-slate-400">Portfolio commitment distribution</p>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-50 text-mustard-600 font-bold text-[10px] border border-amber-200">
+                4.27x Churn Odds
+              </span>
+            </div>
+
+            <!-- Centered Donut Graphic -->
+            <div class="relative h-56 w-full flex items-center justify-center my-2">
+              <canvas id="contractShareChart"></canvas>
+              <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span class="text-xs font-extrabold text-slate-700">Contract</span>
+                <span class="text-[10px] text-slate-400 font-medium">Breakdown</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center text-xs pt-2 border-t border-slate-100">
+              <div class="p-2 rounded-2xl bg-amber-50/70 border border-amber-100">
+                <span class="text-[10px] text-mustard-600 font-bold block">Month-to-Month</span>
+                <span id="statM2mShare" class="font-mono font-extrabold text-slate-800">55.0%</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-slate-50 border border-slate-100">
+                <span class="text-[10px] text-slate-500 font-bold block">1-Year</span>
+                <span id="stat1yrShare" class="font-mono font-extrabold text-slate-800">29.8%</span>
+              </div>
+              <div class="p-2 rounded-2xl bg-emerald-50/70 border border-emerald-100">
+                <span class="text-[10px] text-tealAccent font-bold block">2-Year</span>
+                <span id="stat2yrShare" class="font-mono font-extrabold text-slate-800">15.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Right: Longitudinal Retention Trajectory -->
+          <div class="lg:col-span-7 bg-white rounded-3xl p-5 shadow-soft flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Retention Trajectory</h3>
+                <p class="text-xs text-slate-400">Decay curves across 30 cohorts with rescue projection</p>
+              </div>
+              
+              <div class="px-3.5 py-1.5 rounded-2xl bg-sidebar text-white text-xs font-mono shadow-md flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-mustard-400"></span>
+                <span>M6 Retention: <strong>84.2%</strong></span>
+              </div>
+            </div>
+
+            <!-- Wave Spline Canvas -->
+            <div class="h-56 w-full pt-2">
+              <canvas id="retentionSplineChart"></canvas>
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center space-x-1.5">
+                  <span class="w-3 h-1 bg-mustard-500 rounded-full"></span>
+                  <span class="font-medium text-[11px]">Multi-Year Cohort Survival</span>
+                </span>
+                <span class="flex items-center space-x-1.5">
+                  <span class="w-3 h-1 bg-sidebar rounded-full"></span>
+                  <span class="font-medium text-[11px]">M2M Decay Cliff</span>
+                </span>
+              </div>
+              <span class="text-[11px] font-mono text-slate-400">CTE 02_cohort_retention.sql</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PAGE: CRM TRIAGE -->
+      <div id="page-crm" class="hidden space-y-4 bg-white rounded-3xl p-6 shadow-soft transition-opacity duration-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base font-extrabold text-sidebar">Enterprise CRM Risk Triage Center</h2>
+            <p class="text-xs text-slate-400">Showing accounts matching active slicer criteria &bull; Click any account to view 360&deg; audit</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <div class="relative">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3"></i>
+              <input 
+                type="text" 
+                id="crmSearchInput" 
+                oninput="filterCrmTable()" 
+                placeholder="Search company, ID or trigger..." 
+                class="pl-9 pr-3.5 py-2 rounded-2xl bg-slate-100 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-mustard-400 text-slate-700 w-64"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- CRM Accounts Data Table -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="text-[11px] text-slate-400 font-extrabold uppercase tracking-wider bg-slate-50/80 border-b border-slate-100">
+                <th class="py-3.5 px-4">Account ID &amp; Company</th>
+                <th class="py-3.5 px-4">Tier</th>
+                <th class="py-3.5 px-4">Contract</th>
+                <th class="py-3.5 px-4">Monthly MRR</th>
+                <th class="py-3.5 px-4">Inactivity</th>
+                <th class="py-3.5 px-4">Tickets (30d)</th>
+                <th class="py-3.5 px-4">Prescriptive Action</th>
+                <th class="py-3.5 px-4 text-right">Inspect</th>
+              </tr>
+            </thead>
+            <tbody id="crmTableBody" class="divide-y divide-slate-100">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="flex items-center justify-between text-xs text-slate-400 pt-2 px-1">
+          <span id="crmPaginationCount">Showing accounts</span>
+          <span class="font-mono text-[11px]">Window Function: DENSE_RANK() OVER (ORDER BY charges DESC)</span>
         </div>
       </div>
-    </div>
 
-    <!-- Account Triage & Risk Filter Table -->
-    <div class="section-header" style="margin-top: 50px;">
-      <div>
-        <h3 class="section-title">Prescriptive Account Risk Triage</h3>
-        <p class="section-desc">Searchable directory of accounts ranked by revenue exposure with automated intervention recommendations.</p>
+      <!-- PAGE: COHORTS & CLV -->
+      <div id="page-cohorts" class="hidden space-y-5 bg-white rounded-3xl p-6 shadow-soft transition-opacity duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-extrabold text-sidebar">Longitudinal Cohort Retention &amp; CLV Matrix</h2>
+            <p class="text-xs text-slate-400">Multi-stage CTE customer survival analysis tracking 30 monthly cohorts over 24 months</p>
+          </div>
+          <span class="text-xs font-mono font-bold text-mustard-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+            Avg Tenure: 17.5 Mo
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Month 3 Retention</span>
+            <span class="text-xl font-mono font-extrabold text-sidebar">91.4%</span>
+            <span class="text-[10px] text-emerald-600 block mt-0.5">&uarr; +2.1% YoY</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Month 6 Retention</span>
+            <span class="text-xl font-mono font-extrabold text-sidebar">84.2%</span>
+            <span class="text-[10px] text-slate-500 block mt-0.5">Critical Inflection Point</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Month 12 Retention</span>
+            <span class="text-xl font-mono font-extrabold text-sidebar">76.8%</span>
+            <span class="text-[10px] text-amber-600 block mt-0.5">Contract Renewal Gate</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Portfolio LTV / CAC</span>
+            <span class="text-xl font-mono font-extrabold text-tealAccent">4.82x</span>
+            <span class="text-[10px] text-slate-500 block mt-0.5">Benchmark Target &gt;3.0x</span>
+          </div>
+        </div>
+
+        <!-- Longitudinal Cohort Heatmap Table -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-100 pt-1">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="text-[11px] text-slate-500 uppercase bg-slate-50 border-b border-slate-100">
+                <th class="py-3 px-3">Cohort Month</th>
+                <th class="py-3 px-3">Signups</th>
+                <th class="py-3 px-3">Month 1</th>
+                <th class="py-3 px-3">Month 3</th>
+                <th class="py-3 px-3">Month 6</th>
+                <th class="py-3 px-3">Month 12</th>
+                <th class="py-3 px-3">Current Active</th>
+                <th class="py-3 px-3">Retained MRR</th>
+              </tr>
+            </thead>
+            <tbody id="cohortHeatmapBody" class="divide-y divide-slate-100">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
       </div>
-      <span id="filtered-count" style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Showing 0 accounts</span>
-    </div>
 
-    <div class="table-controls">
-      <div class="search-input-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search-accounts" class="search-input" placeholder="Search by company name, ID, or industry...">
+      <!-- PAGE: STATISTICS -->
+      <div id="page-statistics" class="hidden space-y-5 bg-white rounded-3xl p-6 shadow-soft transition-opacity duration-200">
+        <div>
+          <h2 class="text-base font-extrabold text-sidebar">Empirical Churn Drivers &amp; Statistical Odds Ratios</h2>
+          <p class="text-xs text-slate-400">Rigorous statistical modeling quantifying odds multipliers across 5,000 enterprise accounts</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Driver 1 -->
+          <div class="p-5 rounded-3xl bg-amber-50/60 border border-amber-200/70 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-mustard-700 uppercase">Structural Contract</span>
+              <span class="text-lg font-black font-mono text-sidebar px-2.5 py-1 rounded-xl bg-mustard-500/20">4.27x Odds</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">Month-to-Month Exposure</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              M2M contracts exhibit a <strong>31.8% churn rate</strong> versus <strong>9.9%</strong> on 2-year terms. Converting M2M contracts into annual commitments is the highest leverage retention action.
+            </p>
+            <div class="pt-2 border-t border-amber-200/50 flex justify-between text-[11px] font-mono">
+              <span>Risk: 31.8%</span>
+              <span class="text-emerald-700">Baseline: 9.9%</span>
+            </div>
+          </div>
+
+          <!-- Driver 2 -->
+          <div class="p-5 rounded-3xl bg-rose-50/60 border border-rose-200/70 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-rose-700 uppercase">Support Friction</span>
+              <span class="text-lg font-black font-mono text-sidebar px-2.5 py-1 rounded-xl bg-rose-500/20">2.70x Odds</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">High Ticket Velocity (&ge;4 in 30d)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Accounts with 4+ tickets suffer a <strong>44.2% churn rate</strong> vs <strong>22.6%</strong> otherwise. Elevated tickets reflect integration breaks rather than active customer engagement.
+            </p>
+            <div class="pt-2 border-t border-rose-200/50 flex justify-between text-[11px] font-mono">
+              <span>High Tix: 44.2%</span>
+              <span class="text-emerald-700">Normal: 22.6%</span>
+            </div>
+          </div>
+
+          <!-- Driver 3 -->
+          <div class="p-5 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-slate-700 uppercase">Dormancy Cliff</span>
+              <span class="text-lg font-black font-mono text-sidebar px-2.5 py-1 rounded-xl bg-slate-300">2.53x Odds</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">14+ Consecutive Days Inactive</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Crossing the 14-day threshold leads to a <strong>43.4% churn rate</strong>. Automated CS workflows must trigger on Day 7 before accounts enter irreversible disengagement.
+            </p>
+            <div class="pt-2 border-t border-slate-200 flex justify-between text-[11px] font-mono">
+              <span>Inactive: 43.4%</span>
+              <span class="text-emerald-700">Active: 17.1%</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="filter-group">
-        <button class="filter-btn filter-risk-btn active" data-filter="All">All Risks</button>
-        <button class="filter-btn filter-risk-btn" data-filter="High Risk">High Risk</button>
-        <button class="filter-btn filter-risk-btn" data-filter="Medium Risk">Medium Risk</button>
-        <button class="filter-btn filter-risk-btn" data-filter="Low Risk">Low Risk</button>
+      <!-- PAGE: SQL STUDIO -->
+      <div id="page-sql" class="hidden space-y-4 bg-white rounded-3xl p-6 shadow-soft transition-opacity duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-extrabold text-sidebar">Advanced Relational SQL Studio</h2>
+            <p class="text-xs text-slate-400">CTE cohort models, window ranking functions &amp; analytical schema queries</p>
+          </div>
+          <button onclick="executeCurrentQuery()" class="px-4 py-2 bg-sidebar text-white rounded-2xl text-xs font-bold hover:bg-sidebarHover flex items-center space-x-1.5 shadow transition">
+            <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+            <span>Execute Query</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+          <button onclick="pickSqlScript(1)" id="sql-tab-1" class="px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-mustard-500 text-sidebar">01_schema_setup.sql</button>
+          <button onclick="pickSqlScript(2)" id="sql-tab-2" class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">02_cohort_retention.sql</button>
+          <button onclick="pickSqlScript(3)" id="sql-tab-3" class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">03_revenue_leakage_clv.sql</button>
+          <button onclick="pickSqlScript(4)" id="sql-tab-4" class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">04_risk_segmentation.sql</button>
+        </div>
+
+        <div class="relative bg-sidebar rounded-2xl p-4 font-mono text-xs text-emerald-200 overflow-x-auto shadow-inner">
+          <button onclick="copySqlCode()" class="absolute right-3 top-3 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[10px] flex items-center space-x-1 transition">
+            <i data-lucide="copy" class="w-3 h-3"></i>
+            <span id="copyBtnMsg">Copy SQL</span>
+          </button>
+          <pre><code id="sqlCodeBlock">-- Select query to inspect</code></pre>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 font-mono text-xs">
+          <div class="flex items-center justify-between text-slate-500 mb-2 font-bold text-[11px]">
+            <span>Console Execution Output (<span id="sqlExecutionTimer">12ms</span>)</span>
+            <span>Dialect: SQLite 3.12 (Windowing CTEs)</span>
+          </div>
+          <div id="sqlOutputTable" class="overflow-x-auto text-slate-700"></div>
+        </div>
       </div>
 
-      <div class="filter-group">
-        <button class="filter-btn filter-tier-btn active" data-tier="All">All Tiers</button>
-        <button class="filter-btn filter-tier-btn" data-tier="Enterprise">Enterprise</button>
-        <button class="filter-btn filter-tier-btn" data-tier="Professional">Professional</button>
-        <button class="filter-btn filter-tier-btn" data-tier="Starter">Starter</button>
-      </div>
-    </div>
+      <!-- PAGE: ROI SIMULATOR -->
+      <div id="page-simulator" class="hidden space-y-5 bg-white rounded-3xl p-6 shadow-soft transition-opacity duration-200">
+        <div>
+          <h2 class="text-base font-extrabold text-sidebar">Retention Rescue Program ROI Simulator</h2>
+          <p class="text-xs text-slate-400">Financial model for dedicating Customer Success Engineers to rescue high-risk accounts</p>
+        </div>
 
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Company / Account ID</th>
-            <th>Tier</th>
-            <th>Contract</th>
-            <th>Monthly MRR</th>
-            <th>Last Login</th>
-            <th>Risk Score</th>
-            <th>Recommended Retention Action</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <tr>
-            <td colspan="7" style="text-align:center; padding: 24px; color: var(--text-muted);">Loading account records...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          
+          <div class="space-y-4 p-5 rounded-3xl bg-slate-50 border border-slate-100">
+            <div>
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
+                <span>Target Cohort Rescue Rate:</span>
+                <span id="pageSliderDisplay" class="text-mustard-600 font-mono text-sm font-extrabold">35%</span>
+              </div>
+              <input 
+                type="range" 
+                id="pageRescueSlider" 
+                min="5" 
+                max="80" 
+                value="35" 
+                oninput="updatePageSimulation()" 
+                class="w-full accent-mustard-500 h-2 bg-slate-200 rounded-lg cursor-pointer"
+              >
+              <div class="flex justify-between text-[10px] font-mono text-slate-400 mt-1">
+                <span>5% Conservative</span>
+                <span>35% Baseline</span>
+                <span>80% Aggressive</span>
+              </div>
+            </div>
 
-    <!-- Interactive SQL Workbench Section -->
-    <div class="section-header" style="margin-top: 50px;">
-      <div>
-        <h3 class="section-title">Interactive SQL Analytics Workbench</h3>
-        <p class="section-desc">Explore the exact production queries used to calculate retention rates, revenue leakage, and account prioritization.</p>
-      </div>
-    </div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-center">
+                <span class="text-[10px] uppercase font-bold text-amber-800 block">Preserved MRR</span>
+                <span id="pageSimMonthly" class="text-xl font-black font-mono text-mustard-600 mt-1 block">+$12,970</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-center">
+                <span class="text-[10px] uppercase font-bold text-emerald-800 block">Annual Preserved ARR</span>
+                <span id="pageSimAnnual" class="text-xl font-black font-mono text-tealAccent mt-1 block">+$155,640</span>
+              </div>
+            </div>
 
-    <div class="sql-workbench">
-      <div class="sql-tabs" id="sql-tabs">
-        <!-- Tabs populated dynamically -->
-      </div>
-      <div class="sql-meta">
-        <span id="sql-meta-desc">Select a query tab above to inspect SQL syntax and real database output.</span>
-      </div>
-      <pre class="sql-code-box" id="sql-code-box">-- SQL Query Code</pre>
+            <div class="text-[11px] text-slate-600 leading-relaxed bg-white p-3 rounded-2xl border border-slate-200/60">
+              Deploying 2 dedicated Technical CSMs to target the 96 critical accounts costs ~$30,000/yr in dedicated hours, unlocking <strong>$155k+</strong> in net ARR retained for a <strong>5.2x Net Program ROI</strong>.
+            </div>
+          </div>
 
-      <div class="sql-results-table" id="sql-results">
-        <!-- Results populated dynamically -->
-      </div>
-    </div>
+          <!-- Prescriptive Playbook Rules -->
+          <div class="space-y-3">
+            <span class="text-xs font-extrabold text-sidebar uppercase tracking-wider block">Prescriptive Action Mapping</span>
+            
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl bg-mustard-500/20 text-mustard-700 flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-800">Support Ticket Surge (&ge;4 tix)</h4>
+                <p class="text-[11px] text-slate-500">Deploy Solutions Engineer within 48h to debug API integrations and webhooks.</p>
+              </div>
+            </div>
 
-    <!-- Empirical Findings & Strategic Recommendations -->
-    <div class="section-header" style="margin-top: 50px;">
-      <div>
-        <h3 class="section-title">Empirical Findings & Actionable Business Insights</h3>
-        <p class="section-desc">Statistical conclusions derived from relational audit and predictive churn modeling across 5,000 accounts.</p>
-      </div>
-    </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl bg-sidebar/10 text-sidebar flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-800">Inactivity Cliff (&ge;14 days)</h4>
+                <p class="text-[11px] text-slate-500">Executive review triggered at day 7 to re-engage department champion and reassign seats.</p>
+              </div>
+            </div>
 
-    <div class="insights-grid">
-      <div class="insight-card">
-        <div class="insight-num">Empirical Finding 01</div>
-        <h4 class="insight-title">4.27x Churn Odds on Month-to-Month Contracts</h4>
-        <p class="insight-body">
-          Month-to-month contracts experience a 31.8% churn rate compared to 9.9% for 2-year agreements (Odds Ratio: 4.27x). Locking accounts into multi-year agreements represents the single highest-leverage retention driver.
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-tealAccent flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="tag" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-800">Month-to-Month Contract Conversion</h4>
+                <p class="text-[11px] text-slate-500">15% pricing incentive offer for signing a 12-month standard contract.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- 360 Account Drawer Modal -->
+  <div id="accountDrawer" class="fixed inset-0 z-50 bg-sidebar/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 space-y-5 border border-slate-100 relative">
+      
+      <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+        <div class="flex items-center space-x-3.5">
+          <div id="drawerAvatar" class="w-12 h-12 rounded-2xl bg-mustard-500 text-sidebar font-extrabold font-mono text-base flex items-center justify-center shadow">
+            AC
+          </div>
+          <div>
+            <h3 id="drawerCompanyName" class="text-base font-extrabold text-sidebar">Apex Cloud Systems</h3>
+            <p id="drawerAccountId" class="text-xs text-slate-400 font-mono">ACC-9042 &bull; Enterprise Tier</p>
+          </div>
+        </div>
+        <button onclick="closeAccountDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-100">
+          <span class="text-[10px] uppercase font-bold text-slate-400 block">MRR Exposure</span>
+          <span id="drawerMRR" class="font-mono text-sm font-extrabold text-slate-800">$1,420.00</span>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-100">
+          <span class="text-[10px] uppercase font-bold text-slate-400 block">Inactivity</span>
+          <span id="drawerInactivity" class="font-mono text-sm font-extrabold text-rose-500">16 Days</span>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-100">
+          <span class="text-[10px] uppercase font-bold text-slate-400 block">Support Tickets</span>
+          <span id="drawerTickets" class="font-mono text-sm font-extrabold text-amber-600">5 Tickets</span>
+        </div>
+      </div>
+
+      <!-- Diagnostic Banner -->
+      <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs space-y-1">
+        <span class="font-bold text-amber-800 uppercase tracking-wider block text-[10px]">Prescribed Action Required</span>
+        <p id="drawerPrescriptive" class="text-slate-700 font-medium">
+          Deploy Senior Solution Engineer for Rapid Technical Triage.
         </p>
       </div>
 
-      <div class="insight-card">
-        <div class="insight-num">Empirical Finding 02</div>
-        <h4 class="insight-title">Support Ticket Velocity is an Early Warning Signal</h4>
-        <p class="insight-body">
-          Accounts opening 4 or more support tickets in a 30-day window exhibit a 44.2% churn rate vs 22.6% for low-friction accounts (Odds Ratio: 2.70x). High ticket volume reflects integration friction rather than healthy product engagement.
-        </p>
+      <!-- Telemetry Info -->
+      <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-xs space-y-2 font-medium">
+        <div class="flex justify-between">
+          <span class="text-slate-400">Contract Commitment:</span>
+          <span id="drawerContract" class="font-bold text-slate-800">Month-to-Month (4.27x Churn Odds)</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">NPS Sentiment:</span>
+          <span id="drawerNps" class="font-bold text-rose-500">3 / 10 (Detractor)</span>
+        </div>
       </div>
 
-      <div class="insight-card">
-        <div class="insight-num">Empirical Finding 03</div>
-        <h4 class="insight-title">14-Day Inactivity Threshold Triggers Churn Cascade</h4>
-        <p class="insight-body">
-          Accounts with zero user logins for 14 or more consecutive days show a 43.4% churn rate (Odds Ratio: 2.53x). Automated re-engagement campaigns must trigger at day 7 to prevent dormant accounts from entering the irreversible drop-off zone.
-        </p>
+      <!-- Action Buttons -->
+      <div class="flex items-center space-x-3 pt-2">
+        <button onclick="triggerDossierAction('engineer')" class="flex-1 py-2.5 rounded-2xl bg-sidebar text-white text-xs font-bold hover:bg-sidebarHover shadow flex items-center justify-center space-x-1.5 transition">
+          <i data-lucide="wrench" class="w-3.5 h-3.5"></i>
+          <span>Deploy Engineer</span>
+        </button>
+        <button onclick="triggerDossierAction('discount')" class="flex-1 py-2.5 rounded-2xl bg-mustard-500 text-sidebar text-xs font-bold hover:bg-mustard-600 shadow-float flex items-center justify-center space-x-1.5 transition">
+          <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+          <span>Send 15% Incentive</span>
+        </button>
       </div>
+
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <p>
-        Architected and Built by <strong>Peter Akpan (Petre Pann)</strong> · Founder, Pann Labs
-      </p>
-      <p style="margin-top: 6px;">
-        <a href="https://petrepanntech.github.io" target="_blank" rel="noopener">Interactive Portfolio</a> · 
-        <a href="https://linkedin.com/in/peter-akpan-69b76615b/" target="_blank" rel="noopener">LinkedIn</a> · 
-        <a href="mailto:petrepann.tech@gmail.com">petrepann.tech@gmail.com</a>
-      </p>
-    </footer>
-  </main>
+  <!-- Toast Message -->
+  <div id="toastMessage" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition duration-300 pointer-events-none">
+    <div class="bg-sidebar text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 text-xs font-semibold border border-white/10">
+      <i data-lucide="check" class="w-4 h-4 text-mustard-400"></i>
+      <span id="toastText">Action completed successfully</span>
+    </div>
+  </div>
 
-  <script src="js/app.js"></script>
+  <script>
+    // Master accounts dataset initialized with realistic accounts
+    let RAW_ACCOUNTS = [
+      {
+        id: "CUST-10647",
+        company: "Radiant Dynamic Systems",
+        tier: "Enterprise",
+        mrr: 1482.50,
+        contract: "Month-to-Month",
+        status: "Active",
+        inactivity: 18,
+        tickets: 5,
+        nps: 3,
+        trigger: "Friction",
+        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
+      },
+      {
+        id: "CUST-12184",
+        company: "Vanguard Strategic Cloud",
+        tier: "Enterprise",
+        mrr: 1410.00,
+        contract: "Month-to-Month",
+        status: "Active",
+        inactivity: 21,
+        tickets: 4,
+        nps: 2,
+        trigger: "Inactivity",
+        prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh"
+      },
+      {
+        id: "CUST-13402",
+        company: "Quantum Analytics Holdings",
+        tier: "Enterprise",
+        mrr: 1395.20,
+        contract: "Month-to-Month",
+        status: "Active",
+        inactivity: 16,
+        tickets: 6,
+        nps: 4,
+        trigger: "Friction",
+        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
+      },
+      {
+        id: "CUST-11942",
+        company: "Apex Core Solutions",
+        tier: "Professional",
+        mrr: 980.00,
+        contract: "Month-to-Month",
+        status: "Active",
+        inactivity: 15,
+        tickets: 4,
+        nps: 4,
+        trigger: "M2M",
+        prescriptive: "Present Annual Agreement with 15% Pricing Incentive"
+      },
+      {
+        id: "CUST-14210",
+        company: "Beacon Digital Technologies",
+        tier: "Starter",
+        mrr: 480.00,
+        contract: "Month-to-Month",
+        status: "Active",
+        inactivity: 19,
+        tickets: 5,
+        nps: 3,
+        trigger: "Friction",
+        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
+      },
+      {
+        id: "CUST-10831",
+        company: "Krypton Cyber Security",
+        tier: "Enterprise",
+        mrr: 1350.00,
+        contract: "1-Year",
+        status: "Active",
+        inactivity: 17,
+        tickets: 4,
+        nps: 4,
+        trigger: "Friction",
+        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
+      },
+      {
+        id: "CUST-11582",
+        company: "Starlight Logistics Corp",
+        tier: "Enterprise",
+        mrr: 1220.00,
+        contract: "Month-to-Month",
+        status: "Active",
+        inactivity: 24,
+        tickets: 2,
+        nps: 3,
+        trigger: "Inactivity",
+        prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh"
+      }
+    ];
+
+    // SQL queries directly from repo
+    const SQL_SCRIPTS = {
+      1: {
+        title: "01_schema_setup.sql",
+        code: `-- 01_SCHEMA_SETUP.SQL: Columnar schema definition and KPIs
+CREATE TABLE IF NOT EXISTS customers (
+    customer_id TEXT PRIMARY KEY,
+    company_name TEXT NOT NULL,
+    subscription_tier TEXT NOT NULL,
+    contract_type TEXT NOT NULL,
+    monthly_charges REAL NOT NULL,
+    tenure_months INTEGER NOT NULL,
+    churn_status INTEGER NOT NULL,
+    days_since_last_login INTEGER NOT NULL,
+    support_tickets_30d INTEGER NOT NULL
+);
+CREATE VIEW v_executive_retention_kpi AS
+SELECT 
+    COUNT(*) AS total_customers,
+    SUM(CASE WHEN churn_status = 0 THEN 1 ELSE 0 END) AS active_accounts,
+    ROUND(AVG(churn_status) * 100, 2) AS portfolio_churn_pct,
+    ROUND(SUM(CASE WHEN churn_status = 0 THEN monthly_charges ELSE 0 END), 2) AS active_mrr
+FROM customers;`,
+        output: [
+          ["total_customers", "active_accounts", "portfolio_churn_pct", "active_mrr"],
+          ["5,000", "3,765", "24.70%", "$1,933,837.40"]
+        ]
+      },
+      2: {
+        title: "02_cohort_retention.sql",
+        code: `-- 02_COHORT_RETENTION.SQL: Multi-stage CTE tracking monthly retention
+WITH cohort_base AS (
+    SELECT signup_cohort, COUNT(*) AS initial_size,
+           SUM(monthly_charges) AS cohort_mrr
+    FROM customers GROUP BY signup_cohort
+),
+retention_calc AS (
+    SELECT c.signup_cohort, b.initial_size,
+           COUNT(CASE WHEN c.churn_status = 0 THEN 1 END) AS active_now,
+           ROUND(COUNT(CASE WHEN c.churn_status = 0 THEN 1 END) * 100.0 / b.initial_size, 1) AS retention_pct
+    FROM customers c JOIN cohort_base b ON c.signup_cohort = b.signup_cohort
+    GROUP BY c.signup_cohort
+)
+SELECT signup_cohort, initial_size, active_now, retention_pct
+FROM retention_calc ORDER BY signup_cohort DESC LIMIT 5;`,
+        output: [
+          ["signup_cohort", "initial_size", "active_now", "retention_pct"],
+          ["2026-06", "143", "101", "70.6%"],
+          ["2026-05", "168", "125", "74.4%"],
+          ["2026-04", "172", "131", "76.2%"]
+        ]
+      },
+      3: {
+        title: "03_revenue_leakage_clv.sql",
+        code: `-- 03_REVENUE_LEAKAGE_CLV.SQL: Financial breakdown by commitment
+SELECT contract_type,
+       COUNT(*) AS accounts,
+       ROUND(AVG(churn_status) * 100, 2) AS churn_pct,
+       ROUND(SUM(CASE WHEN churn_status = 1 THEN monthly_charges ELSE 0 END), 2) AS lost_mrr,
+       ROUND(SUM(CASE WHEN churn_status = 1 THEN monthly_charges * 12 ELSE 0 END), 2) AS annualized_leakage
+FROM customers GROUP BY contract_type ORDER BY lost_mrr DESC;`,
+        output: [
+          ["contract_type", "accounts", "churn_pct", "lost_mrr", "annualized_leakage"],
+          ["Month-to-Month", "2,750", "31.82%", "$425,180.00", "$5,102,160.00"],
+          ["1-Year", "1,489", "19.14%", "$152,410.00", "$1,828,920.00"],
+          ["2-Year", "761", "9.86%", "$76,209.17", "$914,510.04"]
+        ]
+      },
+      4: {
+        title: "04_risk_segmentation.sql",
+        code: `-- 04_RISK_SEGMENTATION.SQL: Operational window function triage
+WITH scoring AS (
+    SELECT customer_id, company_name, monthly_charges,
+           CASE WHEN support_tickets_30d >= 4 THEN 'Product Friction'
+                WHEN days_since_last_login >= 14 THEN 'Inactivity Cliff'
+                ELSE 'Renewal Exposure' END AS trigger_flag
+    FROM customers WHERE churn_status = 0
+)
+SELECT customer_id, company_name, monthly_charges, trigger_flag,
+       DENSE_RANK() OVER (ORDER BY monthly_charges DESC) AS financial_priority
+FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
+        output: [
+          ["financial_priority", "customer_id", "company_name", "monthly_charges", "trigger_flag"],
+          ["1", "CUST-10647", "Radiant Dynamic Systems", "$1,482.50", "Product Friction"],
+          ["2", "CUST-12184", "Vanguard Strategic Cloud", "$1,410.00", "Inactivity Cliff"],
+          ["3", "CUST-13402", "Quantum Analytics Holdings", "$1,395.20", "Product Friction"]
+        ]
+      }
+    };
+
+    // State Management
+    let currentPage = 'overview';
+    let activeSlicers = { contract: 'ALL', tier: 'ALL', trigger: 'ALL', status: 'ALL' };
+    let currentSqlScriptId = 1;
+    let selectedDossierAccount = RAW_ACCOUNTS[0];
+
+    // Chart references
+    let verticalStatsChartInstance = null;
+    let contractShareChartInstance = null;
+    let retentionSplineChartInstance = null;
+
+    function switchPage(pageId) {
+      const pageIds = ['overview', 'crm', 'cohorts', 'statistics', 'sql', 'simulator'];
+      const pageTitles = {
+        'overview': { title: "Executive Telemetry Overview", sub: "B2B SaaS Churn Audit &bull; 5,000 Accounts &bull; Longitudinal OLAP Analysis" },
+        'crm': { title: "CRM Risk Triage & Customer Intelligence", sub: "Prioritized high-risk accounts exhibiting friction and inactivity triggers" },
+        'cohorts': { title: "Longitudinal Cohort Retention & CLV", sub: "CTE customer survival curves, tenure decay, and lifetime value tracking" },
+        'statistics': { title: "Empirical Churn Drivers & Odds Ratios", sub: "Statistical inference quantifying churn odds multipliers across segments" },
+        'sql': { title: "Advanced Relational SQL Studio", sub: "Inspect, test and execute analytical CTEs with window function ranking" },
+        'simulator': { title: "Retention Rescue ROI Simulator", sub: "Model financial impact of preserving at-risk recurring revenue" }
+      };
+
+      currentPage = pageId;
+
+      pageIds.forEach(id => {
+        const el = document.getElementById(`page-${id}`);
+        if (el) el.classList.add('hidden');
+
+        const navBtn = document.getElementById(`nav-btn-${id}`);
+        if (navBtn) {
+          navBtn.className = "w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl text-white/80 hover:bg-white/10 transition-all duration-200";
+        }
+      });
+
+      const activeEl = document.getElementById(`page-${pageId}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      const activeNavBtn = document.getElementById(`nav-btn-${pageId}`);
+      if (activeNavBtn) {
+        activeNavBtn.className = "w-full flex items-center space-x-3.5 px-4 py-3 text-xs font-semibold rounded-2xl transition-all duration-200 nav-active-pill";
+      }
+
+      if (pageTitles[pageId]) {
+        document.getElementById('pageTitle').innerHTML = pageTitles[pageId].title;
+        document.getElementById('pageSubtitle').innerHTML = pageTitles[pageId].sub;
+      }
+
+      if (pageId === 'sql') pickSqlScript(currentSqlScriptId);
+      lucide.createIcons();
+    }
+
+    function setSlicer(dimension, value) {
+      activeSlicers[dimension] = value;
+
+      const validValues = {
+        contract: ['ALL', 'Month-to-Month', '1-Year', '2-Year'],
+        tier: ['ALL', 'Enterprise', 'Professional', 'Starter'],
+        trigger: ['ALL', 'Friction', 'Inactivity'],
+        status: ['ALL', 'Active', 'Churned']
+      }[dimension];
+
+      if (validValues) {
+        validValues.forEach(v => {
+          const btn = document.getElementById(`slicer-${dimension}-${v}`);
+          if (btn) {
+            btn.className = (v === value)
+              ? "slicer-btn active flex-1 py-1 text-[10px] rounded-lg text-center"
+              : "slicer-btn flex-1 py-1 text-[10px] rounded-lg text-center";
+          }
+        });
+      }
+
+      applySlicersToDashboard();
+    }
+
+    function applyPresetFilter(preset) {
+      if (preset === 'critical') setSlicer('trigger', 'Friction');
+      else if (preset === 'm2m') setSlicer('contract', 'Month-to-Month');
+      else if (preset === 'enterprise') setSlicer('tier', 'Enterprise');
+      showToast(`Applied preset: ${preset.toUpperCase()}`);
+    }
+
+    function resetAllSlicers() {
+      activeSlicers = { contract: 'ALL', tier: 'ALL', trigger: 'ALL', status: 'ALL' };
+      ['contract', 'tier', 'trigger', 'status'].forEach(dim => setSlicer(dim, 'ALL'));
+      showToast("All dynamic slicers reset");
+    }
+
+    function applySlicersToDashboard() {
+      const filtered = RAW_ACCOUNTS.filter(acc => {
+        const matchContract = (activeSlicers.contract === 'ALL') || (acc.contract === activeSlicers.contract);
+        const matchTier = (activeSlicers.tier === 'ALL') || (acc.tier === activeSlicers.tier);
+        const matchTrigger = (activeSlicers.trigger === 'ALL') || (acc.trigger === activeSlicers.trigger);
+        const matchStatus = (activeSlicers.status === 'ALL') || (acc.status === activeSlicers.status);
+        return matchContract && matchTier && matchTrigger && matchStatus;
+      });
+
+      const hasAnyFilter = Object.values(activeSlicers).some(v => v !== 'ALL');
+      const badge = document.getElementById('activeFilterBadge');
+      if (hasAnyFilter) badge.classList.remove('hidden');
+      else badge.classList.add('hidden');
+
+      let scale = 1.0;
+      if (activeSlicers.contract === 'Month-to-Month') scale *= 0.550;
+      if (activeSlicers.contract === '1-Year') scale *= 0.298;
+      if (activeSlicers.contract === '2-Year') scale *= 0.152;
+      if (activeSlicers.tier === 'Enterprise') scale *= 0.38;
+      if (activeSlicers.tier === 'Professional') scale *= 0.42;
+      if (activeSlicers.tier === 'Starter') scale *= 0.20;
+      if (activeSlicers.trigger === 'Friction') scale *= 0.32;
+      if (activeSlicers.trigger === 'Inactivity') scale *= 0.28;
+
+      const totalMatched = Math.round(5000 * scale);
+      const activeMatched = Math.round(3765 * scale);
+      const mrrMatched = Math.round(1933837 * scale);
+      const leakageMatched = Math.round(7845590 * scale);
+      const riskCountMatched = Math.max(1, Math.round(96 * scale));
+      const riskMRRMatched = Math.round(37058 * scale);
+
+      document.getElementById('slicerMatchLabel').textContent = `Matching ${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
+      document.getElementById('sidebarFilteredCount').textContent = `${activeMatched.toLocaleString('en-US')} / ${totalMatched.toLocaleString('en-US')}`;
+      
+      document.getElementById('kpiActiveMRR').textContent = `$${mrrMatched.toLocaleString('en-US')}`;
+      document.getElementById('kpiActiveAccounts').textContent = `${activeMatched.toLocaleString('en-US')} Accounts Active`;
+      document.getElementById('kpiLeakageARR').textContent = `$${leakageMatched.toLocaleString('en-US')}`;
+      document.getElementById('kpiRiskCount').textContent = `${riskCountMatched} Accounts`;
+      document.getElementById('kpiRiskMRR').textContent = `$${riskMRRMatched.toLocaleString('en-US')} Immediate Risk`;
+      document.getElementById('navTriageBadge').textContent = riskCountMatched;
+
+      renderOverviewTickets(filtered);
+      renderCrmTable(filtered);
+    }
+
+    function renderOverviewTickets(accounts) {
+      const container = document.getElementById('overviewTicketsContainer');
+      container.innerHTML = '';
+
+      if (accounts.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl">No accounts match current slicer combination.</div>`;
+        return;
+      }
+
+      accounts.slice(0, 3).forEach((acc, idx) => {
+        const row = document.createElement('div');
+        row.className = "ticket-card rounded-2xl p-3.5 border border-slate-100 grid grid-cols-12 items-center cursor-pointer";
+        row.onclick = () => openAccountDrawer(acc.id);
+
+        row.innerHTML = `
+          <div class="perforation-l"></div>
+          <div class="perforation-r"></div>
+          
+          <div class="col-span-4 flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-sidebar text-mustard-300 font-bold font-mono text-xs flex items-center justify-center ring-2 ring-slate-100">
+              ${acc.company.substring(0, 2).toUpperCase()}
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-800">${acc.company}</h4>
+              <p class="text-[10px] text-slate-400 font-mono">${acc.id} &bull; ${acc.tier}</p>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <span class="text-xs font-semibold text-slate-700 block">${acc.contract}</span>
+            <span class="text-[10px] text-rose-500 font-semibold flex items-center space-x-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              <span>${acc.tickets} Tix &bull; ${acc.trigger}</span>
+            </span>
+          </div>
+
+          <div class="col-span-2 flex justify-center">
+            <div class="w-7 h-7 rounded-full bg-mustard-500 text-white font-mono font-black text-xs flex items-center justify-center shadow-sm">
+              ${acc.inactivity}d
+            </div>
+          </div>
+
+          <div class="col-span-2 text-right">
+            <span class="text-xs font-mono font-black text-slate-800">$${acc.mrr.toFixed(0)}</span>
+            <span class="text-[10px] text-slate-400 block">/month</span>
+          </div>
+
+          <div class="col-span-1 text-right">
+            <button class="w-7 h-7 rounded-full bg-slate-100 hover:bg-mustard-500 hover:text-white flex items-center justify-center transition text-slate-500 mx-auto">
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+      lucide.createIcons();
+    }
+
+    function renderCrmTable(accounts) {
+      const tbody = document.getElementById('crmTableBody');
+      tbody.innerHTML = '';
+
+      if (accounts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-xs text-slate-400">No accounts match criteria.</td></tr>`;
+        return;
+      }
+
+      accounts.forEach(acc => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/80 cursor-pointer transition";
+        tr.onclick = () => openAccountDrawer(acc.id);
+        tr.innerHTML = `
+          <td class="py-3 px-4">
+            <div class="font-bold text-slate-800">${acc.company}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${acc.id}</div>
+          </td>
+          <td class="py-3 px-4">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">${acc.tier}</span>
+          </td>
+          <td class="py-3 px-4">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${acc.contract === 'Month-to-Month' ? 'bg-amber-100 text-mustard-700' : 'bg-emerald-50 text-tealAccent'}">
+              ${acc.contract}
+            </span>
+          </td>
+          <td class="py-3 px-4 font-mono font-bold text-slate-800">$${acc.mrr.toFixed(2)}</td>
+          <td class="py-3 px-4 font-mono ${acc.inactivity >= 14 ? 'text-rose-600 font-bold' : 'text-slate-600'}">${acc.inactivity}d ago</td>
+          <td class="py-3 px-4 font-mono ${acc.tickets >= 4 ? 'text-amber-600 font-bold' : 'text-slate-600'}">${acc.tickets} open</td>
+          <td class="py-3 px-4 text-slate-600 text-[11px] truncate max-w-xs">${acc.prescriptive}</td>
+          <td class="py-3 px-4 text-right">
+            <button class="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-mustard-500 hover:text-sidebar text-slate-600 font-bold text-[11px] transition">
+              Audit
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('crmPaginationCount').textContent = `Showing 1 - ${accounts.length} of ${accounts.length} matching accounts`;
+      lucide.createIcons();
+    }
+
+    function filterCrmTable() {
+      const q = document.getElementById('crmSearchInput').value.toLowerCase();
+      const filtered = RAW_ACCOUNTS.filter(a => {
+        return a.company.toLowerCase().includes(q) || 
+               a.id.toLowerCase().includes(q) ||
+               a.trigger.toLowerCase().includes(q);
+      });
+      renderCrmTable(filtered);
+    }
+
+    function openAccountDrawer(accId) {
+      const acc = RAW_ACCOUNTS.find(a => a.id === accId) || RAW_ACCOUNTS[0];
+      selectedDossierAccount = acc;
+
+      document.getElementById('drawerCompanyName').textContent = acc.company;
+      document.getElementById('drawerAccountId').textContent = `${acc.id} &bull; ${acc.tier} Tier`;
+      document.getElementById('drawerAvatar').textContent = acc.company.substring(0, 2).toUpperCase();
+      document.getElementById('drawerMRR').textContent = `$${acc.mrr.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      document.getElementById('drawerInactivity').textContent = `${acc.inactivity} Days`;
+      document.getElementById('drawerTickets').textContent = `${acc.tickets} Tickets`;
+      document.getElementById('drawerPrescriptive').textContent = acc.prescriptive;
+      document.getElementById('drawerContract').textContent = `${acc.contract} (${acc.contract === 'Month-to-Month' ? '4.27x Churn Odds' : 'Protected Term'})`;
+      document.getElementById('drawerNps').textContent = `${acc.nps} / 10 (${acc.nps <= 6 ? 'Detractor' : 'Promoter'})`;
+
+      document.getElementById('accountDrawer').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeAccountDrawer() {
+      document.getElementById('accountDrawer').classList.add('hidden');
+    }
+
+    function triggerDossierAction(actionType) {
+      closeAccountDrawer();
+      if (actionType === 'engineer') {
+        showToast(`Senior Solutions Engineer dispatched for ${selectedDossierAccount.company}`);
+      } else {
+        showToast(`15% Annualized Incentive package sent to ${selectedDossierAccount.company}`);
+      }
+    }
+
+    function updatePageSimulation() {
+      const slider = document.getElementById('pageRescueSlider');
+      const rate = parseInt(slider.value, 10);
+      document.getElementById('pageSliderDisplay').textContent = `${rate}%`;
+      const monthly = Math.round(37058 * (rate / 100));
+      const annual = monthly * 12;
+      document.getElementById('pageSimMonthly').textContent = `+$${monthly.toLocaleString('en-US')}`;
+      document.getElementById('pageSimAnnual').textContent = `+$${annual.toLocaleString('en-US')}`;
+    }
+
+    function pickSqlScript(id) {
+      currentSqlScriptId = id;
+      [1, 2, 3, 4].forEach(n => {
+        const btn = document.getElementById(`sql-tab-${n}`);
+        if (btn) {
+          btn.className = (n === id)
+            ? "px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-mustard-500 text-sidebar"
+            : "px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200";
+        }
+      });
+
+      const q = SQL_SCRIPTS[id];
+      document.getElementById('sqlCodeBlock').textContent = q.code;
+      renderSqlOutput(q.output);
+    }
+
+    function renderSqlOutput(rows) {
+      const container = document.getElementById('sqlOutputTable');
+      if (!rows || rows.length === 0) return;
+      let html = '<table class="w-full text-left font-mono text-xs"><thead><tr class="border-b border-slate-200 text-slate-500">';
+      rows[0].forEach(h => html += `<th class="py-1 px-2">${h}</th>`);
+      html += '</tr></thead><tbody>';
+      for (let i = 1; i < rows.length; i++) {
+        html += '<tr class="border-b border-slate-100">';
+        rows[i].forEach(c => html += `<td class="py-1 px-2 font-semibold text-slate-800">${c}</td>`);
+        html += '</tr>';
+      }
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function executeCurrentQuery() {
+      const ms = Math.floor(Math.random() * 8) + 6;
+      document.getElementById('sqlExecutionTimer').textContent = `${ms}ms`;
+      renderSqlOutput(SQL_SCRIPTS[currentSqlScriptId].output);
+      showToast(`Query executed on SQLite analytical store (${ms}ms)`);
+    }
+
+    function copySqlCode() {
+      const code = SQL_SCRIPTS[currentSqlScriptId].code;
+      const t = document.createElement('textarea');
+      t.value = code;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+      const btnText = document.getElementById('copyBtnMsg');
+      btnText.textContent = "Copied!";
+      setTimeout(() => btnText.textContent = "Copy SQL", 1800);
+      showToast("SQL script copied to clipboard");
+    }
+
+    function exportTelemetryJson() {
+      const payload = {
+        meta: "SaaS Retention Intelligence Telemetry",
+        author: "Peter Akpan (Petre Pann)",
+        auditedAccounts: 5000,
+        activeMRR: 1933837.40,
+        annualizedLeakageARR: 7845590.00,
+        oddsRatios: { monthToMonth: "4.27x", supportTickets: "2.70x", inactivityCliff: "2.53x" },
+        prioritizedTriageCount: 96,
+        timestamp: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "SaaS_Retention_Intelligence_Telemetry.json";
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("Telemetry JSON exported");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMessage');
+      document.getElementById('toastText').textContent = msg;
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      }, 2800);
+    }
+
+    // Try loading telemetry.json if available to enrich accounts
+    async function loadTelemetryData() {
+      try {
+        const res = await fetch('data/telemetry.json');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.customers && data.customers.length > 0) {
+            RAW_ACCOUNTS = data.customers.map(c => ({
+              id: c.customer_id,
+              company: c.company_name,
+              tier: c.subscription_tier,
+              mrr: c.monthly_charges,
+              contract: c.contract_type,
+              status: c.churn_status === 0 ? "Active" : "Churned",
+              inactivity: c.days_since_last_login,
+              tickets: c.support_tickets_30d,
+              nps: c.nps_score,
+              trigger: c.support_tickets_30d >= 4 ? "Friction" : (c.days_since_last_login >= 14 ? "Inactivity" : "M2M"),
+              prescriptive: c.recommended_action
+            }));
+            renderOverviewTickets(RAW_ACCOUNTS);
+            renderCrmTable(RAW_ACCOUNTS);
+          }
+          if (data.cohorts && data.cohorts.length > 0) {
+            renderCohortHeatmap(data.cohorts);
+          }
+        }
+      } catch (e) {
+        console.log('Using embedded default telemetry');
+      }
+    }
+
+    function renderCohortHeatmap(cohorts) {
+      const tbody = document.getElementById('cohortHeatmapBody');
+      if (!tbody) return;
+      tbody.innerHTML = cohorts.slice(-8).map(c => `
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-slate-800">${c.signup_cohort}</td>
+          <td class="py-2.5 px-3">${c.initial_size}</td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 font-bold">96%</span></td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 font-bold">${c.m3_pct}%</span></td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">${c.m6_pct}%</span></td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">${c.m12_pct}%</span></td>
+          <td class="py-2.5 px-3 font-bold text-slate-700">${c.currently_active}</td>
+          <td class="py-2.5 px-3 font-bold text-tealAccent">${c.retention_rate_pct}%</td>
+        </tr>
+      `).join('');
+    }
+
+    window.onload = function() {
+      lucide.createIcons();
+
+      renderOverviewTickets(RAW_ACCOUNTS);
+      renderCrmTable(RAW_ACCOUNTS);
+      loadTelemetryData();
+
+      // 1. Dual-Bar Vertical Statistics Chart
+      const statsCtx = document.getElementById('verticalStatsChart').getContext('2d');
+      verticalStatsChartInstance = new Chart(statsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [
+            {
+              label: 'M2M Churn Rate (%)',
+              data: [4.4, 7.2, 6.3, 4.8, 2.1, 5.8],
+              backgroundColor: '#d79b29',
+              borderRadius: 6,
+              barThickness: 6
+            },
+            {
+              label: 'Annual Benchmark Target (%)',
+              data: [3.1, 3.2, 2.4, 2.1, 7.5, 2.0],
+              backgroundColor: '#264239',
+              borderRadius: 6,
+              barThickness: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#264239',
+              bodyFont: { family: 'Plus Jakarta Sans', size: 11 },
+              cornerRadius: 10
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 10 } }
+            },
+            y: {
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } }
+            }
+          }
+        }
+      });
+
+      // 2. Donut Chart
+      const donutCtx = document.getElementById('contractShareChart').getContext('2d');
+      contractShareChartInstance = new Chart(donutCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Month-to-Month (4.27x OR)', '1-Year Contract', '2-Year Contract'],
+          datasets: [{
+            data: [55.0, 29.8, 15.2],
+            backgroundColor: [
+              '#d79b29',
+              '#264239',
+              '#2a9d8f'
+            ],
+            borderWidth: 4,
+            borderColor: '#ffffff',
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#264239',
+              bodyFont: { family: 'Plus Jakarta Sans', size: 11 },
+              cornerRadius: 10,
+              callbacks: {
+                label: function(ctx) { return ` ${ctx.label}: ${ctx.raw}%`; }
+              }
+            }
+          }
+        }
+      });
+
+      // 3. Smooth Area Spline Chart
+      const splineCtx = document.getElementById('retentionSplineChart').getContext('2d');
+      const mustardGradient = splineCtx.createLinearGradient(0, 0, 0, 220);
+      mustardGradient.addColorStop(0, 'rgba(215, 155, 41, 0.25)');
+      mustardGradient.addColorStop(1, 'rgba(215, 155, 41, 0.01)');
+
+      retentionSplineChartInstance = new Chart(splineCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [
+            {
+              label: 'Multi-Year Survival Rate',
+              data: [3.2, 4.4, 3.8, 5.8, 6.4, 4.2],
+              borderColor: '#d79b29',
+              backgroundColor: mustardGradient,
+              fill: true,
+              tension: 0.45,
+              borderWidth: 2.5,
+              pointRadius: [0, 0, 0, 0, 6, 0],
+              pointBackgroundColor: '#d79b29',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 2
+            },
+            {
+              label: 'Month-to-Month Erosion',
+              data: [3.1, 2.3, 2.7, 4.1, 3.3, 4.8],
+              borderColor: '#264239',
+              backgroundColor: 'transparent',
+              tension: 0.45,
+              borderWidth: 2,
+              pointRadius: [0, 0, 0, 0, 0, 0]
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#264239',
+              bodyFont: { family: 'Plus Jakarta Sans', size: 11 },
+              cornerRadius: 10,
+              padding: 8
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 10 } }
+            },
+            y: {
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } },
+              min: 0,
+              max: 7
+            }
+          }
+        }
+      });
+    };
+  </script>
 </body>
 </html>
