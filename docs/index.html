@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RetainPulse | Executive SaaS Churn Intelligence</title>
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS CDN with class-based dark mode -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,6 +18,7 @@
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -25,11 +26,26 @@
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            canvas: '#dce8e4',
-            surface: '#f4f8f6',
-            sidebar: '#264239',
-            sidebarHover: '#1f3830',
-            sidebarActive: '#172d26',
+            canvas: {
+              light: '#dce8e4',
+              dark: '#0d1311'
+            },
+            surface: {
+              light: '#f4f8f6',
+              dark: '#131b18'
+            },
+            card: {
+              light: '#ffffff',
+              dark: '#182320'
+            },
+            cardBorder: {
+              light: '#e2ece9',
+              dark: '#24342f'
+            },
+            sidebar: {
+              light: '#1e3830',
+              dark: '#0f1715'
+            },
             mustard: {
               300: '#edd58f',
               400: '#e5be53',
@@ -37,21 +53,22 @@
               600: '#b87e19',
               700: '#94630f'
             },
-            sageCard: '#31544a',
-            darkCard: '#203932',
+            sageCard: '#2d4e44',
+            darkCard: '#1a2c27',
             tealAccent: '#2a9d8f',
             softGreen: '#52b788',
             roseAccent: '#e76f51',
           },
           borderRadius: {
+            'xl': '0.75rem',
             '2xl': '1rem',
             '3xl': '1.35rem',
             '4xl': '1.75rem'
           },
           boxShadow: {
-            'soft': '0 4px 20px -4px rgba(38, 66, 57, 0.07), 0 2px 6px -1px rgba(38, 66, 57, 0.04)',
+            'soft': '0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03)',
+            'card-dark': '0 4px 20px -4px rgba(0, 0, 0, 0.4)',
             'float': '0 8px 24px -4px rgba(215, 155, 41, 0.3)',
-            'nav-active': '0 4px 14px -2px rgba(20, 36, 31, 0.35)',
           }
         }
       }
@@ -66,416 +83,415 @@
       overflow: hidden;
       margin: 0;
       padding: 0;
+    }
+
+    body {
       background-color: #dce8e4;
       background-image: 
-        radial-gradient(circle at 10% 8%, rgba(237, 216, 180, 0.65) 0%, rgba(237, 216, 180, 0.25) 90px, transparent 220px),
-        radial-gradient(circle at 95% 35%, rgba(199, 221, 214, 0.75) 0%, rgba(199, 221, 214, 0.2) 160px, transparent 340px);
+        radial-gradient(circle at 10% 8%, rgba(237, 216, 180, 0.6) 0%, rgba(237, 216, 180, 0.2) 90px, transparent 220px),
+        radial-gradient(circle at 95% 35%, rgba(199, 221, 214, 0.7) 0%, rgba(199, 221, 214, 0.2) 160px, transparent 340px);
       background-repeat: no-repeat;
+      transition: background-color 0.25s ease;
     }
 
-    /* Ticket Card with Perforations */
-    .ticket-card {
-      position: relative;
-      background: #ffffff;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ticket-card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 18px -4px rgba(38, 66, 57, 0.1);
-    }
-    .perforation-l, .perforation-r {
-      position: absolute;
-      top: 50%;
-      width: 12px;
-      height: 12px;
-      background-color: #f4f8f6;
-      border-radius: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-    }
-    .perforation-l { left: -6px; }
-    .perforation-r { right: -6px; }
-
-    /* Topographic card pattern */
-    .topo-pattern {
-      background-image: radial-gradient(circle at 85% 20%, rgba(255,255,255,0.2) 0%, transparent 45%),
-                        radial-gradient(ellipse at 15% 85%, rgba(255,255,255,0.12) 0%, transparent 55%);
+    html.dark body {
+      background-color: #0d1311;
+      background-image: 
+        radial-gradient(circle at 10% 8%, rgba(215, 155, 41, 0.12) 0%, rgba(215, 155, 41, 0.03) 90px, transparent 220px),
+        radial-gradient(circle at 95% 35%, rgba(42, 157, 143, 0.15) 0%, rgba(42, 157, 143, 0.03) 160px, transparent 340px);
     }
 
     /* Left Nav Item Button */
     .nav-side-btn {
-      transition: all 0.18s ease;
+      transition: all 0.15s ease;
     }
     .nav-side-btn.active {
       background-color: #ffffff;
-      color: #264239;
+      color: #1e3830;
       font-weight: 800;
-      box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.2);
+    }
+    html.dark .nav-side-btn.active {
+      background-color: #e5be53;
+      color: #0f1715;
+      box-shadow: 0 4px 14px -2px rgba(229, 190, 83, 0.35);
     }
     .nav-side-btn:not(.active) {
-      color: rgba(255, 255, 255, 0.82);
+      color: rgba(255, 255, 255, 0.78);
     }
     .nav-side-btn:not(.active):hover {
-      background-color: rgba(255, 255, 255, 0.12);
+      background-color: rgba(255, 255, 255, 0.1);
       color: #ffffff;
     }
 
-    /* Power BI Style Slicer Buttons */
-    .slicer-pill {
-      transition: all 0.15s ease;
+    /* Slicer Pill Buttons in Sidebar */
+    .slicer-side-pill {
+      transition: all 0.14s ease;
       cursor: pointer;
     }
-    .slicer-pill.active {
-      background-color: #264239;
-      color: #ffffff;
+    .slicer-side-pill.active {
+      background-color: #ffffff;
+      color: #1e3830;
       font-weight: 700;
-      box-shadow: 0 2px 6px -1px rgba(38, 66, 57, 0.35);
+      box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.25);
     }
-    .slicer-pill:not(.active) {
-      background-color: #f1f5f4;
-      color: #475569;
+    html.dark .slicer-side-pill.active {
+      background-color: #e5be53;
+      color: #0f1715;
     }
-    .slicer-pill:not(.active):hover {
-      background-color: #e2ece9;
-      color: #1e293b;
+    .slicer-side-pill:not(.active) {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.75);
     }
+    .slicer-side-pill:not(.active):hover {
+      background-color: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    /* Informational Chart Tooltip Popover */
+    .info-tooltip {
+      position: relative;
+    }
+    .info-tooltip .info-popover {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      transform: translateY(4px);
+    }
+    .info-tooltip:hover .info-popover {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Perforated ticket rows */
+    .ticket-card {
+      position: relative;
+      transition: all 0.16s ease;
+    }
+    .ticket-card:hover {
+      transform: translateY(-1px);
+    }
+    .perforation-l, .perforation-r {
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    .perforation-l { left: -5px; }
+    .perforation-r { right: -5px; }
 
     /* Internal Table Scrollbars */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #9bb6ac; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #719b8f; }
+    html.dark ::-webkit-scrollbar-thumb { background: #334842; }
   </style>
 </head>
-<body class="text-slate-800 antialiased h-screen w-screen p-2 sm:p-3 flex flex-col font-sans selection:bg-mustard-500 selection:text-white">
+<body class="text-slate-800 dark:text-slate-100 antialiased h-screen w-screen p-2 sm:p-2.5 flex flex-col font-sans selection:bg-mustard-500 selection:text-white">
 
   <!-- Master Fixed Canvas Wrapper -->
-  <div class="h-full w-full bg-surface rounded-3xl border border-white/80 shadow-2xl p-2.5 sm:p-3 flex flex-row gap-3 overflow-hidden">
+  <div class="h-full w-full bg-surface-light dark:bg-surface-dark rounded-3xl border border-white/80 dark:border-cardBorder-dark shadow-2xl p-2 sm:p-2.5 flex flex-row gap-2.5 overflow-hidden transition-colors duration-200">
 
     <!-- ==================================================== -->
-    <!-- LEFT SIDEBAR: Navigation Panel & Executive Identity -->
+    <!-- COMPACT LEFT SIDEBAR: Navigation, Slicers & Theme    -->
     <!-- ==================================================== -->
-    <aside class="w-56 lg:w-60 bg-sidebar rounded-2xl p-3 text-white flex flex-col justify-between shrink-0 shadow-xl relative overflow-hidden select-none">
+    <aside class="w-48 lg:w-52 bg-sidebar-light dark:bg-sidebar-dark rounded-2xl p-2.5 text-white flex flex-col justify-between shrink-0 shadow-xl relative overflow-hidden select-none transition-colors duration-200">
       
-      <!-- Top Section: Branding & Vertical Navigation -->
-      <div class="space-y-4">
+      <!-- Top Section: Brand, Profile & 6 Navigation Pages -->
+      <div class="space-y-3">
         
-        <!-- Brand Badge -->
-        <div class="flex items-center space-x-2.5 px-1 pt-1">
-          <div class="w-8 h-8 rounded-xl bg-mustard-500 text-sidebar flex items-center justify-center font-extrabold text-xs shadow-md">
-            RP
-          </div>
-          <div>
-            <div class="flex items-center space-x-1">
-              <span class="text-xs font-black tracking-wider uppercase">RetainPulse</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        <!-- Brand & Author Header -->
+        <div class="px-1 pt-0.5">
+          <div class="flex items-center space-x-2">
+            <div class="w-7 h-7 rounded-xl bg-mustard-500 text-sidebar-light font-extrabold text-xs flex items-center justify-center shadow-md">
+              RP
             </div>
-            <p class="text-[9px] text-white/60 font-medium">SaaS Retention Telemetry</p>
+            <div>
+              <div class="flex items-center space-x-1">
+                <span class="text-xs font-black tracking-wider uppercase">RetainPulse</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              </div>
+              <p class="text-[9px] text-white/60 font-medium">SaaS Retention Telemetry</p>
+            </div>
+          </div>
+
+          <div class="mt-2 p-1.5 rounded-xl bg-white/10 dark:bg-white/5 border border-white/10 flex items-center justify-between text-xs">
+            <div>
+              <span class="text-[10px] font-extrabold text-white block leading-tight">Peter Akpan</span>
+              <span class="text-[8px] text-mustard-300 font-medium">Pann Labs Analytics</span>
+            </div>
+            <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition" title="Visit Live Portfolio">
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </a>
           </div>
         </div>
 
-        <!-- Author Profile Callout -->
-        <div class="p-2 rounded-xl bg-white/10 border border-white/10 flex items-center justify-between text-xs">
-          <div>
-            <span class="text-[10px] font-extrabold text-white block uppercase tracking-tight">Peter Akpan</span>
-            <span class="text-[9px] text-mustard-300 font-medium">Founder &bull; Pann Labs</span>
-          </div>
-          <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white transition" title="Visit Live Portfolio">
-            <i data-lucide="external-link" class="w-3 h-3"></i>
-          </a>
-        </div>
+        <!-- 6 Page Navigation List -->
+        <nav class="space-y-1">
+          <span class="text-[8px] uppercase font-extrabold tracking-wider text-white/50 px-1.5 block">REPORT PAGES</span>
 
-        <!-- Vertical Navigation Menu -->
-        <nav class="space-y-1.5 pt-1">
-          <span class="text-[9px] uppercase font-extrabold tracking-wider text-white/50 px-2 block">DASHBOARD PAGES</span>
-
-          <button onclick="switchPage('home')" id="nav-btn-home" class="w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn active">
+          <button onclick="switchPage('home')" id="nav-btn-home" class="w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn active">
             <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 shrink-0"></i>
-            <span class="text-[11px] tracking-wide">Home Overview</span>
+            <span class="text-[11px] tracking-wide">Overview</span>
           </button>
 
-          <button onclick="switchPage('cohorts')" id="nav-btn-cohorts" class="w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn">
+          <button onclick="switchPage('cohorts')" id="nav-btn-cohorts" class="w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn">
             <i data-lucide="layers" class="w-3.5 h-3.5 shrink-0"></i>
-            <span class="text-[11px] tracking-wide">Cohort &amp; CLV</span>
+            <span class="text-[11px] tracking-wide">Cohorts</span>
           </button>
 
-          <button onclick="switchPage('triage')" id="nav-btn-triage" class="w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-xl nav-side-btn">
-            <div class="flex items-center space-x-2.5">
+          <button onclick="switchPage('triage')" id="nav-btn-triage" class="w-full flex items-center justify-between px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn">
+            <div class="flex items-center space-x-2">
               <i data-lucide="flame" class="w-3.5 h-3.5 shrink-0 text-mustard-400"></i>
-              <span class="text-[11px] tracking-wide">Risk Drivers</span>
+              <span class="text-[11px] tracking-wide">Risk Triage</span>
             </div>
-            <span id="navBadgeRisk" class="px-1.5 py-0.2 rounded-full bg-mustard-500 text-sidebar text-[9px] font-mono font-black">96</span>
+            <span id="navBadgeRisk" class="px-1.5 py-0.2 rounded-full bg-mustard-500 text-sidebar-light text-[8px] font-mono font-black">96</span>
           </button>
 
-          <button onclick="switchPage('recommendations')" id="nav-btn-recommendations" class="w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn">
+          <button onclick="switchPage('leakage')" id="nav-btn-leakage" class="w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn">
+            <i data-lucide="dollar-sign" class="w-3.5 h-3.5 shrink-0 text-emerald-300"></i>
+            <span class="text-[11px] tracking-wide">Leakage &amp; CLV</span>
+          </button>
+
+          <button onclick="switchPage('recommendations')" id="nav-btn-recommendations" class="w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn">
             <i data-lucide="check-circle-2" class="w-3.5 h-3.5 shrink-0 text-softGreen"></i>
             <span class="text-[11px] tracking-wide">Strategy &amp; ROI</span>
           </button>
+
+          <button onclick="switchPage('drillthrough')" id="nav-btn-drillthrough" class="w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn">
+            <i data-lucide="compass" class="w-3.5 h-3.5 shrink-0 text-teal-300"></i>
+            <span class="text-[11px] tracking-wide">Drill Explorer</span>
+          </button>
         </nav>
+
+        <!-- Dynamic Contextual Slicers Embedded Directly in Sidebar -->
+        <div class="pt-2 border-t border-white/10 space-y-2">
+          <div class="flex items-center justify-between px-1 text-[8px] uppercase font-extrabold text-white/50 tracking-wider">
+            <span id="sideSlicerTitle">PAGE FILTERS</span>
+            <button onclick="resetActivePageFilters()" class="text-mustard-300 hover:underline">Reset</button>
+          </div>
+          
+          <div id="sideSlicersContainer" class="space-y-2">
+            <!-- Dynamically populated per page -->
+          </div>
+        </div>
 
       </div>
 
-      <!-- Bottom Section: Database Sync & Utilities -->
-      <div class="pt-3 border-t border-white/10 space-y-2">
-        <div class="px-1 text-[10px] text-white/60 font-mono">
-          <div class="flex items-center justify-between text-[9px]">
-            <span>DATA STORE:</span>
-            <span class="text-mustard-300 font-bold">SQLite 3.12</span>
+      <!-- Bottom Section: Theme Toggle, SQL Modal & Status -->
+      <div class="pt-2 border-t border-white/10 space-y-2 shrink-0">
+        
+        <!-- Dark Mode Toggle Button -->
+        <button onclick="toggleDarkMode()" class="w-full py-1.5 px-2 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-between text-[10px] font-bold transition">
+          <div class="flex items-center space-x-1.5">
+            <i id="themeIcon" data-lucide="moon" class="w-3 h-3 text-mustard-300"></i>
+            <span id="themeLabel">Dark Mode</span>
           </div>
-          <div class="text-[9px] text-white/40 mt-0.5">5,000 Accounts Audited</div>
-        </div>
+          <span id="themeTogglePill" class="w-6 h-3.5 rounded-full bg-white/20 p-0.5 flex items-center transition">
+            <span id="themeIndicator" class="w-2.5 h-2.5 rounded-full bg-white transform translate-x-0 transition"></span>
+          </span>
+        </button>
 
-        <div class="grid grid-cols-2 gap-1.5 pt-1">
-          <button onclick="openSqlModal()" class="px-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white flex items-center justify-center space-x-1 transition" title="Inspect Analytical SQL Queries">
-            <i data-lucide="terminal" class="w-3 h-3 text-mustard-400"></i>
-            <span>SQL View</span>
+        <div class="grid grid-cols-2 gap-1 text-[9px]">
+          <button onclick="openSqlModal()" class="py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold flex items-center justify-center space-x-1 transition" title="Inspect Analytical SQL Queries">
+            <i data-lucide="terminal" class="w-2.5 h-2.5 text-mustard-400"></i>
+            <span>SQL</span>
           </button>
-          <button onclick="exportTelemetryJson()" class="px-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white flex items-center justify-center space-x-1 transition" title="Export Telemetry JSON">
-            <i data-lucide="download" class="w-3 h-3"></i>
+          <button onclick="exportTelemetryJson()" class="py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold flex items-center justify-center space-x-1 transition" title="Export Audit JSON">
+            <i data-lucide="download" class="w-2.5 h-2.5"></i>
             <span>Export</span>
           </button>
         </div>
 
-        <button onclick="resetActivePageFilters()" class="w-full py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-bold text-white/70 hover:text-white flex items-center justify-center space-x-1.5 transition">
-          <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-          <span>Reset Page Filters</span>
-        </button>
+        <div class="px-1 text-[8px] text-white/50 font-mono flex items-center justify-between">
+          <span>STORE: SQLite 3.12</span>
+          <span class="text-mustard-300 font-bold">5k ACCTS</span>
+        </div>
+
       </div>
 
     </aside>
 
     <!-- ==================================================== -->
-    <!-- RIGHT MAIN STAGE: Top Slicer Bar + Dynamic Dashboard -->
+    <!-- RIGHT MAIN CANVAS: Generous, Breathable Dashboard     -->
     <!-- ==================================================== -->
-    <section class="flex-1 min-h-0 flex flex-col gap-2.5 overflow-hidden">
+    <section class="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden">
       
-      <!-- DYNAMIC PAGE-CONTEXTUAL SLICER BAR -->
-      <header class="bg-white rounded-2xl p-2 px-3 shadow-soft border border-slate-200/70 shrink-0 flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
-        
-        <!-- Left: Page Title & Analytical Breadcrumb -->
+      <!-- Top Title Bar -->
+      <header class="bg-card-light dark:bg-card-dark rounded-2xl p-2.5 px-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark shrink-0 flex items-center justify-between transition-colors duration-200">
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 id="pageHeaderTitle" class="text-xs font-black text-sidebar-light dark:text-mustard-300 uppercase tracking-wider">Executive Overview</h1>
+            <span class="text-slate-300 dark:text-slate-600">&bull;</span>
+            <span id="pageHeaderSubtitle" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">5,000 Audited B2B Accounts</span>
+          </div>
+        </div>
+
         <div class="flex items-center space-x-2">
-          <h1 id="pageHeaderTitle" class="text-xs font-black text-sidebar uppercase tracking-wider">Executive Telemetry Overview</h1>
-          <span class="text-slate-300">&bull;</span>
-          <p id="pageHeaderSubtitle" class="text-[10px] text-slate-500 font-medium">B2B SaaS Churn Audit &bull; 5,000 Accounts</p>
+          <span id="canvasFilterBadge" class="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-mono text-[9px] font-extrabold border border-emerald-200 dark:border-emerald-800">
+            5,000 Accounts (100%)
+          </span>
+          <button onclick="drillIntoMetric('portfolio')" class="text-[10px] font-bold text-mustard-600 dark:text-mustard-400 hover:underline flex items-center space-x-1">
+            <span>Drill All</span>
+            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+          </button>
         </div>
-
-        <!-- Right: Page-Specific Slicers (Dynamically switched per page) -->
-        <div class="flex items-center space-x-2 flex-wrap" id="pageSlicersContainer">
-          <!-- Populated dynamically via JS to be 100% relevant to the active page -->
-        </div>
-
       </header>
 
-      <!-- DYNAMIC PAGES CONTAINER (Strict 100vh flex-1 height) -->
+      <!-- DYNAMIC PAGES CONTAINER (100vh flex-1 height) -->
       <main class="flex-1 min-h-0 relative overflow-hidden">
 
         <!-- ========================================== -->
-        <!-- PAGE 1: HOME OVERVIEW -->
+        <!-- PAGE 1: EXECUTIVE OVERVIEW (HOME)          -->
         <!-- ========================================== -->
         <div id="page-home" class="h-full flex flex-col gap-2.5">
           
-          <!-- Top 4 Executive KPI Cards -->
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
+          <!-- Top 3 Clean Hero Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 shrink-0">
             
-            <div class="bg-mustard-500 rounded-2xl p-3 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-20">
+            <div class="bg-mustard-500 rounded-2xl p-3.5 text-white shadow-soft relative overflow-hidden flex flex-col justify-between h-24">
               <div class="flex items-start justify-between">
                 <div>
                   <span class="text-[10px] font-semibold uppercase tracking-wider text-white/80 block">Active Portfolio MRR</span>
-                  <div id="kpiActiveMRR" class="text-xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">$1,933,837</div>
+                  <div id="kpiActiveMRR" class="text-2xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">$1,933,837</div>
                 </div>
-                <div class="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white">
                   <i data-lucide="trending-up" class="w-4 h-4"></i>
                 </div>
               </div>
-              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/20">
+              <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-white/20">
                 <span id="kpiActiveAccounts" class="text-white/90">3,765 Accounts Active</span>
-                <span id="kpiAvgMRR" class="font-mono bg-white/20 px-1.5 py-0.2 rounded-full font-bold">Avg $513/mo</span>
+                <span class="font-mono bg-white/20 px-1.5 py-0.2 rounded-full font-bold">Avg $513/mo</span>
               </div>
             </div>
 
-            <div class="bg-sageCard rounded-2xl p-3 text-white shadow-soft relative overflow-hidden topo-pattern flex flex-col justify-between h-20">
+            <div class="bg-sageCard rounded-2xl p-3.5 text-white shadow-soft relative overflow-hidden flex flex-col justify-between h-24">
               <div class="flex items-start justify-between">
                 <div>
                   <span class="text-[10px] font-semibold uppercase tracking-wider text-white/80 block">Annualized Lost Leakage</span>
-                  <div id="kpiLeakageARR" class="text-xl font-black font-mono tracking-tight text-mustard-300 leading-tight mt-0.5">$7,845,590</div>
+                  <div id="kpiLeakageARR" class="text-2xl font-black font-mono tracking-tight text-mustard-300 leading-tight mt-0.5">$7,845,590</div>
                 </div>
-                <div class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-rose-300">
+                <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-rose-300">
                   <i data-lucide="shield-alert" class="w-4 h-4"></i>
                 </div>
               </div>
-              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/15">
+              <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-white/15">
                 <span id="kpiChurnedAccounts" class="text-white/80">1,235 Churned Exits</span>
-                <span id="kpiLostMRR" class="font-mono bg-rose-500/25 text-rose-200 px-1.5 py-0.2 rounded-full font-bold">-$653.8k/mo</span>
+                <span class="font-mono bg-rose-500/25 text-rose-200 px-1.5 py-0.2 rounded-full font-bold">-$653.8k/mo</span>
               </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-3 text-slate-800 shadow-soft border border-slate-200/70 flex flex-col justify-between h-20">
+            <div class="bg-card-light dark:bg-card-dark rounded-2xl p-3.5 text-slate-800 dark:text-slate-100 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-24 transition-colors duration-200">
               <div class="flex items-start justify-between">
                 <div>
-                  <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 block">Baseline Churn Rate</span>
-                  <div id="kpiChurnRate" class="text-xl font-black font-mono tracking-tight text-sidebar leading-tight mt-0.5">24.70%</div>
+                  <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Baseline Churn Rate</span>
+                  <div id="kpiChurnRate" class="text-2xl font-black font-mono tracking-tight text-sidebar-light dark:text-emerald-400 leading-tight mt-0.5">24.70%</div>
                 </div>
-                <div class="w-7 h-7 rounded-xl bg-amber-50 text-mustard-600 flex items-center justify-center border border-amber-200">
+                <div class="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-mustard-600 dark:text-mustard-400 flex items-center justify-center border border-amber-200 dark:border-amber-800">
                   <i data-lucide="pie-chart" class="w-4 h-4"></i>
                 </div>
               </div>
-              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-slate-100">
-                <span id="kpiM2mRateLabel" class="text-slate-500">M2M Risk: 31.8%</span>
-                <span class="font-mono text-emerald-600 font-bold">Target &lt;15%</span>
-              </div>
-            </div>
-
-            <div class="bg-darkCard rounded-2xl p-3 text-white shadow-soft flex flex-col justify-between h-20">
-              <div class="flex items-start justify-between">
-                <div>
-                  <span class="text-[10px] font-semibold uppercase tracking-wider text-white/70 block">Priority At-Risk Accounts</span>
-                  <div id="kpiRiskCount" class="text-xl font-black font-mono tracking-tight text-white leading-tight mt-0.5">96 Accounts</div>
-                </div>
-                <div class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-mustard-400">
-                  <i data-lucide="flame" class="w-4 h-4"></i>
-                </div>
-              </div>
-              <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/10">
-                <span id="kpiRiskMRR" class="text-mustard-300 font-bold font-mono">$37,420 Immediate MRR</span>
-                <button onclick="switchPage('triage')" class="text-white hover:underline font-semibold flex items-center space-x-1">
-                  <span>Triage</span>
-                  <i data-lucide="arrow-right" class="w-2.5 h-2.5"></i>
-                </button>
+              <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-100 dark:border-slate-800">
+                <span class="text-slate-500 dark:text-slate-400">M2M Risk Rate: 31.8%</span>
+                <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">Target &lt;15%</span>
               </div>
             </div>
 
           </div>
 
-          <!-- Bottom Visuals Split (5 cols Donut/Velocity + 7 cols Tickets/Spline) -->
+          <!-- Bottom 2 Spacious Visual Cards -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
             
-            <!-- Left 5 Cols -->
-            <div class="lg:col-span-5 flex flex-col gap-2.5 h-full min-h-0">
-              
-              <!-- Visual 1: Donut -->
-              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
-                <div class="flex items-center justify-between shrink-0">
-                  <div>
-                    <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Contract Commitment Share</h3>
-                    <p class="text-[10px] text-slate-400">Distribution across active portfolio filter</p>
-                  </div>
-                  <span id="homeDonutOddsBadge" class="px-2 py-0.5 rounded-full bg-amber-50 text-mustard-600 font-mono font-bold text-[9px] border border-amber-200">
-                    4.27x Churn Odds
-                  </span>
-                </div>
-
-                <div class="relative flex-1 min-h-0 flex items-center justify-center py-1">
-                  <canvas id="contractShareChart"></canvas>
-                  <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <span class="text-[11px] font-black text-slate-700">Contract</span>
-                    <span class="text-[9px] text-slate-400 font-medium">Split</span>
+            <!-- Left: Contract Share Donut (5 cols) -->
+            <div class="lg:col-span-5 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-1.5">
+                  <h3 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Contract Commitment Share</h3>
+                  
+                  <!-- Info Tooltip -->
+                  <div class="info-tooltip cursor-help">
+                    <i data-lucide="info" class="w-3 h-3 text-slate-400"></i>
+                    <div class="info-popover absolute left-0 top-5 z-30 w-56 p-2 rounded-xl bg-sidebar-light dark:bg-slate-900 text-white text-[10px] shadow-xl border border-white/10 leading-relaxed">
+                      <strong>Methodology:</strong> Breakdown of total accounts across Month-to-Month, 1-Year, and 2-Year terms. Month-to-Month accounts exhibit a 4.27x higher churn odds ratio.
+                    </div>
                   </div>
                 </div>
 
-                <div class="grid grid-cols-3 gap-1.5 text-center text-xs shrink-0 pt-1 border-t border-slate-100">
-                  <div class="p-1 rounded-xl bg-amber-50/70 border border-amber-100">
-                    <span class="text-[9px] text-mustard-600 font-bold block">M2M</span>
-                    <span id="donutStatM2M" class="font-mono font-black text-slate-800 text-[11px]">54.2%</span>
-                  </div>
-                  <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                    <span class="text-[9px] text-slate-500 font-bold block">1-Year</span>
-                    <span id="donutStat1Yr" class="font-mono font-black text-slate-800 text-[11px]">27.6%</span>
-                  </div>
-                  <div class="p-1 rounded-xl bg-emerald-50/70 border border-emerald-100">
-                    <span class="text-[9px] text-tealAccent font-bold block">2-Year</span>
-                    <span id="donutStat2Yr" class="font-mono font-black text-slate-800 text-[11px]">18.2%</span>
-                  </div>
+                <button onclick="drillIntoMetric('contracts')" class="text-[10px] font-bold text-mustard-600 dark:text-mustard-400 hover:underline flex items-center space-x-0.5">
+                  <span>Drill Through</span>
+                  <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </button>
+              </div>
+
+              <div class="relative flex-1 min-h-0 flex items-center justify-center my-1">
+                <canvas id="contractShareChart"></canvas>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-xs font-black text-slate-700 dark:text-slate-200">Commitment</span>
+                  <span class="text-[9px] text-slate-400 font-medium">Split</span>
                 </div>
               </div>
 
-              <!-- Visual 2: Dual Bar Velocity -->
-              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
-                <div class="flex items-center justify-between shrink-0">
-                  <div>
-                    <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Retention Velocity Benchmark</h3>
-                    <p class="text-[10px] text-slate-400">Monthly Churn (%) vs Benchmark Target (%)</p>
+              <div class="grid grid-cols-3 gap-2 text-center text-xs shrink-0 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div class="p-1.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/50">
+                  <span class="text-[9px] text-mustard-600 dark:text-mustard-400 font-bold block">M2M</span>
+                  <span id="donutStatM2M" class="font-mono font-black text-slate-800 dark:text-slate-100 text-xs">54.2%</span>
+                </div>
+                <div class="p-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50">
+                  <span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold block">1-Year</span>
+                  <span id="donutStat1Yr" class="font-mono font-black text-slate-800 dark:text-slate-100 text-xs">27.6%</span>
+                </div>
+                <div class="p-1.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50">
+                  <span class="text-[9px] text-tealAccent font-bold block">2-Year</span>
+                  <span id="donutStat2Yr" class="font-mono font-black text-slate-800 dark:text-slate-100 text-xs">18.2%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Retention Velocity Benchmark (7 cols) -->
+            <div class="lg:col-span-7 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-1.5">
+                  <h3 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Retention Velocity Benchmark</h3>
+                  
+                  <div class="info-tooltip cursor-help">
+                    <i data-lucide="info" class="w-3 h-3 text-slate-400"></i>
+                    <div class="info-popover absolute left-0 top-5 z-30 w-60 p-2 rounded-xl bg-sidebar-light dark:bg-slate-900 text-white text-[10px] shadow-xl border border-white/10 leading-relaxed">
+                      <strong>Analysis:</strong> Tracks monthly customer exit velocity against our baseline 9.9% annual benchmark. Monthly spikes flag integration friction.
+                    </div>
                   </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
                   <div class="flex items-center space-x-2 text-[10px]">
                     <span class="flex items-center space-x-1">
                       <span class="w-2 h-2 rounded-full bg-mustard-500"></span>
-                      <span id="barLegendSegment" class="text-slate-500">Segment (31.8%)</span>
+                      <span id="barLegendLabel" class="text-slate-500 dark:text-slate-400">Segment (31.8%)</span>
                     </span>
                     <span class="flex items-center space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-sidebar"></span>
-                      <span class="text-slate-500">Target (9.9%)</span>
+                      <span class="w-2 h-2 rounded-full bg-sidebar-light dark:bg-slate-400"></span>
+                      <span class="text-slate-500 dark:text-slate-400">Target (9.9%)</span>
                     </span>
                   </div>
-                </div>
 
-                <div class="flex-1 min-h-0 w-full pt-1">
-                  <canvas id="verticalStatsChart"></canvas>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Right 7 Cols -->
-            <div class="lg:col-span-7 flex flex-col gap-2.5 h-full min-h-0">
-              
-              <!-- Visual 3: Priority Accounts Flight Tickets (Internal Scroll) -->
-              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col flex-1 min-h-0">
-                <div class="flex items-center justify-between shrink-0 pb-1.5 border-b border-slate-100">
-                  <div class="flex items-center space-x-2">
-                    <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Priority Risk Accounts</h2>
-                    <span id="homePriorityCountTag" class="px-2 py-0.2 rounded-full bg-rose-50 text-rose-600 font-bold text-[9px] border border-rose-200">
-                      7 Immediate Actions
-                    </span>
-                  </div>
-                  <button onclick="switchPage('triage')" class="text-[10px] font-bold text-mustard-600 hover:underline">
-                    View Complete Triage List &rarr;
+                  <button onclick="drillIntoMetric('velocity')" class="text-[10px] font-bold text-mustard-600 dark:text-mustard-400 hover:underline flex items-center space-x-0.5">
+                    <span>Drill Through</span>
+                    <i data-lucide="chevron-right" class="w-3 h-3"></i>
                   </button>
                 </div>
-
-                <div class="grid grid-cols-12 text-[9px] font-extrabold text-slate-400 uppercase tracking-wider px-3 py-1 shrink-0">
-                  <div class="col-span-4">Account &amp; CSM</div>
-                  <div class="col-span-3">Contract &amp; Trigger</div>
-                  <div class="col-span-2 text-center">Inactivity</div>
-                  <div class="col-span-2 text-right">At-Risk MRR</div>
-                  <div class="col-span-1 text-right">Audit</div>
-                </div>
-
-                <div class="flex-1 min-h-0 overflow-y-auto space-y-1.5 pr-1" id="overviewTicketsContainer">
-                  <!-- Dynamically populated via JS -->
-                </div>
               </div>
 
-              <!-- Visual 4: Longitudinal Spline Chart -->
-              <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between flex-1 min-h-0">
-                <div class="flex items-center justify-between shrink-0">
-                  <div>
-                    <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Retention Trajectory</h3>
-                    <p class="text-[10px] text-slate-400">Decay curves across 30 cohorts responding to active filter</p>
-                  </div>
-                  <div class="px-2.5 py-0.5 rounded-full bg-sidebar text-white text-[10px] font-mono shadow-sm flex items-center space-x-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-mustard-400"></span>
-                    <span id="splineBadgeLabel">M6 Benchmark: <strong>84.2%</strong></span>
-                  </div>
-                </div>
-
-                <div class="flex-1 min-h-0 w-full pt-1">
-                  <canvas id="retentionSplineChart"></canvas>
-                </div>
-
-                <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100 shrink-0">
-                  <div class="flex items-center space-x-3">
-                    <span class="flex items-center space-x-1">
-                      <span class="w-2.5 h-1 bg-mustard-500 rounded-full"></span>
-                      <span>Filtered Cohort Survival</span>
-                    </span>
-                    <span class="flex items-center space-x-1">
-                      <span class="w-2.5 h-1 bg-sidebar rounded-full"></span>
-                      <span>M2M Decay Cliff</span>
-                    </span>
-                  </div>
-                  <span class="font-mono text-slate-400 text-[9px]">CTE 02_cohort_retention.sql</span>
-                </div>
+              <div class="flex-1 min-h-0 w-full pt-2">
+                <canvas id="verticalStatsChart"></canvas>
               </div>
 
+              <div class="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800 shrink-0">
+                <span>SQL CTE: 01_schema_setup.sql</span>
+                <span class="font-mono text-emerald-600 dark:text-emerald-400">H1 Run-rate Verified</span>
+              </div>
             </div>
 
           </div>
@@ -483,61 +499,68 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- PAGE 2: COHORT SURVIVAL & CLV -->
+        <!-- PAGE 2: COHORT SURVIVAL ANALYSIS           -->
         <!-- ========================================== -->
         <div id="page-cohorts" class="hidden h-full flex flex-col gap-2.5">
           
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
-            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between">
               <div>
-                <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 3 Survival</span>
-                <span id="cohortKpiM3" class="text-lg font-mono font-black text-sidebar">91.4%</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Month 3 Survival</span>
+                <span id="cohortKpiM3" class="text-xl font-mono font-black text-sidebar-light dark:text-slate-100">91.4%</span>
               </div>
-              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">&uarr; +2.1% YoY</span>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-100 dark:border-emerald-800">&uarr; +2.1% YoY</span>
             </div>
 
-            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between">
               <div>
-                <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 6 Retention</span>
-                <span id="cohortKpiM6" class="text-lg font-mono font-black text-sidebar">84.2%</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Month 6 Retention</span>
+                <span id="cohortKpiM6" class="text-xl font-mono font-black text-sidebar-light dark:text-slate-100">84.2%</span>
               </div>
-              <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Inflection Point</span>
+              <span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">Inflection Gate</span>
             </div>
 
-            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between">
               <div>
-                <span class="text-[9px] uppercase font-bold text-slate-400 block">Month 12 Renewal</span>
-                <span id="cohortKpiM12" class="text-lg font-mono font-black text-sidebar">76.8%</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Month 12 Renewal</span>
+                <span id="cohortKpiM12" class="text-xl font-mono font-black text-sidebar-light dark:text-slate-100">76.8%</span>
               </div>
-              <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">Annual Target</span>
+              <span class="text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-100 dark:border-amber-800">Annual Gate</span>
             </div>
 
-            <div class="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-soft flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between">
               <div>
-                <span class="text-[9px] uppercase font-bold text-slate-400 block">Portfolio LTV / CAC</span>
-                <span id="cohortKpiLtv" class="text-lg font-mono font-black text-tealAccent">4.82x</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Portfolio LTV / CAC</span>
+                <span id="cohortKpiLtv" class="text-xl font-mono font-black text-tealAccent">4.82x</span>
               </div>
-              <span class="text-[10px] font-bold text-tealAccent bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100">&gt;3.0x Benchmark</span>
+              <span class="text-[10px] font-bold text-tealAccent bg-teal-50 dark:bg-teal-950/60 px-2 py-0.5 rounded-full border border-teal-100 dark:border-teal-800">&gt;3.0x Target</span>
             </div>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
             
             <!-- Left: Matrix (7 cols) -->
-            <div class="lg:col-span-7 bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col h-full min-h-0">
-              <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100">
-                <div>
-                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Longitudinal Cohort Retention Matrix</h3>
-                  <p class="text-[10px] text-slate-400">Tracking customer survival brackets across monthly acquisition cohorts</p>
+            <div class="lg:col-span-7 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col h-full min-h-0 transition-colors duration-200">
+              <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center space-x-1.5">
+                  <h3 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Longitudinal Retention Matrix</h3>
+                  <div class="info-tooltip cursor-help">
+                    <i data-lucide="info" class="w-3 h-3 text-slate-400"></i>
+                    <div class="info-popover absolute left-0 top-5 z-30 w-56 p-2 rounded-xl bg-sidebar-light dark:bg-slate-900 text-white text-[10px] shadow-xl border border-white/10 leading-relaxed">
+                      <strong>Methodology:</strong> Multi-stage CTE tracking signup cohorts across 18 months. Highlights decay inflection points.
+                    </div>
+                  </div>
                 </div>
-                <span id="cohortTenureBadge" class="text-[10px] font-mono text-mustard-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 font-bold">
-                  Average Tenure: 17.5 Mo
-                </span>
+
+                <button onclick="drillIntoMetric('cohorts')" class="text-[10px] font-bold text-mustard-600 dark:text-mustard-400 hover:underline flex items-center space-x-0.5">
+                  <span>Drill Through</span>
+                  <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </button>
               </div>
 
               <div class="flex-1 min-h-0 overflow-y-auto pt-1">
                 <table class="w-full text-left text-[11px] font-mono">
-                  <thead class="sticky top-0 bg-slate-50 text-[10px] text-slate-500 uppercase tracking-wider border-b border-slate-100 z-10">
+                  <thead class="sticky top-0 bg-slate-50 dark:bg-slate-800/90 text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
                     <tr>
                       <th class="py-2 px-2.5">Cohort</th>
                       <th class="py-2 px-2.5">Signups</th>
@@ -549,40 +572,29 @@
                       <th class="py-2 px-2.5 text-right">ARR</th>
                     </tr>
                   </thead>
-                  <tbody id="cohortTableBody" class="divide-y divide-slate-100">
-                    <!-- Populated dynamically via JS -->
+                  <tbody id="cohortTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                    <!-- Populated dynamically -->
                   </tbody>
                 </table>
               </div>
             </div>
 
-            <!-- Right: CLV Trajectory (5 cols) -->
-            <div class="lg:col-span-5 bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
+            <!-- Right: Spline Survival Curve (5 cols) -->
+            <div class="lg:col-span-5 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
               <div class="flex items-center justify-between shrink-0">
-                <div>
-                  <h3 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Cumulative CLV Trajectory</h3>
-                  <p class="text-[10px] text-slate-400">Lifetime value accumulation ($k) across tenure</p>
-                </div>
-                <span class="text-[10px] font-bold text-sidebar font-mono">24-Mo Horizon</span>
+                <h3 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Retention Wave Spline</h3>
+                <span id="cohortSplineBadge" class="text-[10px] font-mono text-mustard-700 dark:text-mustard-300 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-800 font-bold">
+                  Survival: 84.2%
+                </span>
               </div>
 
               <div class="flex-1 min-h-0 w-full pt-1">
-                <canvas id="clvTierChart"></canvas>
+                <canvas id="retentionSplineChart"></canvas>
               </div>
 
-              <div class="grid grid-cols-3 gap-1.5 text-center text-xs shrink-0 pt-2 border-t border-slate-100">
-                <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                  <span class="text-[9px] text-slate-400 font-bold block">Enterprise CLV</span>
-                  <span id="clvStatEnterprise" class="font-mono font-black text-sidebar text-xs">$28,420</span>
-                </div>
-                <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                  <span class="text-[9px] text-slate-400 font-bold block">Mid-Market CLV</span>
-                  <span id="clvStatMidMarket" class="font-mono font-black text-sidebar text-xs">$14,890</span>
-                </div>
-                <div class="p-1 rounded-xl bg-slate-50 border border-slate-100">
-                  <span class="text-[9px] text-slate-400 font-bold block">Growth CLV</span>
-                  <span id="clvStatGrowth" class="font-mono font-black text-sidebar text-xs">$7,210</span>
-                </div>
+              <div class="text-[10px] text-slate-400 dark:text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
+                <span>Multi-Year vs M2M Erosion</span>
+                <button onclick="drillIntoMetric('spline')" class="text-mustard-600 dark:text-mustard-400 hover:underline">Drill Trajectory &rarr;</button>
               </div>
             </div>
 
@@ -591,61 +603,63 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- PAGE 3: RISK DRIVERS & TRIAGE -->
+        <!-- PAGE 3: BEHAVIORAL RISK TRIAGE (CRM)       -->
         <!-- ========================================== -->
         <div id="page-triage" class="hidden h-full flex flex-col gap-2.5">
           
+          <!-- 3 Odds Multipliers -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 shrink-0">
-            <div class="p-2.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-between">
               <div>
-                <span class="text-[9px] font-extrabold text-mustard-700 uppercase tracking-wider block">Contract Exposure</span>
-                <span class="text-xs font-bold text-slate-800">Month-to-Month Term</span>
+                <span class="text-[9px] font-extrabold text-mustard-700 dark:text-mustard-400 uppercase tracking-wider block">Contract Risk</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Month-to-Month Term</span>
               </div>
               <div class="text-right">
-                <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-mustard-500/20">4.27x Odds</span>
-                <span class="text-[9px] text-slate-500 block mt-0.5">31.8% vs 9.9% Baseline</span>
+                <span class="text-base font-mono font-black text-sidebar-light dark:text-mustard-300 px-2 py-0.5 rounded-lg bg-mustard-500/20">4.27x Odds</span>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 block mt-0.5">31.8% vs 9.9%</span>
               </div>
             </div>
 
-            <div class="p-2.5 rounded-2xl bg-rose-50/80 border border-rose-200/80 flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 flex items-center justify-between">
               <div>
-                <span class="text-[9px] font-extrabold text-rose-700 uppercase tracking-wider block">Support Friction</span>
-                <span class="text-xs font-bold text-slate-800">Ticket Surge (&ge;4 in 30d)</span>
+                <span class="text-[9px] font-extrabold text-rose-700 dark:text-rose-400 uppercase tracking-wider block">Ticket Friction</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Ticket Surge (&ge;4 in 30d)</span>
               </div>
               <div class="text-right">
-                <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-rose-500/20">2.70x Odds</span>
-                <span class="text-[9px] text-slate-500 block mt-0.5">44.2% Churn Rate</span>
+                <span class="text-base font-mono font-black text-sidebar-light dark:text-rose-300 px-2 py-0.5 rounded-lg bg-rose-500/20">2.70x Odds</span>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 block mt-0.5">44.2% Churn</span>
               </div>
             </div>
 
-            <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
               <div>
-                <span class="text-[9px] font-extrabold text-slate-700 uppercase tracking-wider block">Dormancy Cliff</span>
-                <span class="text-xs font-bold text-slate-800">Inactivity (&ge;14 Days)</span>
+                <span class="text-[9px] font-extrabold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">Dormancy Cliff</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Inactivity (&ge;14 Days)</span>
               </div>
               <div class="text-right">
-                <span class="text-base font-mono font-black text-sidebar px-2 py-0.5 rounded-lg bg-slate-200">2.53x Odds</span>
-                <span class="text-[9px] text-slate-500 block mt-0.5">43.4% Churn Rate</span>
+                <span class="text-base font-mono font-black text-sidebar-light dark:text-slate-200 px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700">2.53x Odds</span>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 block mt-0.5">43.4% Churn</span>
               </div>
             </div>
           </div>
 
-          <div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-200/70 flex flex-col flex-1 min-h-0">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-2 shrink-0 border-b border-slate-100">
+          <!-- CRM Table Card -->
+          <div class="bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col flex-1 min-h-0 transition-colors duration-200">
+            <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
               <div>
-                <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Operational Risk Triage Center</h2>
-                <p class="text-[10px] text-slate-400">Ranked by monthly MRR exposure &bull; Click any account row for 360-degree audit</p>
+                <h2 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Operational Risk Triage Center</h2>
+                <p class="text-[10px] text-slate-400 dark:text-slate-500">Ranked by monthly MRR exposure &bull; Click any account row for 360-degree audit</p>
               </div>
 
-              <div class="flex items-center space-x-2 text-xs">
+              <div class="flex items-center space-x-2">
                 <div class="relative">
-                  <i data-lucide="search" class="w-3 h-3 text-slate-400 absolute left-2.5 top-2.5"></i>
+                  <i data-lucide="search" class="w-3 h-3 text-slate-400 absolute left-2.5 top-2"></i>
                   <input 
                     type="text" 
                     id="crmSearchInput" 
                     oninput="filterCrmTable()" 
-                    placeholder="Search account, CSM or ID..." 
-                    class="pl-8 pr-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-mustard-400 text-slate-700 w-56"
+                    placeholder="Search company or CSM..." 
+                    class="pl-7 pr-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none text-slate-700 dark:text-slate-200 w-48"
                   />
                 </div>
                 <span id="crmPaginationCount" class="text-[10px] font-mono text-slate-400">7 Accounts</span>
@@ -654,7 +668,7 @@
 
             <div class="flex-1 min-h-0 overflow-y-auto pt-1">
               <table class="w-full text-left text-xs border-collapse">
-                <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-sm text-[10px] text-slate-400 font-extrabold uppercase tracking-wider border-b border-slate-100 z-10">
+                <thead class="sticky top-0 bg-slate-50/90 dark:bg-slate-800/90 backdrop-blur-sm text-[10px] text-slate-400 dark:text-slate-400 font-extrabold uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
                   <tr>
                     <th class="py-2 px-3">Account &amp; CSM</th>
                     <th class="py-2 px-3">Tier</th>
@@ -666,90 +680,202 @@
                     <th class="py-2 px-3 text-right">Audit</th>
                   </tr>
                 </thead>
-                <tbody id="crmTableBody" class="divide-y divide-slate-100">
+                <tbody id="crmTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
                   <!-- Populated via JS -->
                 </tbody>
               </table>
             </div>
 
-            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-100 shrink-0">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800 shrink-0">
               <span>Window Ranking: DENSE_RANK() OVER (ORDER BY monthly_charges DESC)</span>
-              <span class="font-mono text-sidebar font-semibold">SQLite Analytical Store</span>
+              <button onclick="drillIntoMetric('triage')" class="text-mustard-600 dark:text-mustard-400 hover:underline">Drill Triage Intelligence &rarr;</button>
             </div>
           </div>
 
         </div>
 
         <!-- ========================================== -->
-        <!-- PAGE 4: STRATEGIC RECOMMENDATIONS & ROI -->
+        <!-- PAGE 4: REVENUE LEAKAGE & CLV              -->
+        <!-- ========================================== -->
+        <div id="page-leakage" class="hidden h-full flex flex-col gap-2.5">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 shrink-0">
+            <div class="p-3.5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-rose-700 dark:text-rose-400 block">M2M Annual Leakage</span>
+                <span class="text-xl font-mono font-black text-rose-900 dark:text-rose-200">$5,102,160</span>
+              </div>
+              <span class="text-[10px] font-bold text-rose-700 bg-rose-200/60 dark:bg-rose-900/60 px-2 py-0.5 rounded-full">65% of Total</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 block">1-Year Annual Leakage</span>
+                <span class="text-xl font-mono font-black text-sidebar-light dark:text-slate-100">$1,828,920</span>
+              </div>
+              <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">23% of Total</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between">
+              <div>
+                <span class="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 block">2-Year Annual Leakage</span>
+                <span class="text-xl font-mono font-black text-tealAccent">$914,510</span>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">12% Protected</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+            
+            <!-- Left: Cumulative CLV Curves (7 cols) -->
+            <div class="lg:col-span-7 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-1.5">
+                  <h3 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Cumulative CLV Realization</h3>
+                  <div class="info-tooltip cursor-help">
+                    <i data-lucide="info" class="w-3 h-3 text-slate-400"></i>
+                    <div class="info-popover absolute left-0 top-5 z-30 w-56 p-2 rounded-xl bg-sidebar-light dark:bg-slate-900 text-white text-[10px] shadow-xl border border-white/10 leading-relaxed">
+                      <strong>Methodology:</strong> Multiplies cumulative monthly charges across customer tenure. Enterprise accounts generate $28.4k in lifetime value.
+                    </div>
+                  </div>
+                </div>
+
+                <button onclick="drillIntoMetric('clv')" class="text-[10px] font-bold text-mustard-600 dark:text-mustard-400 hover:underline">Drill Trajectory &rarr;</button>
+              </div>
+
+              <div class="flex-1 min-h-0 w-full pt-2">
+                <canvas id="clvTierChart"></canvas>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2 text-center text-xs shrink-0 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div class="p-1 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50">
+                  <span class="text-[9px] text-slate-400 font-bold block">Enterprise CLV</span>
+                  <span id="clvStatEnterprise" class="font-mono font-black text-sidebar-light dark:text-slate-100 text-xs">$28,420</span>
+                </div>
+                <div class="p-1 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50">
+                  <span class="text-[9px] text-slate-400 font-bold block">Mid-Market CLV</span>
+                  <span id="clvStatMidMarket" class="font-mono font-black text-sidebar-light dark:text-slate-100 text-xs">$14,890</span>
+                </div>
+                <div class="p-1 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50">
+                  <span class="text-[9px] text-slate-400 font-bold block">Growth CLV</span>
+                  <span id="clvStatGrowth" class="font-mono font-black text-sidebar-light dark:text-slate-100 text-xs">$7,210</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Revenue Leakage Breakdown (5 cols) -->
+            <div class="lg:col-span-5 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="shrink-0 pb-1.5 border-b border-slate-100 dark:border-slate-800">
+                <h3 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Revenue Leakage Distribution</h3>
+                <p class="text-[10px] text-slate-400">Total annualized leakage: $7,845,590 across 1,235 exits</p>
+              </div>
+
+              <div class="space-y-2.5 my-auto py-2">
+                <div>
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span class="text-slate-700 dark:text-slate-200">Month-to-Month Contracts</span>
+                    <span class="font-mono text-rose-500 font-black">$5.10M (65%)</span>
+                  </div>
+                  <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div class="h-full bg-rose-500 rounded-full" style="width: 65%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span class="text-slate-700 dark:text-slate-200">1-Year Contracts</span>
+                    <span class="font-mono text-mustard-500 font-black">$1.83M (23%)</span>
+                  </div>
+                  <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div class="h-full bg-mustard-500 rounded-full" style="width: 23%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span class="text-slate-700 dark:text-slate-200">2-Year Contracts</span>
+                    <span class="font-mono text-tealAccent font-black">$0.91M (12%)</span>
+                  </div>
+                  <div class="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div class="h-full bg-tealAccent rounded-full" style="width: 12%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50 text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed shrink-0">
+                Converting 20% of M2M contracts to annual commitments unlocks over <strong>$450k in retained ARR</strong> with minimal customer acquisition cost.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PAGE 5: STRATEGIC RECOMMENDATIONS & ROI   -->
         <!-- ========================================== -->
         <div id="page-recommendations" class="hidden h-full flex flex-col gap-2.5">
           
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
             
-            <!-- Left 6 Cols: Playbook -->
-            <div class="lg:col-span-6 bg-white rounded-2xl p-3.5 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
-              <div class="shrink-0 pb-1.5 border-b border-slate-100">
-                <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Strategic Recommendations Playbook</h2>
+            <div class="lg:col-span-6 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="shrink-0 pb-1.5 border-b border-slate-100 dark:border-slate-800">
+                <h2 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Strategic Recommendations Playbook</h2>
                 <p class="text-[10px] text-slate-400">Targeted interventions directly addressing the 3 primary churn drivers</p>
               </div>
 
-              <div class="flex-1 min-h-0 overflow-y-auto space-y-2 py-1 pr-1">
-                
-                <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1">
+              <div class="flex-1 min-h-0 overflow-y-auto space-y-2 py-1.5 pr-1">
+                <div class="p-3 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 space-y-1">
                   <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-bold text-mustard-700 uppercase tracking-wider">Pillar 1: Structural Contract Shift</span>
-                    <span class="text-[10px] font-mono font-bold text-sidebar bg-mustard-500/20 px-2 py-0.5 rounded-md">Eliminate 4.27x Odds</span>
+                    <span class="text-[10px] font-bold text-mustard-700 dark:text-mustard-400 uppercase tracking-wider">Pillar 1: Structural Contract Shift</span>
+                    <span class="text-[9px] font-mono font-bold text-sidebar-light dark:text-mustard-300 bg-mustard-500/20 px-2 py-0.5 rounded-md">Eliminate 4.27x Odds</span>
                   </div>
-                  <h3 class="text-xs font-bold text-slate-800">Targeted Annual Agreement Incentive (15% Rebate)</h3>
-                  <p class="text-[11px] text-slate-600 leading-relaxed">
+                  <h3 class="text-xs font-bold text-slate-800 dark:text-slate-100">Targeted Annual Agreement Incentive (15% Rebate)</h3>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                     With Month-to-Month accounts driving <strong>$5.1M (65%)</strong> of annualized revenue leakage, offer a 15% discount for converting to 1-year commitments. Transitioning 20% of M2M contracts secures over <strong>$450k in annual ARR</strong>.
                   </p>
                 </div>
 
-                <div class="p-3 rounded-2xl bg-rose-50/70 border border-rose-200/80 space-y-1">
+                <div class="p-3 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/60 space-y-1">
                   <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-bold text-rose-700 uppercase tracking-wider">Pillar 2: Rapid Technical Triage</span>
-                    <span class="text-[10px] font-mono font-bold text-sidebar bg-rose-500/20 px-2 py-0.5 rounded-md">48-Hour SLA</span>
+                    <span class="text-[10px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider">Pillar 2: Rapid Technical Triage</span>
+                    <span class="text-[9px] font-mono font-bold text-sidebar-light dark:text-rose-300 bg-rose-500/20 px-2 py-0.5 rounded-md">48-Hour SLA</span>
                   </div>
-                  <h3 class="text-xs font-bold text-slate-800">Deploy Solutions Engineers for Ticket Surges (&ge;4)</h3>
-                  <p class="text-[11px] text-slate-600 leading-relaxed">
+                  <h3 class="text-xs font-bold text-slate-800 dark:text-slate-100">Deploy Solutions Engineers for Ticket Surges (&ge;4)</h3>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                     Accounts logging 4+ support tickets exhibit a <strong>44.2% churn rate</strong> (2.70x odds). These represent integration blockers rather than churn intent. Dispatch a senior solution engineer within 48 hours.
                   </p>
                 </div>
 
-                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1">
                   <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Pillar 3: Dormancy Early Warning</span>
-                    <span class="text-[10px] font-mono font-bold text-sidebar bg-slate-200 px-2 py-0.5 rounded-md">Day 7 Warning Trigger</span>
+                    <span class="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Pillar 3: Dormancy Early Warning</span>
+                    <span class="text-[9px] font-mono font-bold text-sidebar-light dark:text-slate-200 bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded-md">Day 7 Warning Trigger</span>
                   </div>
-                  <h3 class="text-xs font-bold text-slate-800">Pre-empt the 14-Day Inactivity Disengagement Cliff</h3>
-                  <p class="text-[11px] text-slate-600 leading-relaxed">
+                  <h3 class="text-xs font-bold text-slate-800 dark:text-slate-100">Pre-empt the 14-Day Inactivity Disengagement Cliff</h3>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                     Crossing 14 days of inactivity spikes churn to <strong>43.4%</strong>. Automate customer success playbooks to ping department champions at Day 7 to reassign idle seats before disengagement becomes permanent.
                   </p>
                 </div>
-
               </div>
 
-              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 shrink-0">
-                <span>Executive Briefing &bull; Prepared by Peter Akpan</span>
-                <span class="font-mono text-mustard-600 font-bold">Pann Labs Enterprise Analytics</span>
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 shrink-0">
+                <span>Executive Briefing &bull; Peter Akpan</span>
+                <span class="font-mono text-mustard-600 dark:text-mustard-400 font-bold">Pann Labs Analytics</span>
               </div>
             </div>
 
-            <!-- Right 6 Cols: Simulator -->
-            <div class="lg:col-span-6 bg-white rounded-2xl p-3.5 shadow-soft border border-slate-200/70 flex flex-col justify-between h-full min-h-0">
-              <div class="shrink-0 pb-1.5 border-b border-slate-100">
-                <h2 class="text-xs font-extrabold text-sidebar tracking-wide uppercase">Retention Rescue Program ROI Simulator</h2>
+            <div class="lg:col-span-6 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="shrink-0 pb-1.5 border-b border-slate-100 dark:border-slate-800">
+                <h2 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 tracking-wide uppercase">Retention Rescue Program ROI Simulator</h2>
                 <p class="text-[10px] text-slate-400">Financial model dedicating Solutions Engineers to rescue prioritized accounts</p>
               </div>
 
-              <div class="space-y-3 py-1">
-                
-                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
+              <div class="space-y-3 py-1.5">
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/60">
+                  <div class="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                     <span>Target Cohort Rescue Rate:</span>
-                    <span id="pageSliderDisplay" class="text-mustard-600 font-mono text-sm font-black">35%</span>
+                    <span id="pageSliderDisplay" class="text-mustard-600 dark:text-mustard-400 font-mono text-sm font-black">35%</span>
                   </div>
                   <input 
                     type="range" 
@@ -758,9 +884,9 @@
                     max="80" 
                     value="35" 
                     oninput="updatePageSimulation()" 
-                    class="w-full accent-mustard-500 h-2 bg-slate-200 rounded-lg cursor-pointer"
+                    class="w-full accent-mustard-500 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer"
                   >
-                  <div class="flex justify-between text-[9px] font-mono text-slate-400 mt-1">
+                  <div class="flex justify-between text-[9px] font-mono text-slate-400 dark:text-slate-500 mt-1">
                     <span>5% Conservative</span>
                     <span>35% Baseline Target</span>
                     <span>80% Stretch Goal</span>
@@ -768,34 +894,105 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-2.5">
-                  <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-center">
-                    <span class="text-[9px] uppercase font-bold text-amber-800 block">Preserved Monthly MRR</span>
-                    <span id="pageSimMonthly" class="text-lg font-mono font-black text-mustard-600 mt-0.5 block">+$13,097</span>
+                  <div class="p-3 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 text-center">
+                    <span class="text-[9px] uppercase font-bold text-amber-800 dark:text-amber-300 block">Preserved Monthly MRR</span>
+                    <span id="pageSimMonthly" class="text-lg font-mono font-black text-mustard-600 dark:text-mustard-400 mt-0.5 block">+$13,097</span>
                   </div>
-                  <div class="p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-center">
-                    <span class="text-[9px] uppercase font-bold text-emerald-800 block">Preserved Annual ARR</span>
+                  <div class="p-3 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/60 text-center">
+                    <span class="text-[9px] uppercase font-bold text-emerald-800 dark:text-emerald-300 block">Preserved Annual ARR</span>
                     <span id="pageSimAnnual" class="text-lg font-mono font-black text-tealAccent mt-0.5 block">+$157,164</span>
                   </div>
                 </div>
 
-                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs space-y-1">
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 text-xs space-y-1">
                   <div class="flex items-center justify-between">
-                    <span class="font-bold text-sidebar text-[11px]">Net Program Return on Investment</span>
-                    <span id="pageSimRoiBadge" class="font-mono font-black text-emerald-600 text-xs">5.2x ROI</span>
+                    <span class="font-bold text-sidebar-light dark:text-slate-100 text-[11px]">Net Program Return on Investment</span>
+                    <span id="pageSimRoiBadge" class="font-mono font-black text-emerald-600 dark:text-emerald-400 text-xs">5.2x ROI</span>
                   </div>
-                  <p id="pageSimRoiText" class="text-[11px] text-slate-600 leading-relaxed">
+                  <p id="pageSimRoiText" class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                     Dedicating two Senior Solutions Engineers costs approximately $30,000 in dedicated hours, unlocking over <strong>$157,000 in net preserved ARR</strong>.
                   </p>
                 </div>
-
               </div>
 
-              <div class="pt-2 border-t border-slate-100 flex items-center justify-between shrink-0">
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
                 <span class="text-[10px] text-slate-400 font-mono">Sensitivity Model &bull; 96 Accounts</span>
-                <button onclick="openInterventionModal()" class="px-3.5 py-1.5 bg-sidebar hover:bg-sidebarHover text-white font-bold text-xs rounded-xl shadow flex items-center space-x-1.5 transition">
-                  <i data-lucide="zap" class="w-3 h-3 text-mustard-400"></i>
+                <button onclick="openInterventionModal()" class="px-3.5 py-1.5 bg-sidebar-light dark:bg-mustard-500 text-white dark:text-sidebar-light font-bold text-xs rounded-xl shadow flex items-center space-x-1.5 transition">
+                  <i data-lucide="zap" class="w-3 h-3 text-mustard-400 dark:text-sidebar-light"></i>
                   <span>Deploy Rescue Playbook</span>
                 </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PAGE 6: INTERACTIVE DRILLTHROUGH EXPLORER -->
+        <!-- ========================================== -->
+        <div id="page-drillthrough" class="hidden h-full flex flex-col gap-2.5">
+          
+          <div class="p-3.5 rounded-2xl bg-card-light dark:bg-card-dark border border-cardBorder-light dark:border-cardBorder-dark shadow-soft flex items-center justify-between shrink-0 transition-colors duration-200">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span id="drillContextBadge" class="px-2 py-0.5 rounded-lg bg-mustard-500/20 text-mustard-700 dark:text-mustard-300 font-mono text-[10px] font-extrabold uppercase">
+                  Drill Context: Portfolio Risk
+                </span>
+                <h3 id="drillTitle" class="text-xs font-black text-sidebar-light dark:text-slate-100 uppercase tracking-wide">Detailed Account &amp; Analytical Drillthrough</h3>
+              </div>
+              <p id="drillSubtitle" class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Underlying SQL CTE query output, account level records, and diagnostic signals</p>
+            </div>
+
+            <div class="flex items-center space-x-2 text-xs">
+              <button onclick="switchPage('home')" class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-200 transition">
+                &larr; Back to Overview
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+            
+            <!-- Drill Left: Raw Records Table (8 cols) -->
+            <div class="lg:col-span-8 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col h-full min-h-0 transition-colors duration-200">
+              <div class="flex items-center justify-between pb-2 shrink-0 border-b border-slate-100 dark:border-slate-800">
+                <span class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 uppercase">Micro-Level Account Telemetry</span>
+                <span id="drillRowCount" class="text-[10px] font-mono text-slate-400">Showing 7 Matching Records</span>
+              </div>
+
+              <div class="flex-1 min-h-0 overflow-y-auto pt-1">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead class="sticky top-0 bg-slate-50/90 dark:bg-slate-800/90 backdrop-blur-sm text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 z-10">
+                    <tr>
+                      <th class="py-2 px-2.5">Account ID</th>
+                      <th class="py-2 px-2.5">Company Name</th>
+                      <th class="py-2 px-2.5">Tier</th>
+                      <th class="py-2 px-2.5">Contract</th>
+                      <th class="py-2 px-2.5 font-mono">MRR</th>
+                      <th class="py-2 px-2.5">Inactivity</th>
+                      <th class="py-2 px-2.5">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="drillTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Drill Right: Analytical Query Breakdown (4 cols) -->
+            <div class="lg:col-span-4 bg-card-light dark:bg-card-dark rounded-2xl p-3.5 shadow-soft border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between h-full min-h-0 transition-colors duration-200">
+              <div class="shrink-0 pb-1.5 border-b border-slate-100 dark:border-slate-800">
+                <h4 class="text-xs font-extrabold text-sidebar-light dark:text-slate-100 uppercase">SQL Query Behind This Visual</h4>
+                <p class="text-[10px] text-slate-400 font-mono">SQLite 3.12 Analytical Engine</p>
+              </div>
+
+              <div class="relative bg-sidebar-light dark:bg-slate-900 rounded-xl p-3 font-mono text-[10px] text-emerald-200 flex-1 min-h-0 overflow-y-auto my-2">
+                <pre><code id="drillSqlBlock">-- Active CTE Query</code></pre>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/60 text-[10px] text-slate-600 dark:text-slate-400 shrink-0">
+                <strong>Executive Insight:</strong> Cross-filtered results verify statistical odds multipliers across all 5,000 synthetic enterprise accounts.
               </div>
             </div>
 
@@ -810,56 +1007,56 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL: 360-DEGREE ACCOUNT AUDIT DRAWER -->
+  <!-- MODAL: 360-DEGREE ACCOUNT AUDIT DRAWER     -->
   <!-- ========================================== -->
-  <div id="accountDrawer" class="fixed inset-0 z-50 bg-sidebar/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-5 space-y-4 border border-slate-100 relative">
+  <div id="accountDrawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-card-light dark:bg-card-dark rounded-3xl shadow-2xl p-5 space-y-4 border border-cardBorder-light dark:border-cardBorder-dark relative transition-colors duration-200">
       
-      <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+      <div class="flex items-start justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
         <div class="flex items-center space-x-3">
-          <div id="drawerAvatar" class="w-10 h-10 rounded-2xl bg-mustard-500 text-sidebar font-extrabold font-mono text-sm flex items-center justify-center shadow">
+          <div id="drawerAvatar" class="w-10 h-10 rounded-2xl bg-mustard-500 text-sidebar-light font-extrabold font-mono text-sm flex items-center justify-center shadow">
             AC
           </div>
           <div>
-            <h3 id="drawerCompanyName" class="text-sm font-extrabold text-sidebar">Apex Cloud Systems</h3>
+            <h3 id="drawerCompanyName" class="text-sm font-extrabold text-sidebar-light dark:text-slate-100">Apex Cloud Systems</h3>
             <p id="drawerAccountId" class="text-[10px] text-slate-400 font-mono">ACC-9042 &bull; Enterprise Tier</p>
           </div>
         </div>
-        <button onclick="closeAccountDrawer()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+        <button onclick="closeAccountDrawer()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-500 dark:text-slate-400 flex items-center justify-center">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
       </div>
 
       <div class="grid grid-cols-3 gap-2">
-        <div class="bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl text-center border border-slate-100 dark:border-slate-700/60">
           <span class="text-[9px] uppercase font-bold text-slate-400 block">MRR Exposure</span>
-          <span id="drawerMRR" class="font-mono text-xs font-black text-slate-800">$1,420.00</span>
+          <span id="drawerMRR" class="font-mono text-xs font-black text-slate-800 dark:text-slate-100">$1,420.00</span>
         </div>
-        <div class="bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl text-center border border-slate-100 dark:border-slate-700/60">
           <span class="text-[9px] uppercase font-bold text-slate-400 block">Inactivity</span>
           <span id="drawerInactivity" class="font-mono text-xs font-black text-rose-500">16 Days</span>
         </div>
-        <div class="bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl text-center border border-slate-100 dark:border-slate-700/60">
           <span class="text-[9px] uppercase font-bold text-slate-400 block">Support Tickets</span>
           <span id="drawerTickets" class="font-mono text-xs font-black text-amber-600">5 Tickets</span>
         </div>
       </div>
 
-      <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-0.5">
-        <span class="font-bold text-amber-800 uppercase tracking-wider block text-[9px]">Prescribed Action Required</span>
-        <p id="drawerPrescriptive" class="text-slate-700 font-medium text-[11px]">
+      <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs space-y-0.5">
+        <span class="font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider block text-[9px]">Prescribed Action Required</span>
+        <p id="drawerPrescriptive" class="text-slate-700 dark:text-slate-200 font-medium text-[11px]">
           Deploy Senior Solution Engineer for Rapid Technical Triage.
         </p>
       </div>
 
-      <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 text-xs space-y-1.5 font-medium">
+      <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-700/60 text-xs space-y-1.5 font-medium">
         <div class="flex justify-between">
           <span class="text-slate-400 text-[11px]">Contract Commitment:</span>
-          <span id="drawerContract" class="font-bold text-slate-800 text-[11px]">Month-to-Month (4.27x Churn Odds)</span>
+          <span id="drawerContract" class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">Month-to-Month (4.27x Churn Odds)</span>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-400 text-[11px]">Assigned CSM:</span>
-          <span id="drawerCsm" class="font-bold text-sidebar text-[11px]">Marcus Vance</span>
+          <span id="drawerCsm" class="font-bold text-sidebar-light dark:text-mustard-300 text-[11px]">Marcus Vance</span>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-400 text-[11px]">NPS Sentiment:</span>
@@ -868,11 +1065,11 @@
       </div>
 
       <div class="flex items-center space-x-2 pt-1">
-        <button onclick="triggerDossierAction('engineer')" class="flex-1 py-2 rounded-xl bg-sidebar text-white text-xs font-bold hover:bg-sidebarHover shadow flex items-center justify-center space-x-1.5 transition">
+        <button onclick="triggerDossierAction('engineer')" class="flex-1 py-2 rounded-xl bg-sidebar-light dark:bg-slate-700 text-white text-xs font-bold hover:bg-sidebarHover shadow flex items-center justify-center space-x-1.5 transition">
           <i data-lucide="wrench" class="w-3 h-3"></i>
           <span>Deploy Engineer</span>
         </button>
-        <button onclick="triggerDossierAction('discount')" class="flex-1 py-2 rounded-xl bg-mustard-500 text-sidebar text-xs font-bold hover:bg-mustard-600 shadow-float flex items-center justify-center space-x-1.5 transition">
+        <button onclick="triggerDossierAction('discount')" class="flex-1 py-2 rounded-xl bg-mustard-500 text-sidebar-light text-xs font-bold hover:bg-mustard-600 shadow-float flex items-center justify-center space-x-1.5 transition">
           <i data-lucide="tag" class="w-3 h-3"></i>
           <span>Send 15% Incentive</span>
         </button>
@@ -882,163 +1079,65 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL: SQL ENGINE & ANALYTICS VIEWER -->
+  <!-- MODAL: SQL ANALYTICAL QUERIES VIEWER       -->
   <!-- ========================================== -->
-  <div id="sqlModal" class="fixed inset-0 z-50 bg-sidebar/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl p-5 space-y-3 border border-slate-100 relative">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+  <div id="sqlModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-card-light dark:bg-card-dark rounded-3xl shadow-2xl p-5 space-y-3 border border-cardBorder-light dark:border-cardBorder-dark relative transition-colors duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 rounded-xl bg-sidebar text-white flex items-center justify-center">
+          <div class="w-8 h-8 rounded-xl bg-sidebar-light dark:bg-slate-800 text-white flex items-center justify-center">
             <i data-lucide="terminal" class="w-4 h-4 text-mustard-400"></i>
           </div>
           <div>
-            <h3 class="text-sm font-extrabold text-sidebar">SQLite Analytical Engine Queries</h3>
-            <p class="text-[10px] text-slate-400 font-mono">SQLite 3.12 &bull; Window Functions &bull; CTE Cohort Models</p>
+            <h3 class="text-sm font-extrabold text-sidebar-light dark:text-slate-100">SQLite Analytical Engine Queries</h3>
+            <p class="text-[10px] text-slate-400 font-mono">SQLite 3.12 &bull; Window Functions &bull; Multi-Stage CTEs</p>
           </div>
         </div>
-        <button onclick="closeSqlModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+        <button onclick="closeSqlModal()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-500 dark:text-slate-400 flex items-center justify-center">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
       </div>
 
       <div class="flex flex-wrap gap-1.5">
-        <button onclick="pickSqlScript(1)" id="sql-tab-1" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-mustard-500 text-sidebar">01_schema_setup.sql</button>
-        <button onclick="pickSqlScript(2)" id="sql-tab-2" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">02_cohort_retention.sql</button>
-        <button onclick="pickSqlScript(3)" id="sql-tab-3" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">03_revenue_leakage_clv.sql</button>
-        <button onclick="pickSqlScript(4)" id="sql-tab-4" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">04_risk_segmentation.sql</button>
+        <button onclick="pickSqlScript(1)" id="sql-tab-1" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-mustard-500 text-sidebar-light">01_schema_setup.sql</button>
+        <button onclick="pickSqlScript(2)" id="sql-tab-2" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">02_cohort_retention.sql</button>
+        <button onclick="pickSqlScript(3)" id="sql-tab-3" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">03_revenue_leakage_clv.sql</button>
+        <button onclick="pickSqlScript(4)" id="sql-tab-4" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">04_risk_segmentation.sql</button>
       </div>
 
-      <div class="relative bg-sidebar rounded-xl p-3 font-mono text-[11px] text-emerald-200 max-h-48 overflow-y-auto">
+      <div class="relative bg-sidebar-light dark:bg-slate-900 rounded-xl p-3 font-mono text-[11px] text-emerald-200 max-h-48 overflow-y-auto">
         <pre><code id="sqlCodeBlock">-- Select query to inspect</code></pre>
       </div>
 
-      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 font-mono text-[11px]">
-        <div class="flex items-center justify-between text-slate-500 mb-1 font-bold text-[10px]">
-          <span>Execution Output (<span id="sqlExecutionTimer">12ms</span>)</span>
+      <div class="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 rounded-xl p-3 font-mono text-[11px]">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-1 font-bold text-[10px]">
+          <span>Output Table (<span id="sqlExecutionTimer">12ms</span>)</span>
           <span>SQLite Store</span>
         </div>
-        <div id="sqlOutputTable" class="overflow-x-auto text-slate-700 max-h-32 overflow-y-auto"></div>
+        <div id="sqlOutputTable" class="overflow-x-auto text-slate-700 dark:text-slate-200 max-h-32 overflow-y-auto"></div>
       </div>
     </div>
   </div>
 
   <!-- TOAST NOTIFICATION -->
   <div id="toastMessage" class="fixed bottom-4 right-4 z-50 transform translate-y-20 opacity-0 transition duration-300 pointer-events-none">
-    <div class="bg-sidebar text-white px-3.5 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold border border-white/10">
+    <div class="bg-sidebar-light dark:bg-slate-800 text-white px-3.5 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold border border-white/10">
       <i data-lucide="check" class="w-3.5 h-3.5 text-mustard-400"></i>
       <span id="toastText">Action completed successfully</span>
     </div>
   </div>
 
-  <!-- CORE INTERACTIVE LOGIC & DYNAMIC CHART REACTIVITY -->
+  <!-- CORE INTERACTIVE LOGIC & REACTIVE CHARTS -->
   <script>
-    // Master accounts dataset based on repository telemetry
+    // Master accounts dataset
     const RAW_ACCOUNTS = [
-      {
-        id: "ACC-9042",
-        company: "Apex Cloud Systems",
-        contact: "marcus@apexcloud.io",
-        csm: "Marcus Vance",
-        tier: "Enterprise",
-        mrr: 1420.00,
-        contract: "Month-to-Month",
-        status: "Active",
-        inactivity: 16,
-        tickets: 5,
-        nps: 3,
-        trigger: "Friction",
-        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
-      },
-      {
-        id: "ACC-8419",
-        company: "Hyperion Data Corp",
-        contact: "sarah@hyperion.ai",
-        csm: "Sarah Jenkins",
-        tier: "Enterprise",
-        mrr: 1280.50,
-        contract: "Month-to-Month",
-        status: "Active",
-        inactivity: 19,
-        tickets: 6,
-        nps: 2,
-        trigger: "Inactivity",
-        prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh"
-      },
-      {
-        id: "ACC-7731",
-        company: "OmniFlow Logistics",
-        contact: "david@omniflow.com",
-        csm: "David Chen",
-        tier: "Enterprise",
-        mrr: 1150.00,
-        contract: "Month-to-Month",
-        status: "Active",
-        inactivity: 22,
-        tickets: 4,
-        nps: 3,
-        trigger: "M2M",
-        prescriptive: "Present Annual Agreement with 15% Pricing Incentive"
-      },
-      {
-        id: "ACC-6604",
-        company: "Vanguard FinTech",
-        contact: "elena@vanguard.io",
-        csm: "Elena Rostova",
-        tier: "Mid-Market",
-        mrr: 980.00,
-        contract: "Month-to-Month",
-        status: "Active",
-        inactivity: 15,
-        tickets: 7,
-        nps: 4,
-        trigger: "Friction",
-        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
-      },
-      {
-        id: "ACC-9921",
-        company: "BioSyn Labs",
-        contact: "marcus@biosyn.com",
-        csm: "Marcus Vance",
-        tier: "Growth",
-        mrr: 750.00,
-        contract: "Month-to-Month",
-        status: "Active",
-        inactivity: 18,
-        tickets: 4,
-        nps: 4,
-        trigger: "Inactivity",
-        prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh"
-      },
-      {
-        id: "ACC-4491",
-        company: "Krypton Cyber Security",
-        contact: "david@krypton.com",
-        csm: "David Chen",
-        tier: "Enterprise",
-        mrr: 1350.00,
-        contract: "1-Year",
-        status: "Active",
-        inactivity: 17,
-        tickets: 6,
-        nps: 4,
-        trigger: "Friction",
-        prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage"
-      },
-      {
-        id: "ACC-3108",
-        company: "AeroDynamics Global",
-        contact: "elena@aerodynamics.com",
-        csm: "Elena Rostova",
-        tier: "Enterprise",
-        mrr: 1220.00,
-        contract: "Month-to-Month",
-        status: "Active",
-        inactivity: 24,
-        tickets: 2,
-        nps: 3,
-        trigger: "Inactivity",
-        prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh"
-      }
+      { id: "ACC-9042", company: "Apex Cloud Systems", contact: "marcus@apexcloud.io", csm: "Marcus Vance", tier: "Enterprise", mrr: 1420.00, contract: "Month-to-Month", status: "Active", inactivity: 16, tickets: 5, nps: 3, trigger: "Friction", prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage" },
+      { id: "ACC-8419", company: "Hyperion Data Corp", contact: "sarah@hyperion.ai", csm: "Sarah Jenkins", tier: "Enterprise", mrr: 1280.50, contract: "Month-to-Month", status: "Active", inactivity: 19, tickets: 6, nps: 2, trigger: "Inactivity", prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh" },
+      { id: "ACC-7731", company: "OmniFlow Logistics", contact: "david@omniflow.com", csm: "David Chen", tier: "Enterprise", mrr: 1150.00, contract: "Month-to-Month", status: "Active", inactivity: 22, tickets: 4, nps: 3, trigger: "M2M", prescriptive: "Present Annual Agreement with 15% Pricing Incentive" },
+      { id: "ACC-6604", company: "Vanguard FinTech", contact: "elena@vanguard.io", csm: "Elena Rostova", tier: "Mid-Market", mrr: 980.00, contract: "Month-to-Month", status: "Active", inactivity: 15, tickets: 7, nps: 4, trigger: "Friction", prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage" },
+      { id: "ACC-9921", company: "BioSyn Labs", contact: "marcus@biosyn.com", csm: "Marcus Vance", tier: "Growth", mrr: 750.00, contract: "Month-to-Month", status: "Active", inactivity: 18, tickets: 4, nps: 4, trigger: "Inactivity", prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh" },
+      { id: "ACC-4491", company: "Krypton Cyber Security", contact: "david@krypton.com", csm: "David Chen", tier: "Enterprise", mrr: 1350.00, contract: "1-Year", status: "Active", inactivity: 17, tickets: 6, nps: 4, trigger: "Friction", prescriptive: "Deploy Senior Solution Engineer for Rapid Technical Triage" },
+      { id: "ACC-3108", company: "AeroDynamics Global", contact: "elena@aerodynamics.com", csm: "Elena Rostova", tier: "Enterprise", mrr: 1220.00, contract: "Month-to-Month", status: "Active", inactivity: 24, tickets: 2, nps: 3, trigger: "Inactivity", prescriptive: "Schedule Executive Re-engagement Audit & Workflow Refresh" }
     ];
 
     // Master Cohort Matrix Dataset
@@ -1140,14 +1239,17 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     // State
     let currentPage = 'home';
     let currentSqlScriptId = 1;
+    let isDarkMode = false;
     let selectedDossierAccount = RAW_ACCOUNTS[0];
 
     // Page-specific filter states
     const pageFilters = {
       home: { contract: 'ALL', tier: 'ALL', status: 'ALL' },
-      cohorts: { tier: 'ALL', commitment: 'ALL', horizon: 'ALL' },
-      triage: { trigger: 'ALL', tier: 'ALL', contract: 'ALL', search: '' },
-      recommendations: { focus: 'ALL', capacity: '2' }
+      cohorts: { tier: 'ALL', commitment: 'ALL' },
+      triage: { trigger: 'ALL', tier: 'ALL' },
+      leakage: { commitment: 'ALL', tier: 'ALL' },
+      recommendations: { focus: 'ALL', capacity: '2' },
+      drillthrough: { dimension: 'portfolio', tier: 'ALL' }
     };
 
     // Chart instances
@@ -1156,14 +1258,66 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     let retentionSplineChartInstance = null;
     let clvTierChartInstance = null;
 
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+      isDarkMode = !isDarkMode;
+      applyTheme();
+    }
+
+    function applyTheme() {
+      const htmlEl = document.documentElement;
+      const themeLabel = document.getElementById('themeLabel');
+      const themeIndicator = document.getElementById('themeIndicator');
+      const themeIcon = document.getElementById('themeIcon');
+
+      if (isDarkMode) {
+        htmlEl.classList.add('dark');
+        themeLabel.textContent = "Light Mode";
+        themeIndicator.classList.remove('translate-x-0');
+        themeIndicator.classList.add('translate-x-2.5');
+        themeIcon.setAttribute('data-lucide', 'sun');
+      } else {
+        htmlEl.classList.remove('dark');
+        themeLabel.textContent = "Dark Mode";
+        themeIndicator.classList.remove('translate-x-2.5');
+        themeIndicator.classList.add('translate-x-0');
+        themeIcon.setAttribute('data-lucide', 'moon');
+      }
+
+      // Re-theme Chart.js elements
+      updateChartThemes();
+      lucide.createIcons();
+    }
+
+    function updateChartThemes() {
+      const tickColor = isDarkMode ? '#94a3b8' : '#64748b';
+      const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)';
+
+      [verticalStatsChartInstance, retentionSplineChartInstance, clvTierChartInstance].forEach(chart => {
+        if (chart && chart.options && chart.options.scales) {
+          if (chart.options.scales.x) {
+            if (chart.options.scales.x.ticks) chart.options.scales.x.ticks.color = tickColor;
+            if (chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor;
+          }
+          if (chart.options.scales.y) {
+            if (chart.options.scales.y.ticks) chart.options.scales.y.ticks.color = tickColor;
+            if (chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
+          }
+          chart.update();
+        }
+      });
+    }
+
     // Switch Page
     function switchPage(pageId) {
-      const pageIds = ['home', 'cohorts', 'triage', 'recommendations'];
+      const pageIds = ['home', 'cohorts', 'triage', 'leakage', 'recommendations', 'drillthrough'];
       const pageInfo = {
-        home: { title: "Executive Telemetry Overview", sub: "B2B SaaS Churn Audit &bull; 5,000 Accounts &bull; Longitudinal OLAP" },
-        cohorts: { title: "Cohort Survival & CLV Analysis", sub: "Tenure Decay Curves & Multi-Year Customer Lifetime Value" },
-        triage: { title: "Risk Drivers & Account Triage", sub: "Operational Matrix Identifying High Friction & Dormancy Flags" },
-        recommendations: { title: "Strategic Recommendations & ROI", sub: "Data-Driven Action Playbook & Preserved ARR Sensitivity Model" }
+        home: { title: "Executive Telemetry Overview", sub: "5,000 Audited B2B Accounts &bull; Longitudinal OLAP" },
+        cohorts: { title: "Cohort Survival Analysis", sub: "Tenure Decay Curves & Multi-Year Retention Rates" },
+        triage: { title: "Behavioral Risk Triage (CRM)", sub: "Operational Priority Matrix & Diagnostic Triggers" },
+        leakage: { title: "Revenue Leakage & Lifetime Value", sub: "Financial Exposure & CLV Realization by Commitment" },
+        recommendations: { title: "Strategic Action & Rescue ROI", sub: "Data-Driven Playbook & Preserved ARR Model" },
+        drillthrough: { title: "Interactive Drillthrough Explorer", sub: "Micro-Level Account Telemetry & SQL CTE Audits" }
       };
 
       currentPage = pageId;
@@ -1174,7 +1328,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
 
         const navBtn = document.getElementById(`nav-btn-${id}`);
         if (navBtn) {
-          navBtn.className = "w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn";
+          navBtn.className = "w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn";
         }
       });
 
@@ -1184,211 +1338,245 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       const activeNavBtn = document.getElementById(`nav-btn-${pageId}`);
       if (activeNavBtn) {
         if (pageId === 'triage') {
-          activeNavBtn.className = "w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-xl nav-side-btn active";
+          activeNavBtn.className = "w-full flex items-center justify-between px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn active";
         } else {
-          activeNavBtn.className = "w-full flex items-center space-x-2.5 px-3 py-2 text-xs font-bold rounded-xl nav-side-btn active";
+          activeNavBtn.className = "w-full flex items-center space-x-2 px-2.5 py-1.5 text-xs font-bold rounded-xl nav-side-btn active";
         }
       }
 
-      // Update titles
       document.getElementById('pageHeaderTitle').innerHTML = pageInfo[pageId].title;
       document.getElementById('pageHeaderSubtitle').innerHTML = pageInfo[pageId].sub;
 
-      // Render the page-specific slicer bar
-      renderPageSlicers();
+      renderSideSlicers();
 
-      // Initialize or refresh charts
       if (pageId === 'home') {
         applyHomeFilters();
       } else if (pageId === 'cohorts') {
-        if (!clvTierChartInstance) setTimeout(initClvTierChart, 60);
         applyCohortFilters();
       } else if (pageId === 'triage') {
         applyTriageFilters();
+      } else if (pageId === 'leakage') {
+        if (!clvTierChartInstance) setTimeout(initClvTierChart, 60);
+        applyLeakageFilters();
       } else if (pageId === 'recommendations') {
         applyRecommendationsFilters();
+      } else if (pageId === 'drillthrough') {
+        renderDrillthroughView();
       }
 
       lucide.createIcons();
     }
 
-    // Render Page Slicers (Only relevant slicers per page)
-    function renderPageSlicers() {
-      const container = document.getElementById('pageSlicersContainer');
+    // Render Slicers into the Left Sidebar
+    function renderSideSlicers() {
+      const container = document.getElementById('sideSlicersContainer');
+      const titleEl = document.getElementById('sideSlicerTitle');
       container.innerHTML = '';
 
       if (currentPage === 'home') {
+        titleEl.textContent = "OVERVIEW FILTERS";
         container.innerHTML = `
-          <!-- Slicer 1: Contract -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Contract:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setHomeSlicer('contract', 'ALL')" class="slicer-pill ${pageFilters.home.contract === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setHomeSlicer('contract', 'Month-to-Month')" class="slicer-pill ${pageFilters.home.contract === 'Month-to-Month' ? 'active' : ''} px-2 py-0.5 rounded">M2M</button>
-              <button onclick="setHomeSlicer('contract', '1-Year')" class="slicer-pill ${pageFilters.home.contract === '1-Year' ? 'active' : ''} px-2 py-0.5 rounded">1-Yr</button>
-              <button onclick="setHomeSlicer('contract', '2-Year')" class="slicer-pill ${pageFilters.home.contract === '2-Year' ? 'active' : ''} px-2 py-0.5 rounded">2-Yr</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Contract Term:</span>
+            <div class="grid grid-cols-2 gap-1 text-[9px]">
+              <button onclick="setHomeSlicer('contract', 'ALL')" class="slicer-side-pill ${pageFilters.home.contract === 'ALL' ? 'active' : ''} py-1 px-1 rounded-lg text-center">All</button>
+              <button onclick="setHomeSlicer('contract', 'Month-to-Month')" class="slicer-side-pill ${pageFilters.home.contract === 'Month-to-Month' ? 'active' : ''} py-1 px-1 rounded-lg text-center">M2M</button>
+              <button onclick="setHomeSlicer('contract', '1-Year')" class="slicer-side-pill ${pageFilters.home.contract === '1-Year' ? 'active' : ''} py-1 px-1 rounded-lg text-center">1-Yr</button>
+              <button onclick="setHomeSlicer('contract', '2-Year')" class="slicer-side-pill ${pageFilters.home.contract === '2-Year' ? 'active' : ''} py-1 px-1 rounded-lg text-center">2-Yr</button>
             </div>
           </div>
 
-          <!-- Slicer 2: Tier -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setHomeSlicer('tier', 'ALL')" class="slicer-pill ${pageFilters.home.tier === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setHomeSlicer('tier', 'Enterprise')" class="slicer-pill ${pageFilters.home.tier === 'Enterprise' ? 'active' : ''} px-2 py-0.5 rounded">Ent</button>
-              <button onclick="setHomeSlicer('tier', 'Mid-Market')" class="slicer-pill ${pageFilters.home.tier === 'Mid-Market' ? 'active' : ''} px-2 py-0.5 rounded">Mid</button>
-              <button onclick="setHomeSlicer('tier', 'Growth')" class="slicer-pill ${pageFilters.home.tier === 'Growth' ? 'active' : ''} px-2 py-0.5 rounded">Growth</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Subscription Tier:</span>
+            <div class="grid grid-cols-2 gap-1 text-[9px]">
+              <button onclick="setHomeSlicer('tier', 'ALL')" class="slicer-side-pill ${pageFilters.home.tier === 'ALL' ? 'active' : ''} py-1 px-1 rounded-lg text-center">All</button>
+              <button onclick="setHomeSlicer('tier', 'Enterprise')" class="slicer-side-pill ${pageFilters.home.tier === 'Enterprise' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Ent</button>
+              <button onclick="setHomeSlicer('tier', 'Mid-Market')" class="slicer-side-pill ${pageFilters.home.tier === 'Mid-Market' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Mid</button>
+              <button onclick="setHomeSlicer('tier', 'Growth')" class="slicer-side-pill ${pageFilters.home.tier === 'Growth' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Growth</button>
             </div>
           </div>
-
-          <!-- Slicer 3: Status -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Status:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setHomeSlicer('status', 'ALL')" class="slicer-pill ${pageFilters.home.status === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setHomeSlicer('status', 'Active')" class="slicer-pill ${pageFilters.home.status === 'Active' ? 'active' : ''} px-2 py-0.5 rounded">Active</button>
-              <button onclick="setHomeSlicer('status', 'Churned')" class="slicer-pill ${pageFilters.home.status === 'Churned' ? 'active' : ''} px-2 py-0.5 rounded">Churned</button>
-            </div>
-          </div>
-
-          <span id="homeMatchCounter" class="px-2 py-0.5 rounded-full bg-emerald-50 text-sidebar font-mono text-[10px] font-extrabold border border-emerald-200 ml-1">
-            5,000 Accounts (100%)
-          </span>
         `;
       } else if (currentPage === 'cohorts') {
+        titleEl.textContent = "COHORT FILTERS";
         container.innerHTML = `
-          <!-- Cohort Slicer 1: Tier -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setCohortSlicer('tier', 'ALL')" class="slicer-pill ${pageFilters.cohorts.tier === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setCohortSlicer('tier', 'Enterprise')" class="slicer-pill ${pageFilters.cohorts.tier === 'Enterprise' ? 'active' : ''} px-2 py-0.5 rounded">Enterprise</button>
-              <button onclick="setCohortSlicer('tier', 'Mid-Market')" class="slicer-pill ${pageFilters.cohorts.tier === 'Mid-Market' ? 'active' : ''} px-2 py-0.5 rounded">Mid-Market</button>
-              <button onclick="setCohortSlicer('tier', 'Growth')" class="slicer-pill ${pageFilters.cohorts.tier === 'Growth' ? 'active' : ''} px-2 py-0.5 rounded">Growth</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Tier Breakdown:</span>
+            <div class="grid grid-cols-2 gap-1 text-[9px]">
+              <button onclick="setCohortSlicer('tier', 'ALL')" class="slicer-side-pill ${pageFilters.cohorts.tier === 'ALL' ? 'active' : ''} py-1 px-1 rounded-lg text-center">All</button>
+              <button onclick="setCohortSlicer('tier', 'Enterprise')" class="slicer-side-pill ${pageFilters.cohorts.tier === 'Enterprise' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Ent</button>
+              <button onclick="setCohortSlicer('tier', 'Mid-Market')" class="slicer-side-pill ${pageFilters.cohorts.tier === 'Mid-Market' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Mid</button>
+              <button onclick="setCohortSlicer('tier', 'Growth')" class="slicer-side-pill ${pageFilters.cohorts.tier === 'Growth' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Growth</button>
             </div>
           </div>
 
-          <!-- Cohort Slicer 2: Commitment -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Commitment:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setCohortSlicer('commitment', 'ALL')" class="slicer-pill ${pageFilters.cohorts.commitment === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setCohortSlicer('commitment', 'Annual')" class="slicer-pill ${pageFilters.cohorts.commitment === 'Annual' ? 'active' : ''} px-2 py-0.5 rounded">Annual / 2-Yr</button>
-              <button onclick="setCohortSlicer('commitment', 'M2M')" class="slicer-pill ${pageFilters.cohorts.commitment === 'M2M' ? 'active' : ''} px-2 py-0.5 rounded">Month-to-Month</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Commitment:</span>
+            <div class="grid grid-cols-2 gap-1 text-[9px]">
+              <button onclick="setCohortSlicer('commitment', 'ALL')" class="slicer-side-pill ${pageFilters.cohorts.commitment === 'ALL' ? 'active' : ''} py-1 px-1 rounded-lg text-center">All</button>
+              <button onclick="setCohortSlicer('commitment', 'Annual')" class="slicer-side-pill ${pageFilters.cohorts.commitment === 'Annual' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Annual</button>
+              <button onclick="setCohortSlicer('commitment', 'M2M')" class="slicer-side-pill ${pageFilters.cohorts.commitment === 'M2M' ? 'active' : ''} py-1 px-1 rounded-lg text-center col-span-2">Month-to-Month</button>
             </div>
           </div>
-
-          <!-- Cohort Slicer 3: Horizon -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Horizon:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setCohortSlicer('horizon', 'ALL')" class="slicer-pill ${pageFilters.cohorts.horizon === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setCohortSlicer('horizon', '12M')" class="slicer-pill ${pageFilters.cohorts.horizon === '12M' ? 'active' : ''} px-2 py-0.5 rounded">12-Mo</button>
-              <button onclick="setCohortSlicer('horizon', '24M')" class="slicer-pill ${pageFilters.cohorts.horizon === '24M' ? 'active' : ''} px-2 py-0.5 rounded">24-Mo</button>
-            </div>
-          </div>
-
-          <span class="px-2 py-0.5 rounded-full bg-teal-50 text-tealAccent font-mono text-[10px] font-extrabold border border-teal-200 ml-1">
-            30 Longitudinal Cohorts
-          </span>
         `;
       } else if (currentPage === 'triage') {
+        titleEl.textContent = "TRIAGE FILTERS";
         container.innerHTML = `
-          <!-- Triage Slicer 1: Risk Trigger -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Trigger Signal:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setTriageSlicer('trigger', 'ALL')" class="slicer-pill ${pageFilters.triage.trigger === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setTriageSlicer('trigger', 'Friction')" class="slicer-pill ${pageFilters.triage.trigger === 'Friction' ? 'active' : ''} px-2 py-0.5 rounded" title="4+ Support Tickets">Friction (4+ Tix)</button>
-              <button onclick="setTriageSlicer('trigger', 'Inactivity')" class="slicer-pill ${pageFilters.triage.trigger === 'Inactivity' ? 'active' : ''} px-2 py-0.5 rounded" title="14+ Days Inactive">Dormant (14+ Days)</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Trigger Signal:</span>
+            <div class="space-y-1 text-[9px]">
+              <button onclick="setTriageSlicer('trigger', 'ALL')" class="w-full slicer-side-pill ${pageFilters.triage.trigger === 'ALL' ? 'active' : ''} py-1 px-2 rounded-lg text-left">All Signals</button>
+              <button onclick="setTriageSlicer('trigger', 'Friction')" class="w-full slicer-side-pill ${pageFilters.triage.trigger === 'Friction' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Support Friction (4+)</button>
+              <button onclick="setTriageSlicer('trigger', 'Inactivity')" class="w-full slicer-side-pill ${pageFilters.triage.trigger === 'Inactivity' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Dormancy (&ge;14d)</button>
             </div>
           </div>
 
-          <!-- Triage Slicer 2: Tier -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Tier:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setTriageSlicer('tier', 'ALL')" class="slicer-pill ${pageFilters.triage.tier === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All</button>
-              <button onclick="setTriageSlicer('tier', 'Enterprise')" class="slicer-pill ${pageFilters.triage.tier === 'Enterprise' ? 'active' : ''} px-2 py-0.5 rounded">Enterprise</button>
-              <button onclick="setTriageSlicer('tier', 'Mid-Market')" class="slicer-pill ${pageFilters.triage.tier === 'Mid-Market' ? 'active' : ''} px-2 py-0.5 rounded">Mid-Market</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Account Tier:</span>
+            <div class="grid grid-cols-2 gap-1 text-[9px]">
+              <button onclick="setTriageSlicer('tier', 'ALL')" class="slicer-side-pill ${pageFilters.triage.tier === 'ALL' ? 'active' : ''} py-1 px-1 rounded-lg text-center">All</button>
+              <button onclick="setTriageSlicer('tier', 'Enterprise')" class="slicer-side-pill ${pageFilters.triage.tier === 'Enterprise' ? 'active' : ''} py-1 px-1 rounded-lg text-center">Ent</button>
+              <button onclick="setTriageSlicer('tier', 'Mid-Market')" class="slicer-side-pill ${pageFilters.triage.tier === 'Mid-Market' ? 'active' : ''} py-1 px-1 rounded-lg text-center col-span-2">Mid-Market</button>
             </div>
           </div>
-
-          <span id="triageMatchCounter" class="px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 font-mono text-[10px] font-extrabold border border-rose-200 ml-1">
-            96 At-Risk
-          </span>
+        `;
+      } else if (currentPage === 'leakage') {
+        titleEl.textContent = "LEAKAGE FILTERS";
+        container.innerHTML = `
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Commitment Focus:</span>
+            <div class="space-y-1 text-[9px]">
+              <button onclick="setLeakageSlicer('commitment', 'ALL')" class="w-full slicer-side-pill ${pageFilters.leakage.commitment === 'ALL' ? 'active' : ''} py-1 px-2 rounded-lg text-left">All Terms</button>
+              <button onclick="setLeakageSlicer('commitment', 'M2M')" class="w-full slicer-side-pill ${pageFilters.leakage.commitment === 'M2M' ? 'active' : ''} py-1 px-2 rounded-lg text-left">M2M ($5.1M Risk)</button>
+              <button onclick="setLeakageSlicer('commitment', 'Annual')" class="w-full slicer-side-pill ${pageFilters.leakage.commitment === 'Annual' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Annual Protected</button>
+            </div>
+          </div>
         `;
       } else if (currentPage === 'recommendations') {
+        titleEl.textContent = "STRATEGY FILTERS";
         container.innerHTML = `
-          <!-- Recommendations Slicer 1: Focus Segment -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">Intervention Focus:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setRecommendationsSlicer('focus', 'ALL')" class="slicer-pill ${pageFilters.recommendations.focus === 'ALL' ? 'active' : ''} px-2 py-0.5 rounded">All Critical</button>
-              <button onclick="setRecommendationsSlicer('focus', 'M2M')" class="slicer-pill ${pageFilters.recommendations.focus === 'M2M' ? 'active' : ''} px-2 py-0.5 rounded">M2M Conversion</button>
-              <button onclick="setRecommendationsSlicer('focus', 'Friction')" class="slicer-pill ${pageFilters.recommendations.focus === 'Friction' ? 'active' : ''} px-2 py-0.5 rounded">Support Friction</button>
-              <button onclick="setRecommendationsSlicer('focus', 'Dormancy')" class="slicer-pill ${pageFilters.recommendations.focus === 'Dormancy' ? 'active' : ''} px-2 py-0.5 rounded">Dormant Accounts</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Intervention Focus:</span>
+            <div class="space-y-1 text-[9px]">
+              <button onclick="setRecommendationsSlicer('focus', 'ALL')" class="w-full slicer-side-pill ${pageFilters.recommendations.focus === 'ALL' ? 'active' : ''} py-1 px-2 rounded-lg text-left">All Critical ($37k MRR)</button>
+              <button onclick="setRecommendationsSlicer('focus', 'M2M')" class="w-full slicer-side-pill ${pageFilters.recommendations.focus === 'M2M' ? 'active' : ''} py-1 px-2 rounded-lg text-left">M2M Conversions</button>
+              <button onclick="setRecommendationsSlicer('focus', 'Friction')" class="w-full slicer-side-pill ${pageFilters.recommendations.focus === 'Friction' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Technical Triage</button>
             </div>
           </div>
 
-          <!-- Recommendations Slicer 2: CSM Dedicated Capacity -->
-          <div class="flex items-center space-x-1">
-            <span class="text-[10px] font-bold text-slate-400 uppercase">CSM Capacity:</span>
-            <div class="flex rounded-lg bg-slate-100 p-0.5 text-[10px]">
-              <button onclick="setRecommendationsSlicer('capacity', '1')" class="slicer-pill ${pageFilters.recommendations.capacity === '1' ? 'active' : ''} px-2 py-0.5 rounded">1 CSM</button>
-              <button onclick="setRecommendationsSlicer('capacity', '2')" class="slicer-pill ${pageFilters.recommendations.capacity === '2' ? 'active' : ''} px-2 py-0.5 rounded">2 CSMs</button>
-              <button onclick="setRecommendationsSlicer('capacity', '3')" class="slicer-pill ${pageFilters.recommendations.capacity === '3' ? 'active' : ''} px-2 py-0.5 rounded">3 CSMs</button>
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">CSM Capacity:</span>
+            <div class="grid grid-cols-3 gap-1 text-[9px]">
+              <button onclick="setRecommendationsSlicer('capacity', '1')" class="slicer-side-pill ${pageFilters.recommendations.capacity === '1' ? 'active' : ''} py-1 rounded text-center">1</button>
+              <button onclick="setRecommendationsSlicer('capacity', '2')" class="slicer-side-pill ${pageFilters.recommendations.capacity === '2' ? 'active' : ''} py-1 rounded text-center">2</button>
+              <button onclick="setRecommendationsSlicer('capacity', '3')" class="slicer-side-pill ${pageFilters.recommendations.capacity === '3' ? 'active' : ''} py-1 rounded text-center">3</button>
             </div>
           </div>
-
-          <span class="px-2 py-0.5 rounded-full bg-amber-50 text-mustard-700 font-mono text-[10px] font-extrabold border border-amber-200 ml-1">
-            Financial Sensitivity
-          </span>
+        `;
+      } else if (currentPage === 'drillthrough') {
+        titleEl.textContent = "DRILL FILTERS";
+        container.innerHTML = `
+          <div>
+            <span class="text-[8px] font-bold text-white/60 uppercase block mb-1">Drill Dimension:</span>
+            <div class="space-y-1 text-[9px]">
+              <button onclick="drillIntoMetric('portfolio')" class="w-full slicer-side-pill ${pageFilters.drillthrough.dimension === 'portfolio' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Portfolio Overview</button>
+              <button onclick="drillIntoMetric('contracts')" class="w-full slicer-side-pill ${pageFilters.drillthrough.dimension === 'contracts' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Contract Risk</button>
+              <button onclick="drillIntoMetric('cohorts')" class="w-full slicer-side-pill ${pageFilters.drillthrough.dimension === 'cohorts' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Cohort Decay</button>
+              <button onclick="drillIntoMetric('triage')" class="w-full slicer-side-pill ${pageFilters.drillthrough.dimension === 'triage' ? 'active' : ''} py-1 px-2 rounded-lg text-left">Priority Accounts</button>
+            </div>
+          </div>
         `;
       }
     }
 
-    // Reset current page filters
     function resetActivePageFilters() {
-      if (currentPage === 'home') {
-        pageFilters.home = { contract: 'ALL', tier: 'ALL', status: 'ALL' };
-        applyHomeFilters();
-      } else if (currentPage === 'cohorts') {
-        pageFilters.cohorts = { tier: 'ALL', commitment: 'ALL', horizon: 'ALL' };
-        applyCohortFilters();
-      } else if (currentPage === 'triage') {
-        pageFilters.triage = { trigger: 'ALL', tier: 'ALL', contract: 'ALL', search: '' };
-        applyTriageFilters();
-      } else if (currentPage === 'recommendations') {
-        pageFilters.recommendations = { focus: 'ALL', capacity: '2' };
-        document.getElementById('pageRescueSlider').value = 35;
-        applyRecommendationsFilters();
-      }
-      renderPageSlicers();
-      showToast(`Filters for ${currentPage.toUpperCase()} reset to baseline`);
+      if (currentPage === 'home') pageFilters.home = { contract: 'ALL', tier: 'ALL', status: 'ALL' };
+      if (currentPage === 'cohorts') pageFilters.cohorts = { tier: 'ALL', commitment: 'ALL' };
+      if (currentPage === 'triage') pageFilters.triage = { trigger: 'ALL', tier: 'ALL' };
+      if (currentPage === 'leakage') pageFilters.leakage = { commitment: 'ALL', tier: 'ALL' };
+      if (currentPage === 'recommendations') pageFilters.recommendations = { focus: 'ALL', capacity: '2' };
+
+      renderSideSlicers();
+      switchPage(currentPage);
+      showToast("Page filters reset to baseline");
     }
 
     // ==========================================
-    // PAGE 1: HOME SLICER HANDLERS & REACTIVITY
+    // DRILLTHROUGH ROUTER & POPULATOR
+    // ==========================================
+    function drillIntoMetric(dimension) {
+      pageFilters.drillthrough.dimension = dimension;
+      switchPage('drillthrough');
+    }
+
+    function renderDrillthroughView() {
+      const dim = pageFilters.drillthrough.dimension;
+      const title = document.getElementById('drillTitle');
+      const badge = document.getElementById('drillContextBadge');
+      const sqlCode = document.getElementById('drillSqlBlock');
+      const tbody = document.getElementById('drillTableBody');
+
+      let queryCode = SQL_SCRIPTS[1].code;
+      let contextLabel = "Portfolio Health Overview";
+      let filterAccounts = RAW_ACCOUNTS;
+
+      if (dim === 'contracts') {
+        contextLabel = "Drill: Contract Exposure (4.27x Odds)";
+        queryCode = SQL_SCRIPTS[3].code;
+        filterAccounts = RAW_ACCOUNTS.filter(a => a.contract === 'Month-to-Month');
+      } else if (dim === 'velocity') {
+        contextLabel = "Drill: Monthly Exit Velocity";
+        queryCode = SQL_SCRIPTS[2].code;
+      } else if (dim === 'cohorts') {
+        contextLabel = "Drill: Cohort Decay & Tenure";
+        queryCode = SQL_SCRIPTS[2].code;
+      } else if (dim === 'triage') {
+        contextLabel = "Drill: Priority Account Triage";
+        queryCode = SQL_SCRIPTS[4].code;
+        filterAccounts = RAW_ACCOUNTS.filter(a => a.inactivity >= 14 || a.tickets >= 4);
+      } else if (dim === 'clv') {
+        contextLabel = "Drill: Customer Lifetime Value";
+        queryCode = SQL_SCRIPTS[3].code;
+      }
+
+      badge.textContent = contextLabel;
+      title.textContent = `Deep Dive Explorer: ${dim.toUpperCase()}`;
+      sqlCode.textContent = queryCode;
+
+      tbody.innerHTML = '';
+      filterAccounts.forEach(acc => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition";
+        tr.onclick = () => openAccountDrawer(acc.id);
+        tr.innerHTML = `
+          <td class="py-2.5 px-2.5 font-mono text-[11px] text-slate-400 font-bold">${acc.id}</td>
+          <td class="py-2.5 px-2.5 font-bold text-slate-800 dark:text-slate-100">${acc.company}</td>
+          <td class="py-2.5 px-2.5"><span class="px-1.5 py-0.2 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">${acc.tier}</span></td>
+          <td class="py-2.5 px-2.5"><span class="px-1.5 py-0.2 rounded-md ${acc.contract === 'Month-to-Month' ? 'bg-amber-100 dark:bg-amber-950/60 text-mustard-700 dark:text-mustard-300' : 'bg-emerald-50 dark:bg-emerald-950/60 text-tealAccent'} text-[10px] font-bold">${acc.contract}</span></td>
+          <td class="py-2.5 px-2.5 font-mono font-bold text-slate-800 dark:text-slate-100 text-xs">$${acc.mrr.toFixed(2)}</td>
+          <td class="py-2.5 px-2.5 font-mono ${acc.inactivity >= 14 ? 'text-rose-600 font-bold' : 'text-slate-500'} text-xs">${acc.inactivity}d</td>
+          <td class="py-2.5 px-2.5">
+            <button class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-mustard-500 hover:text-sidebar-light text-slate-700 dark:text-slate-300 font-bold text-[10px] transition">
+              Inspect
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('drillRowCount').textContent = `Showing ${filterAccounts.length} Filtered Records`;
+    }
+
+    // ==========================================
+    // FILTER HANDLERS
     // ==========================================
     function setHomeSlicer(key, value) {
       pageFilters.home[key] = value;
-      renderPageSlicers();
+      renderSideSlicers();
       applyHomeFilters();
     }
 
     function applyHomeFilters() {
       const f = pageFilters.home;
-
-      // Filter accounts
-      const filtered = RAW_ACCOUNTS.filter(a => {
-        const matchContract = (f.contract === 'ALL') || (a.contract === f.contract);
-        const matchTier = (f.tier === 'ALL') || (a.tier === f.tier);
-        const matchStatus = (f.status === 'ALL') || (a.status === f.status);
-        return matchContract && matchTier && matchStatus;
-      });
-
-      // Scale factors for realistic responsiveness
       let scale = 1.0;
       if (f.contract === 'Month-to-Month') scale *= 0.542;
       if (f.contract === '1-Year') scale *= 0.276;
@@ -1401,10 +1589,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       const activeMatched = Math.round(3765 * scale);
       const mrrMatched = Math.round(1933837 * scale);
       const leakageMatched = Math.round(7845590 * scale);
-      const riskCountMatched = Math.max(1, Math.round(96 * scale));
-      const riskMRRMatched = Math.round(37420 * scale);
 
-      // Churn rate calculation based on contract selection
       let churnRate = 24.7;
       if (f.contract === 'Month-to-Month') churnRate = 31.8;
       if (f.contract === '1-Year') churnRate = 16.4;
@@ -1413,25 +1598,16 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       if (f.tier === 'Growth') churnRate += 4.5;
       churnRate = Math.max(8.0, Math.min(45.0, churnRate));
 
-      // Update KPI Cards
       document.getElementById('kpiActiveMRR').textContent = `$${mrrMatched.toLocaleString('en-US')}`;
       document.getElementById('kpiActiveAccounts').textContent = `${activeMatched.toLocaleString('en-US')} Accounts Active`;
       document.getElementById('kpiLeakageARR').textContent = `$${leakageMatched.toLocaleString('en-US')}`;
       document.getElementById('kpiChurnRate').textContent = `${churnRate.toFixed(1)}%`;
-      document.getElementById('kpiRiskCount').textContent = `${riskCountMatched} Accounts`;
-      document.getElementById('kpiRiskMRR').textContent = `$${riskMRRMatched.toLocaleString('en-US')} Immediate MRR`;
-      document.getElementById('navBadgeRisk').textContent = riskCountMatched;
+      document.getElementById('canvasFilterBadge').textContent = `${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
 
-      const counterEl = document.getElementById('homeMatchCounter');
-      if (counterEl) counterEl.textContent = `${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
-
-      // Update Donut Chart
       if (contractShareChartInstance) {
         let donutData = [54.2, 27.6, 18.2];
         if (f.tier === 'Enterprise') donutData = [38.5, 34.2, 27.3];
-        if (f.tier === 'Mid-Market') donutData = [55.1, 28.3, 16.6];
         if (f.tier === 'Growth') donutData = [72.4, 18.6, 9.0];
-
         if (f.contract === 'Month-to-Month') donutData = [100.0, 0, 0];
         if (f.contract === '1-Year') donutData = [0, 100.0, 0];
         if (f.contract === '2-Year') donutData = [0, 0, 100.0];
@@ -1444,108 +1620,85 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         document.getElementById('donutStat2Yr').textContent = `${donutData[2].toFixed(0)}%`;
       }
 
-      // Update Dual Bar Retention Velocity Chart
       if (verticalStatsChartInstance) {
-        let segmentBarData = [4.4, 7.2, 6.3, 4.8, 2.1, 5.8];
-        if (f.contract === 'Month-to-Month') segmentBarData = [6.8, 8.4, 7.9, 6.2, 5.1, 7.4];
-        if (f.contract === '1-Year') segmentBarData = [2.8, 3.4, 3.1, 2.9, 1.8, 2.6];
-        if (f.contract === '2-Year') segmentBarData = [1.2, 1.8, 1.4, 1.1, 0.9, 1.5];
+        let barData = [4.4, 7.2, 6.3, 4.8, 2.1, 5.8];
+        if (f.contract === 'Month-to-Month') barData = [6.8, 8.4, 7.9, 6.2, 5.1, 7.4];
+        if (f.contract === '2-Year') barData = [1.2, 1.8, 1.4, 1.1, 0.9, 1.5];
 
-        verticalStatsChartInstance.data.datasets[0].data = segmentBarData;
-        verticalStatsChartInstance.data.datasets[0].label = f.contract === 'ALL' ? 'Portfolio Churn Rate (%)' : `${f.contract} Churn (%)`;
+        verticalStatsChartInstance.data.datasets[0].data = barData;
         verticalStatsChartInstance.update();
-
-        const legendLabel = document.getElementById('barLegendSegment');
-        if (legendLabel) legendLabel.textContent = `${f.contract === 'ALL' ? 'Portfolio' : f.contract} (${churnRate.toFixed(1)}%)`;
+        document.getElementById('barLegendLabel').textContent = `${f.contract === 'ALL' ? 'Segment' : f.contract} (${churnRate.toFixed(1)}%)`;
       }
-
-      // Update Retention Spline Chart
-      if (retentionSplineChartInstance) {
-        let survivalCurve = [3.2, 4.4, 3.8, 5.8, 6.4, 4.2];
-        if (f.tier === 'Enterprise') survivalCurve = [4.8, 5.6, 5.2, 6.5, 6.8, 5.9];
-        if (f.tier === 'Growth') survivalCurve = [2.1, 3.2, 2.8, 4.1, 4.6, 3.4];
-        if (f.contract === 'Month-to-Month') survivalCurve = [2.4, 3.5, 3.0, 4.4, 4.8, 3.6];
-
-        retentionSplineChartInstance.data.datasets[0].data = survivalCurve;
-        retentionSplineChartInstance.update();
-
-        const badgeLabel = document.getElementById('splineBadgeLabel');
-        if (badgeLabel) {
-          const m6Rate = (84.2 * (scale > 0.5 ? 1 : 0.94)).toFixed(1);
-          badgeLabel.innerHTML = `M6 Benchmark: <strong>${m6Rate}%</strong>`;
-        }
-      }
-
-      // Render flight cards
-      renderOverviewTickets(filtered);
     }
 
-    // ==========================================
-    // PAGE 2: COHORT SLICER HANDLERS & REACTIVITY
-    // ==========================================
     function setCohortSlicer(key, value) {
       pageFilters.cohorts[key] = value;
-      renderPageSlicers();
+      renderSideSlicers();
       applyCohortFilters();
     }
 
     function applyCohortFilters() {
       const f = pageFilters.cohorts;
-
-      let filteredCohorts = RAW_COHORTS.filter(c => {
+      let filtered = RAW_COHORTS.filter(c => {
         const matchTier = (f.tier === 'ALL') || (c.tier === f.tier);
         const matchCommitment = (f.commitment === 'ALL') || (c.contract === f.commitment);
         return matchTier && matchCommitment;
       });
 
-      if (f.horizon === '12M') {
-        filteredCohorts = filteredCohorts.slice(0, 3);
-      }
-
-      // Recalculate cohort summary stats
-      let m3Sum = 0, m6Sum = 0, m12Sum = 0, count = filteredCohorts.length;
-      filteredCohorts.forEach(c => {
-        m3Sum += c.m3;
-        m6Sum += c.m6;
-        m12Sum += c.m12;
-      });
-
-      const avgM3 = count ? (m3Sum / count).toFixed(1) : "91.4";
-      const avgM6 = count ? (m6Sum / count).toFixed(1) : "84.2";
-      const avgM12 = count ? (m12Sum / count).toFixed(1) : "76.8";
-
-      document.getElementById('cohortKpiM3').textContent = `${avgM3}%`;
-      document.getElementById('cohortKpiM6').textContent = `${avgM6}%`;
-      document.getElementById('cohortKpiM12').textContent = `${avgM12}%`;
-
-      // Render cohort rows
       const tbody = document.getElementById('cohortTableBody');
       tbody.innerHTML = '';
+      filtered.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="py-2 px-2.5 font-bold text-slate-800 dark:text-slate-100">${c.month}</td>
+          <td class="py-2 px-2.5 text-slate-600 dark:text-slate-300">${c.signups}</td>
+          <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-300 font-bold">${c.m1}%</span></td>
+          <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-300 font-bold">${c.m3}%</span></td>
+          <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 font-bold">${c.m6}%</span></td>
+          <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 font-bold">${c.m12}%</span></td>
+          <td class="py-2 px-2.5 text-slate-400">${c.m18 ? c.m18 + '%' : '-'}</td>
+          <td class="py-2 px-2.5 font-bold text-slate-800 dark:text-slate-100 text-right">$${c.arr}k</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
-      if (filteredCohorts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-xs text-slate-400">No cohorts match criteria.</td></tr>`;
-      } else {
-        filteredCohorts.forEach(c => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="py-2 px-2.5 font-bold text-slate-800">${c.month}</td>
-            <td class="py-2 px-2.5 text-slate-600">${c.signups}</td>
-            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">${c.m1}%</span></td>
-            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 font-bold">${c.m3}%</span></td>
-            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold">${c.m6}%</span></td>
-            <td class="py-2 px-2.5"><span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold">${c.m12}%</span></td>
-            <td class="py-2 px-2.5 text-slate-400">${c.m18 ? c.m18 + '%' : '-'}</td>
-            <td class="py-2 px-2.5 font-bold text-slate-800 text-right">$${c.arr}k</td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
+    function setTriageSlicer(key, value) {
+      pageFilters.triage[key] = value;
+      renderSideSlicers();
+      applyTriageFilters();
+    }
 
-      // Update CLV Chart if initialized
+    function applyTriageFilters() {
+      const f = pageFilters.triage;
+      const q = (document.getElementById('crmSearchInput')?.value || '').toLowerCase();
+
+      const filtered = RAW_ACCOUNTS.filter(a => {
+        const matchTrigger = (f.trigger === 'ALL') || (a.trigger === f.trigger);
+        const matchTier = (f.tier === 'ALL') || (a.tier === f.tier);
+        const matchQuery = !q || a.company.toLowerCase().includes(q) || a.csm.toLowerCase().includes(q);
+        return matchTrigger && matchTier && matchQuery;
+      });
+
+      renderCrmTable(filtered);
+    }
+
+    function filterCrmTable() {
+      applyTriageFilters();
+    }
+
+    function setLeakageSlicer(key, value) {
+      pageFilters.leakage[key] = value;
+      renderSideSlicers();
+      applyLeakageFilters();
+    }
+
+    function applyLeakageFilters() {
+      const f = pageFilters.leakage;
       if (clvTierChartInstance) {
         let mult = 1.0;
-        if (f.commitment === 'Annual') mult = 1.25;
-        if (f.commitment === 'M2M') mult = 0.75;
+        if (f.commitment === 'Annual') mult = 1.28;
+        if (f.commitment === 'M2M') mult = 0.72;
 
         clvTierChartInstance.data.datasets[0].data = [1.4, 4.2, 8.5, 16.8, 23.2, 28.4].map(v => +(v * mult).toFixed(1));
         clvTierChartInstance.data.datasets[1].data = [0.98, 2.9, 5.6, 9.8, 12.6, 14.9].map(v => +(v * mult).toFixed(1));
@@ -1558,47 +1711,13 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       }
     }
 
-    // ==========================================
-    // PAGE 3: TRIAGE SLICER HANDLERS & REACTIVITY
-    // ==========================================
-    function setTriageSlicer(key, value) {
-      pageFilters.triage[key] = value;
-      renderPageSlicers();
-      applyTriageFilters();
-    }
-
-    function applyTriageFilters() {
-      const f = pageFilters.triage;
-      const q = (document.getElementById('crmSearchInput')?.value || '').toLowerCase();
-
-      const filtered = RAW_ACCOUNTS.filter(a => {
-        const matchTrigger = (f.trigger === 'ALL') || (a.trigger === f.trigger);
-        const matchTier = (f.tier === 'ALL') || (a.tier === f.tier);
-        const matchQuery = !q || a.company.toLowerCase().includes(q) || a.csm.toLowerCase().includes(q) || a.id.toLowerCase().includes(q);
-        return matchTrigger && matchTier && matchQuery;
-      });
-
-      renderCrmTable(filtered);
-
-      const counter = document.getElementById('triageMatchCounter');
-      if (counter) counter.textContent = `${filtered.length} At-Risk`;
-    }
-
-    function filterCrmTable() {
-      applyTriageFilters();
-    }
-
-    // ==========================================
-    // PAGE 4: RECOMMENDATIONS SLICER HANDLERS
-    // ==========================================
     function setRecommendationsSlicer(key, value) {
       pageFilters.recommendations[key] = value;
-      renderPageSlicers();
+      renderSideSlicers();
       applyRecommendationsFilters();
     }
 
     function applyRecommendationsFilters() {
-      const f = pageFilters.recommendations;
       updatePageSimulation();
     }
 
@@ -1611,7 +1730,6 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       let poolMRR = 37420;
       if (f.focus === 'M2M') poolMRR = 26500;
       if (f.focus === 'Friction') poolMRR = 18200;
-      if (f.focus === 'Dormancy') poolMRR = 14800;
 
       const monthly = Math.round(poolMRR * (rate / 100));
       const annual = monthly * 12;
@@ -1619,7 +1737,6 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       document.getElementById('pageSimMonthly').textContent = `+$${monthly.toLocaleString('en-US')}`;
       document.getElementById('pageSimAnnual').textContent = `+$${annual.toLocaleString('en-US')}`;
 
-      // Net ROI calculation based on CSM count
       const csmCount = parseInt(f.capacity, 10) || 2;
       const csmCost = csmCount * 15000;
       const netRoi = (annual / csmCost).toFixed(1);
@@ -1630,69 +1747,6 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       `;
     }
 
-    // Render Overview Tickets on Home
-    function renderOverviewTickets(accounts) {
-      const container = document.getElementById('overviewTicketsContainer');
-      container.innerHTML = '';
-
-      if (accounts.length === 0) {
-        container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">No priority accounts match current filter.</div>`;
-        return;
-      }
-
-      accounts.slice(0, 4).forEach((acc, idx) => {
-        const row = document.createElement('div');
-        row.className = "ticket-card rounded-xl p-2.5 border border-slate-100 grid grid-cols-12 items-center cursor-pointer";
-        row.onclick = () => openAccountDrawer(acc.id);
-
-        const avatarColors = ['bg-mustard-500', 'bg-sageCard', 'bg-tealAccent', 'bg-roseAccent'];
-        const avatarBg = avatarColors[idx % avatarColors.length];
-
-        row.innerHTML = `
-          <div class="perforation-l"></div>
-          <div class="perforation-r"></div>
-          
-          <div class="col-span-4 flex items-center space-x-2 pl-1">
-            <div class="w-7 h-7 rounded-xl ${avatarBg} text-white font-mono font-bold text-[10px] flex items-center justify-center shrink-0">
-              ${acc.company.substring(0, 2).toUpperCase()}
-            </div>
-            <div class="truncate">
-              <h4 class="text-xs font-bold text-slate-800 truncate">${acc.company}</h4>
-              <p class="text-[9px] text-slate-400 font-mono truncate">${acc.id} &bull; ${acc.csm}</p>
-            </div>
-          </div>
-
-          <div class="col-span-3">
-            <span class="text-[11px] font-semibold text-slate-700 block">${acc.contract}</span>
-            <span class="text-[9px] text-rose-500 font-semibold flex items-center space-x-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-              <span>${acc.tickets} Tix &bull; ${acc.trigger}</span>
-            </span>
-          </div>
-
-          <div class="col-span-2 flex justify-center">
-            <div class="px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700 font-mono font-bold text-[10px]">
-              ${acc.inactivity}d ago
-            </div>
-          </div>
-
-          <div class="col-span-2 text-right">
-            <span class="text-xs font-mono font-black text-slate-800">$${acc.mrr.toFixed(0)}</span>
-            <span class="text-[9px] text-slate-400 block">/mo</span>
-          </div>
-
-          <div class="col-span-1 text-right pr-1">
-            <button class="w-6 h-6 rounded-lg bg-slate-100 hover:bg-mustard-500 hover:text-white flex items-center justify-center transition text-slate-500 ml-auto">
-              <i data-lucide="chevron-right" class="w-3 h-3"></i>
-            </button>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-      lucide.createIcons();
-    }
-
-    // Render CRM Triage Table
     function renderCrmTable(accounts) {
       const tbody = document.getElementById('crmTableBody');
       tbody.innerHTML = '';
@@ -1704,27 +1758,27 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
 
       accounts.forEach(acc => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50/80 cursor-pointer transition";
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition";
         tr.onclick = () => openAccountDrawer(acc.id);
         tr.innerHTML = `
           <td class="py-2.5 px-3">
-            <div class="font-bold text-slate-800 text-xs">${acc.company}</div>
+            <div class="font-bold text-slate-800 dark:text-slate-100 text-xs">${acc.company}</div>
             <div class="text-[9px] text-slate-400 font-mono">${acc.id} &bull; ${acc.csm}</div>
           </td>
           <td class="py-2.5 px-3">
-            <span class="px-1.5 py-0.2 rounded-md text-[9px] font-bold bg-slate-100 text-slate-700">${acc.tier}</span>
+            <span class="px-1.5 py-0.2 rounded-md text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${acc.tier}</span>
           </td>
           <td class="py-2.5 px-3">
-            <span class="px-1.5 py-0.2 rounded-md text-[9px] font-bold ${acc.contract === 'Month-to-Month' ? 'bg-amber-100 text-mustard-700' : 'bg-emerald-50 text-tealAccent'}">
+            <span class="px-1.5 py-0.2 rounded-md text-[9px] font-bold ${acc.contract === 'Month-to-Month' ? 'bg-amber-100 dark:bg-amber-950/60 text-mustard-700 dark:text-mustard-300' : 'bg-emerald-50 dark:bg-emerald-950/60 text-tealAccent'}">
               ${acc.contract}
             </span>
           </td>
-          <td class="py-2.5 px-3 font-mono font-bold text-slate-800 text-xs">$${acc.mrr.toFixed(2)}</td>
-          <td class="py-2.5 px-3 font-mono text-xs ${acc.inactivity >= 14 ? 'text-rose-600 font-bold' : 'text-slate-600'}">${acc.inactivity}d</td>
-          <td class="py-2.5 px-3 font-mono text-xs ${acc.tickets >= 4 ? 'text-amber-600 font-bold' : 'text-slate-600'}">${acc.tickets}</td>
-          <td class="py-2.5 px-3 text-slate-600 text-[10px] truncate max-w-[200px]">${acc.prescriptive}</td>
+          <td class="py-2.5 px-3 font-mono font-bold text-slate-800 dark:text-slate-100 text-xs">$${acc.mrr.toFixed(2)}</td>
+          <td class="py-2.5 px-3 font-mono text-xs ${acc.inactivity >= 14 ? 'text-rose-600 font-bold' : 'text-slate-600 dark:text-slate-400'}">${acc.inactivity}d</td>
+          <td class="py-2.5 px-3 font-mono text-xs ${acc.tickets >= 4 ? 'text-amber-600 font-bold' : 'text-slate-600 dark:text-slate-400'}">${acc.tickets}</td>
+          <td class="py-2.5 px-3 text-slate-600 dark:text-slate-300 text-[10px] truncate max-w-[180px]">${acc.prescriptive}</td>
           <td class="py-2.5 px-3 text-right">
-            <button class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-mustard-500 hover:text-sidebar text-slate-700 font-bold text-[10px] transition">
+            <button class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-mustard-500 hover:text-sidebar-light text-slate-700 dark:text-slate-300 font-bold text-[10px] transition">
               Audit
             </button>
           </td>
@@ -1737,7 +1791,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       lucide.createIcons();
     }
 
-    // Modal & Action Drawer Functions
+    // Modal Functions
     function openAccountDrawer(accId) {
       const acc = RAW_ACCOUNTS.find(a => a.id === accId) || RAW_ACCOUNTS[0];
       selectedDossierAccount = acc;
@@ -1774,7 +1828,6 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       openAccountDrawer('ACC-9042');
     }
 
-    // SQL Modal Functions
     function openSqlModal() {
       document.getElementById('sqlModal').classList.remove('hidden');
       pickSqlScript(currentSqlScriptId);
@@ -1791,9 +1844,9 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         const btn = document.getElementById(`sql-tab-${n}`);
         if (btn) {
           if (n === id) {
-            btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-mustard-500 text-sidebar";
+            btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-mustard-500 text-sidebar-light";
           } else {
-            btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 text-slate-600 hover:bg-slate-200";
+            btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
           }
         }
       });
@@ -1806,12 +1859,12 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     function renderSqlOutput(rows) {
       const container = document.getElementById('sqlOutputTable');
       if (!rows || rows.length === 0) return;
-      let html = '<table class="w-full text-left font-mono text-[10px]"><thead><tr class="border-b border-slate-200 text-slate-500">';
+      let html = '<table class="w-full text-left font-mono text-[10px]"><thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">';
       rows[0].forEach(h => html += `<th class="py-1 px-1.5">${h}</th>`);
       html += '</tr></thead><tbody>';
       for (let i = 1; i < rows.length; i++) {
-        html += '<tr class="border-b border-slate-100">';
-        rows[i].forEach(c => html += `<td class="py-1 px-1.5 font-semibold text-slate-800">${c}</td>`);
+        html += '<tr class="border-b border-slate-100 dark:border-slate-800">';
+        rows[i].forEach(c => html += `<td class="py-1 px-1.5 font-semibold text-slate-800 dark:text-slate-200">${c}</td>`);
         html += '</tr>';
       }
       html += '</tbody></table>';
@@ -1855,59 +1908,21 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         data: {
           labels: ['M1', 'M3', 'M6', 'M12', 'M18', 'M24'],
           datasets: [
-            {
-              label: 'Enterprise Tier',
-              data: [1.4, 4.2, 8.5, 16.8, 23.2, 28.4],
-              borderColor: '#d79b29',
-              backgroundColor: 'rgba(215, 155, 41, 0.1)',
-              fill: true,
-              tension: 0.35,
-              borderWidth: 2
-            },
-            {
-              label: 'Mid-Market Tier',
-              data: [0.98, 2.9, 5.6, 9.8, 12.6, 14.9],
-              borderColor: '#264239',
-              backgroundColor: 'transparent',
-              tension: 0.35,
-              borderWidth: 2
-            },
-            {
-              label: 'Growth Tier',
-              data: [0.75, 2.1, 3.8, 5.4, 6.5, 7.2],
-              borderColor: '#2a9d8f',
-              backgroundColor: 'transparent',
-              tension: 0.35,
-              borderWidth: 1.5,
-              borderDash: [3, 3]
-            }
+            { label: 'Enterprise Tier', data: [1.4, 4.2, 8.5, 16.8, 23.2, 28.4], borderColor: '#d79b29', backgroundColor: 'rgba(215, 155, 41, 0.1)', fill: true, tension: 0.35, borderWidth: 2 },
+            { label: 'Mid-Market Tier', data: [0.98, 2.9, 5.6, 9.8, 12.6, 14.9], borderColor: '#264239', backgroundColor: 'transparent', tension: 0.35, borderWidth: 2 },
+            { label: 'Growth Tier', data: [0.75, 2.1, 3.8, 5.4, 6.5, 7.2], borderColor: '#2a9d8f', backgroundColor: 'transparent', tension: 0.35, borderWidth: 1.5, borderDash: [3, 3] }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: {
-              position: 'top',
-              labels: { font: { family: 'Plus Jakarta Sans', size: 10 }, boxWidth: 10 }
-            },
-            tooltip: {
-              backgroundColor: '#264239',
-              bodyFont: { family: 'Plus Jakarta Sans', size: 10 },
-              callbacks: {
-                label: (ctx) => ` ${ctx.dataset.label}: $${ctx.raw}k Cumulative CLV`
-              }
-            }
+            legend: { position: 'top', labels: { font: { family: 'Plus Jakarta Sans', size: 10 }, boxWidth: 10, color: isDarkMode ? '#94a3b8' : '#64748b' } },
+            tooltip: { backgroundColor: '#1e3830', bodyFont: { family: 'Plus Jakarta Sans', size: 10 } }
           },
           scales: {
-            x: { grid: { display: false }, ticks: { font: { size: 9 } } },
-            y: {
-              grid: { color: '#f1f5f9' },
-              ticks: {
-                font: { family: 'JetBrains Mono', size: 9 },
-                callback: (v) => `$${v}k`
-              }
-            }
+            x: { grid: { display: false }, ticks: { font: { size: 9 }, color: isDarkMode ? '#94a3b8' : '#64748b' } },
+            y: { grid: { color: isDarkMode ? 'rgba(255,255,255,0.06)' : '#f1f5f9' }, ticks: { font: { family: 'JetBrains Mono', size: 9 }, color: isDarkMode ? '#94a3b8' : '#64748b', callback: v => `$${v}k` } }
           }
         }
       });
@@ -1916,12 +1931,9 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
     window.onload = function() {
       lucide.createIcons();
 
-      // Render Home Slicers
-      renderPageSlicers();
-
-      // Initial Tables Render
-      renderOverviewTickets(RAW_ACCOUNTS);
-      renderCrmTable(RAW_ACCOUNTS);
+      renderSideSlicers();
+      applyCohortFilters();
+      applyTriageFilters();
 
       // 1. Dual-Bar Retention Velocity Chart
       const statsCtx = document.getElementById('verticalStatsChart').getContext('2d');
@@ -1930,20 +1942,8 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
           datasets: [
-            {
-              label: 'Portfolio Churn Rate (%)',
-              data: [4.4, 7.2, 6.3, 4.8, 2.1, 5.8],
-              backgroundColor: '#d79b29',
-              borderRadius: 4,
-              barThickness: 5
-            },
-            {
-              label: 'Annual Benchmark Target (%)',
-              data: [3.1, 3.2, 2.4, 2.1, 7.5, 2.0],
-              backgroundColor: '#264239',
-              borderRadius: 4,
-              barThickness: 5
-            }
+            { label: 'Segment Churn (%)', data: [4.4, 7.2, 6.3, 4.8, 2.1, 5.8], backgroundColor: '#d79b29', borderRadius: 4, barThickness: 6 },
+            { label: 'Annual Target (%)', data: [3.1, 3.2, 2.4, 2.1, 7.5, 2.0], backgroundColor: '#1e3830', borderRadius: 4, barThickness: 6 }
           ]
         },
         options: {
@@ -1951,21 +1951,11 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
           maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
-            tooltip: {
-              backgroundColor: '#264239',
-              bodyFont: { family: 'Plus Jakarta Sans', size: 10 },
-              cornerRadius: 8
-            }
+            tooltip: { backgroundColor: '#1e3830', bodyFont: { family: 'Plus Jakarta Sans', size: 10 }, cornerRadius: 8 }
           },
           scales: {
-            x: {
-              grid: { display: false },
-              ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 9 } }
-            },
-            y: {
-              grid: { color: '#f1f5f9' },
-              ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 9 } }
-            }
+            x: { grid: { display: false }, ticks: { color: '#64748b', font: { family: 'Plus Jakarta Sans', size: 9 } } },
+            y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 9 } } }
           }
         }
       });
@@ -1978,7 +1968,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
           labels: ['Month-to-Month (4.27x Odds)', '1-Year Contract', '2-Year Contract'],
           datasets: [{
             data: [54.2, 27.6, 18.2],
-            backgroundColor: ['#d79b29', '#264239', '#2a9d8f'],
+            backgroundColor: ['#d79b29', '#1e3830', '#2a9d8f'],
             borderWidth: 3,
             borderColor: '#ffffff',
             hoverOffset: 3
@@ -1990,14 +1980,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
           cutout: '72%',
           plugins: {
             legend: { display: false },
-            tooltip: {
-              backgroundColor: '#264239',
-              bodyFont: { family: 'Plus Jakarta Sans', size: 10 },
-              cornerRadius: 8,
-              callbacks: {
-                label: (ctx) => ` ${ctx.label}: ${ctx.raw}%`
-              }
-            }
+            tooltip: { backgroundColor: '#1e3830', bodyFont: { family: 'Plus Jakarta Sans', size: 10 }, cornerRadius: 8, callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}%` } }
           }
         }
       });
@@ -2013,53 +1996,20 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
           datasets: [
-            {
-              label: 'Filtered Cohort Survival',
-              data: [3.2, 4.4, 3.8, 5.8, 6.4, 4.2],
-              borderColor: '#d79b29',
-              backgroundColor: mustardGradient,
-              fill: true,
-              tension: 0.45,
-              borderWidth: 2,
-              pointRadius: [0, 0, 0, 0, 4, 0],
-              pointBackgroundColor: '#d79b29',
-              pointBorderColor: '#ffffff',
-              pointBorderWidth: 1.5
-            },
-            {
-              label: 'M2M Decay Cliff',
-              data: [3.1, 2.3, 2.7, 4.1, 3.3, 4.8],
-              borderColor: '#264239',
-              backgroundColor: 'transparent',
-              tension: 0.45,
-              borderWidth: 1.5,
-              pointRadius: [0, 0, 0, 0, 0, 0]
-            }
+            { label: 'Survival Rate', data: [3.2, 4.4, 3.8, 5.8, 6.4, 4.2], borderColor: '#d79b29', backgroundColor: mustardGradient, fill: true, tension: 0.45, borderWidth: 2, pointRadius: [0, 0, 0, 0, 4, 0], pointBackgroundColor: '#d79b29', pointBorderColor: '#ffffff', pointBorderWidth: 1.5 },
+            { label: 'M2M Erosion', data: [3.1, 2.3, 2.7, 4.1, 3.3, 4.8], borderColor: '#1e3830', backgroundColor: 'transparent', tension: 0.45, borderWidth: 1.5, pointRadius: [0, 0, 0, 0, 0, 0] }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
           plugins: {
             legend: { display: false },
-            tooltip: {
-              backgroundColor: '#264239',
-              bodyFont: { family: 'Plus Jakarta Sans', size: 10 },
-              cornerRadius: 8
-            }
+            tooltip: { backgroundColor: '#1e3830', bodyFont: { family: 'Plus Jakarta Sans', size: 10 }, cornerRadius: 8 }
           },
           scales: {
-            x: {
-              grid: { display: false },
-              ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 9 } }
-            },
-            y: {
-              grid: { color: '#f1f5f9' },
-              ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 9 } },
-              min: 0,
-              max: 7
-            }
+            x: { grid: { display: false }, ticks: { color: '#64748b', font: { family: 'Plus Jakarta Sans', size: 9 } } },
+            y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 9 } }, min: 0, max: 7 }
           }
         }
       });
