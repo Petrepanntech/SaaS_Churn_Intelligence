@@ -167,6 +167,37 @@
       border-radius: 9999px;
     }
 
+    /* Interactive Card Hover Lift & Glow */
+    .hover-card {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+    }
+    .hover-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.08), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+    html.dark .hover-card:hover {
+      box-shadow: 0 14px 30px -6px rgba(0, 0, 0, 0.45);
+      border-color: rgba(245, 190, 56, 0.35);
+    }
+
+    /* Segmented Slicer Buttons */
+    .slicer-btn {
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slicer-btn.active {
+      background-color: #0f172a;
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 2px 8px -1px rgba(15, 23, 42, 0.25);
+    }
+    html.dark .slicer-btn.active {
+      background-color: #f6be3c;
+      color: #0f172a;
+      font-weight: 700;
+      box-shadow: 0 2px 10px -1px rgba(246, 190, 60, 0.35);
+    }
+
     /* Custom internal scrollbars */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -263,49 +294,46 @@
       </div>
 
       <!-- Third Row: Segmented Slicers on Left and 4 Detailed Metrics on Right -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2.5 pt-0.5">
         
-        <!-- Left: Segmented Commitment Slicer Strip -->
-        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <!-- Left: Unified Contract Slicer Control with Explicit Explanation -->
+        <div class="flex items-center space-x-2">
           
-          <!-- Item 1: Baseline -->
-          <div class="flex flex-col">
-            <span class="text-[8px] text-slate-400 font-medium uppercase tracking-wider">Baseline</span>
-            <button onclick="setContractSlicer('ALL')" id="slicer-all" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white shadow-sm hover:opacity-90">
-              All 100% <span class="text-[9px] opacity-70 font-mono">(5k)</span>
-            </button>
+          <div class="flex items-center space-x-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400 shrink-0">
+            <i data-lucide="filter" class="w-3.5 h-3.5 text-buttercup-500"></i>
+            <span class="hidden sm:inline">Contract Slicer:</span>
           </div>
 
-          <!-- Item 2: High Risk M2M -->
-          <div class="flex flex-col">
-            <span class="text-[8px] text-slate-400 font-medium uppercase tracking-wider">High Risk</span>
-            <button onclick="setContractSlicer('Month-to-Month')" id="slicer-m2m" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition bg-buttercup-400 hover:bg-buttercup-500 text-slate-900 shadow-sm">
-              M2M 54% <span class="text-[9px] opacity-80 font-mono">(4.27x)</span>
+          <div class="flex items-center p-0.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-xs font-medium space-x-1">
+            
+            <!-- Button 1: All Contracts -->
+            <button onclick="setContractSlicer('ALL')" id="slicer-all" class="slicer-btn active px-3 py-1 rounded-full text-xs font-bold transition shadow-sm bg-slate-900 text-white dark:bg-buttercup-400 dark:text-slate-950" title="Inspect all 5,000 audited accounts across all contract models">
+              All Contracts (5k)
             </button>
-          </div>
 
-          <!-- Item 3: 1-Year Term -->
-          <div class="flex flex-col">
-            <span class="text-[8px] text-slate-400 font-medium uppercase tracking-wider">Protected</span>
-            <button onclick="setContractSlicer('1-Year')" id="slicer-1yr" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition bg-darkTile text-white hover:bg-black shadow-sm">
-              1-Year 28% <span class="text-[9px] opacity-70 font-mono">(1.4k)</span>
+            <!-- Button 2: Month-to-Month -->
+            <button onclick="setContractSlicer('Month-to-Month')" id="slicer-m2m" class="slicer-btn px-3 py-1 rounded-full text-xs font-medium transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" title="Isolate Month-to-Month accounts (4.27x Churn Odds)">
+              Month-to-Month (4.27x)
             </button>
-          </div>
 
-          <!-- Item 4: 2-Year Term -->
-          <div class="flex flex-col">
-            <span class="text-[8px] text-slate-400 font-medium uppercase tracking-wider">Enterprise</span>
-            <button onclick="setContractSlicer('2-Year')" id="slicer-2yr" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-white/5 text-slate-700 dark:text-slate-300 hatch-pattern hover:bg-white">
-              2-Year 18% <span class="text-[9px] opacity-70 font-mono">(Shield)</span>
+            <!-- Button 3: 1-Year Term -->
+            <button onclick="setContractSlicer('1-Year')" id="slicer-1yr" class="slicer-btn px-3 py-1 rounded-full text-xs font-medium transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" title="Filter to 1-Year committed accounts (16.4% Churn)">
+              1-Year Term
             </button>
+
+            <!-- Button 4: 2-Year Term -->
+            <button onclick="setContractSlicer('2-Year')" id="slicer-2yr" class="slicer-btn px-3 py-1 rounded-full text-xs font-medium transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" title="Filter to 2-Year committed accounts (9.9% Churn - Shielded)">
+              2-Year Term (Shield)
+            </button>
+
           </div>
 
           <!-- Active Filter Badge and Reset -->
-          <div class="hidden xl:flex items-center space-x-2 pl-2">
+          <div class="hidden xl:flex items-center space-x-2 pl-1">
             <span id="activeSlicerCountBadge" class="text-[10px] font-mono text-slate-400">
-              5,000 Accounts
+              5,000 Accounts (100%)
             </span>
-            <button onclick="resetContractSlicer()" class="text-[11px] font-semibold text-slate-400 hover:text-buttercup-600 transition">
+            <button onclick="resetContractSlicer()" class="text-[11px] font-semibold text-slate-400 hover:text-buttercup-600 transition" title="Reset filter to all contracts">
               Reset
             </button>
           </div>
@@ -314,49 +342,55 @@
 
         <!-- Right: 4 Detailed Telemetry Metric Blocks with Micro Deltas -->
         <div class="flex items-center space-x-4 sm:space-x-6 shrink-0">
-          <div class="flex flex-col">
-            <div class="flex items-baseline space-x-1">
-              <span id="statActiveAccounts" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none">3,765</span>
-              <span class="text-[9px] text-emerald-600 font-semibold font-mono">+4.2%</span>
+          
+          <!-- KPI 1: Active Accounts -->
+          <div class="flex flex-col text-right">
+            <div class="flex items-baseline justify-end space-x-1">
+              <span id="statActiveAccounts" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none font-mono">3,765</span>
+              <span id="statActiveAccountsDelta" class="text-[9px] text-emerald-600 font-semibold font-mono">75.3%</span>
             </div>
-            <div class="flex items-center space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
-              <i data-lucide="users" class="w-2.5 h-2.5"></i>
+            <div class="flex items-center justify-end space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
+              <i data-lucide="users" class="w-2.5 h-2.5 text-slate-400"></i>
               <span>Active Accts</span>
             </div>
           </div>
 
-          <div class="flex flex-col">
-            <div class="flex items-baseline space-x-1">
-              <span id="statPriorityRisk" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none">96</span>
-              <span class="text-[9px] text-rose-500 font-semibold font-mono">$184k</span>
+          <!-- KPI 2: At-Risk Queue -->
+          <div class="flex flex-col text-right">
+            <div class="flex items-baseline justify-end space-x-1">
+              <span id="statPriorityRisk" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none font-mono">96</span>
+              <span id="statPriorityRiskDelta" class="text-[9px] text-rose-500 font-semibold font-mono">$184k</span>
             </div>
-            <div class="flex items-center space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
-              <i data-lucide="flame" class="w-2.5 h-2.5 text-buttercup-500"></i>
-              <span>Triage Queue</span>
+            <div class="flex items-center justify-end space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
+              <i data-lucide="alert-circle" class="w-2.5 h-2.5 text-rose-400"></i>
+              <span>At-Risk Queue</span>
             </div>
           </div>
 
-          <div class="flex flex-col">
-            <div class="flex items-baseline space-x-1">
-              <span id="statActiveMrr" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none">$1.93M</span>
-              <span class="text-[9px] text-emerald-600 font-semibold font-mono">+$42k</span>
+          <!-- KPI 3: Active MRR -->
+          <div class="flex flex-col text-right">
+            <div class="flex items-baseline justify-end space-x-1">
+              <span id="statActiveMrr" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none font-mono">$1.93M</span>
+              <span id="statActiveMrrDelta" class="text-[9px] text-emerald-600 font-semibold font-mono">+$42k</span>
             </div>
-            <div class="flex items-center space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
+            <div class="flex items-center justify-end space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
               <i data-lucide="trending-up" class="w-2.5 h-2.5 text-emerald-500"></i>
               <span>Active MRR</span>
             </div>
           </div>
 
-          <div class="flex flex-col">
-            <div class="flex items-baseline space-x-1">
-              <span class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none font-mono">$7.8M</span>
-              <span class="text-[9px] text-amber-500 font-semibold font-mono">33.7%</span>
+          <!-- KPI 4: ARR Leakage -->
+          <div class="flex flex-col text-right">
+            <div class="flex items-baseline justify-end space-x-1">
+              <span id="statArrLeakage" class="text-xl sm:text-2xl font-light text-slate-800 dark:text-white tracking-tight leading-none font-mono">$7.85M</span>
+              <span id="statArrLeakageDelta" class="text-[9px] text-rose-500 font-semibold font-mono">24.7% Churn</span>
             </div>
-            <div class="flex items-center space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
+            <div class="flex items-center justify-end space-x-1 text-[10px] text-slate-400 font-medium mt-0.5">
               <i data-lucide="shield-alert" class="w-2.5 h-2.5 text-rose-400"></i>
               <span>ARR Leakage</span>
             </div>
           </div>
+
         </div>
 
       </div>
@@ -375,7 +409,7 @@
         <div class="h-[52%] min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2.5">
 
           <!-- Col 1: Founder & Portfolio Overview Card (lg:col-span-3) -->
-          <div class="lg:col-span-3 h-full min-h-0 relative rounded-[22px] overflow-hidden shadow-card border border-cardBorder-light dark:border-cardBorder-dark bg-card-light dark:bg-card-dark flex flex-col justify-between p-3 group">
+          <div class="lg:col-span-3 h-full min-h-0 relative rounded-[22px] overflow-hidden shadow-card border border-cardBorder-light dark:border-cardBorder-dark bg-card-light dark:bg-card-dark flex flex-col justify-between p-3 group hover-card">
             <!-- Background Portrait -->
             <img 
               src="./assets/petrepann_avatar.png" 
@@ -385,17 +419,27 @@
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20"></div>
 
-            <!-- Top Row: Status badge & MRR Pill -->
+            <!-- Top Row: Status badge, LinkedIn link, Isolation button & MRR Pill -->
             <div class="relative z-10 flex items-center justify-between">
               <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-semibold bg-black/60 backdrop-blur-md text-emerald-400 border border-white/10">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1 animate-pulse"></span>
                 Active Monitoring
               </span>
 
-              <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 text-white text-xs font-semibold border border-white/25 flex items-center space-x-1 transition shadow-sm" title="View Portfolio">
-                <span class="text-buttercup-300 font-mono font-bold">$1.93M</span>
-                <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
+              <div class="flex items-center space-x-1.5">
+                <a href="https://lnkd.in/p/eRU5vGKH" target="_blank" rel="noopener noreferrer" class="w-5 h-5 rounded-full bg-white/20 backdrop-blur-md hover:bg-buttercup-400 hover:text-slate-900 text-white flex items-center justify-center transition shadow-sm" title="View Discussion on LinkedIn">
+                  <i data-lucide="linkedin" class="w-2.5 h-2.5"></i>
+                </a>
+
+                <button onclick="openIsolationMode('founder')" class="w-5 h-5 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 text-white flex items-center justify-center transition" title="Enter Isolation Mode">
+                  <i data-lucide="maximize-2" class="w-2.5 h-2.5"></i>
+                </button>
+
+                <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 text-white text-xs font-semibold border border-white/25 flex items-center space-x-1 transition shadow-sm" title="View Portfolio">
+                  <span class="text-buttercup-300 font-mono font-bold">$1.93M</span>
+                  <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                </a>
+              </div>
             </div>
 
             <!-- Bottom Content: Name, Title and Telemetry Micro-Pills -->
@@ -427,7 +471,7 @@
           </div>
 
           <!-- Col 2: Prominent Contract Churn Risk Donut Chart (lg:col-span-4) -->
-          <div class="lg:col-span-4 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden">
+          <div class="lg:col-span-4 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden hover-card">
             <!-- Header -->
             <div class="flex items-start justify-between shrink-0">
               <div>
@@ -439,6 +483,9 @@
               </div>
 
               <div class="flex items-center space-x-1">
+                <button onclick="openIsolationMode('donut')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-900 hover:text-white dark:hover:bg-buttercup-400 dark:hover:text-slate-950 flex items-center justify-center text-slate-400 transition" title="Enter Isolation Mode">
+                  <i data-lucide="maximize-2" class="w-2.5 h-2.5"></i>
+                </button>
                 <button onclick="switchPage('leakage')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-400 transition" title="Drill into Leakage &amp; CLV">
                   <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                 </button>
@@ -458,27 +505,27 @@
             </div>
 
             <!-- Interactive Legend Badges (Click to slice) -->
-            <div class="grid grid-cols-3 gap-1 pt-1 border-t border-slate-100 dark:border-white/5 text-[8px] font-mono shrink-0">
-              <button onclick="setContractSlicer('Month-to-Month')" class="p-1 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-200 text-left hover:ring-1 hover:ring-buttercup-400 transition">
+            <div class="grid grid-cols-3 gap-1.5 pt-1.5 border-t border-slate-100 dark:border-white/5 text-[8px] font-mono shrink-0">
+              <button onclick="setContractSlicer('Month-to-Month')" class="p-1 rounded-xl bg-slate-50 dark:bg-white/5 text-left border border-slate-200/60 dark:border-white/10 hover:border-buttercup-400 transition group/leg">
                 <div class="flex items-center space-x-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-buttercup-500 shrink-0"></span>
-                  <span class="font-bold truncate">M2M: 54%</span>
+                  <span class="w-2 h-2 rounded-full bg-buttercup-400 shrink-0"></span>
+                  <span class="font-bold text-slate-800 dark:text-slate-200 truncate">M2M: 54%</span>
                 </div>
                 <span class="text-[7px] text-slate-400 block mt-0.5">31.8% Churn</span>
               </button>
 
-              <button onclick="setContractSlicer('1-Year')" class="p-1 rounded bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-300 text-left hover:ring-1 hover:ring-slate-400 transition">
+              <button onclick="setContractSlicer('1-Year')" class="p-1 rounded-xl bg-slate-50 dark:bg-white/5 text-left border border-slate-200/60 dark:border-white/10 hover:border-slate-400 transition group/leg">
                 <div class="flex items-center space-x-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-700 dark:bg-slate-400 shrink-0"></span>
-                  <span class="font-bold truncate">1-Yr: 28%</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-700 dark:bg-slate-400 shrink-0"></span>
+                  <span class="font-bold text-slate-800 dark:text-slate-200 truncate">1-Yr: 28%</span>
                 </div>
                 <span class="text-[7px] text-slate-400 block mt-0.5">16.4% Churn</span>
               </button>
 
-              <button onclick="setContractSlicer('2-Year')" class="p-1 rounded bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-200 text-left hover:ring-1 hover:ring-emerald-400 transition">
+              <button onclick="setContractSlicer('2-Year')" class="p-1 rounded-xl bg-slate-50 dark:bg-white/5 text-left border border-slate-200/60 dark:border-white/10 hover:border-emerald-500 transition group/leg">
                 <div class="flex items-center space-x-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-                  <span class="font-bold truncate">2-Yr: 18%</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                  <span class="font-bold text-slate-800 dark:text-slate-200 truncate">2-Yr: 18%</span>
                 </div>
                 <span class="text-[7px] text-slate-400 block mt-0.5">9.9% Shield</span>
               </button>
@@ -486,18 +533,21 @@
           </div>
 
           <!-- Col 3: Prominent ARR Leakage & Churn Rate Bar Chart (lg:col-span-5) -->
-          <div class="lg:col-span-5 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden">
+          <div class="lg:col-span-5 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between relative overflow-hidden hover-card">
             <!-- Header -->
             <div class="flex items-start justify-between shrink-0">
               <div>
                 <div class="flex items-center space-x-1.5">
                   <span class="text-xs font-semibold text-slate-800 dark:text-slate-100">ARR Leakage &amp; Churn by Tier</span>
-                  <span class="text-[8px] font-mono text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-1 py-0.2 rounded font-semibold">$7.85M Total</span>
+                  <span class="text-[8px] font-mono text-slate-500 bg-slate-100 dark:bg-white/10 px-1.5 py-0.5 rounded-md font-semibold">$7.85M Total</span>
                 </div>
                 <p class="text-[9px] text-slate-400 font-mono mt-0.5">Annualized revenue at risk across customer tiers</p>
               </div>
 
               <div class="flex items-center space-x-1">
+                <button onclick="openIsolationMode('bar')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-900 hover:text-white dark:hover:bg-buttercup-400 dark:hover:text-slate-950 flex items-center justify-center text-slate-400 transition" title="Enter Isolation Mode">
+                  <i data-lucide="maximize-2" class="w-2.5 h-2.5"></i>
+                </button>
                 <button onclick="switchPage('cohorts')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 flex items-center justify-center text-slate-400 transition" title="Inspect Cohort Survival">
                   <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                 </button>
@@ -525,15 +575,20 @@
         <div class="h-[48%] min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2.5">
 
           <!-- Left: Key Behavioral Churn Drivers Matrix (lg:col-span-4) -->
-          <div class="lg:col-span-4 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between">
+          <div class="lg:col-span-4 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between hover-card">
             <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-white/5 shrink-0">
               <div>
                 <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 block">Behavioral Churn Drivers</span>
                 <span class="text-[8px] text-slate-400 font-mono">Empirical Odds Ratios (5,000 Accounts)</span>
               </div>
-              <button onclick="switchPage('recommendations')" class="text-[9px] font-semibold text-buttercup-600 dark:text-buttercup-400 hover:underline">
-                Playbooks &rarr;
-              </button>
+              <div class="flex items-center space-x-1">
+                <button onclick="openIsolationMode('drivers')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-900 hover:text-white dark:hover:bg-buttercup-400 dark:hover:text-slate-950 flex items-center justify-center text-slate-400 transition" title="Enter Isolation Mode">
+                  <i data-lucide="maximize-2" class="w-2.5 h-2.5"></i>
+                </button>
+                <button onclick="switchPage('recommendations')" class="text-[9px] font-semibold text-buttercup-600 dark:text-buttercup-400 hover:underline">
+                  Playbooks &rarr;
+                </button>
+              </div>
             </div>
 
             <!-- 4 Empirical Driver Rows with Clean Compact Spacing -->
@@ -621,7 +676,7 @@
           </div>
 
           <!-- Right: Priority Account Risk Triage Center (lg:col-span-8) -->
-          <div class="lg:col-span-8 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between overflow-hidden">
+          <div class="lg:col-span-8 h-full min-h-0 bg-card-light dark:bg-card-dark rounded-[22px] p-2.5 sm:p-3 shadow-card border border-cardBorder-light dark:border-cardBorder-dark flex flex-col justify-between overflow-hidden hover-card">
             <!-- Header -->
             <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-white/5 shrink-0">
               <div class="flex items-center space-x-2">
@@ -629,10 +684,15 @@
                 <span class="px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 dark:bg-rose-950/40 text-[8px] font-mono font-bold">6 Critical Flagged</span>
                 <span class="text-[8px] text-slate-400 font-mono hidden sm:inline">&bull; +$24.1k ARR Defended Today</span>
               </div>
-              <button onclick="switchPage('triage')" class="text-xs font-semibold text-buttercup-600 dark:text-buttercup-400 hover:underline flex items-center space-x-1">
-                <span>View All 96</span>
-                <i data-lucide="arrow-right" class="w-3 h-3"></i>
-              </button>
+              <div class="flex items-center space-x-2">
+                <button onclick="openIsolationMode('triage')" class="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-900 hover:text-white dark:hover:bg-buttercup-400 dark:hover:text-slate-950 flex items-center justify-center text-slate-400 transition" title="Enter Isolation Mode">
+                  <i data-lucide="maximize-2" class="w-2.5 h-2.5"></i>
+                </button>
+                <button onclick="switchPage('triage')" class="text-xs font-semibold text-buttercup-600 dark:text-buttercup-400 hover:underline flex items-center space-x-1">
+                  <span>View All 96</span>
+                  <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </button>
+              </div>
             </div>
 
             <!-- Triage Table Container (Fits remaining height) -->
@@ -1175,6 +1235,57 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;</pre>
   </div>
 
   <!-- ======================================================== -->
+  <!-- MODAL: VISUAL ISOLATION & FOCUS MODE                     -->
+  <!-- ======================================================== -->
+  <div id="isolationModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 transition-all duration-200">
+    <div class="bg-white dark:bg-card-dark rounded-[28px] p-5 sm:p-7 w-full max-w-5xl shadow-2xl border border-slate-200/80 dark:border-white/10 flex flex-col max-h-[92vh] transform transition-all">
+      <!-- Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/5 shrink-0">
+        <div class="flex items-center space-x-3">
+          <div id="isolationIconContainer" class="w-9 h-9 rounded-2xl bg-buttercup-500/20 text-buttercup-600 dark:text-buttercup-400 flex items-center justify-center shadow-sm">
+            <i id="isolationIcon" data-lucide="maximize-2" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 id="isolationTitle" class="text-base font-bold text-slate-900 dark:text-white">Visual Isolation Mode</h3>
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-semibold bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">
+                Focus Mode &bull; Distraction Free
+              </span>
+            </div>
+            <p id="isolationSubtitle" class="text-xs text-slate-400 font-mono mt-0.5">Deep-dive analytical drilldown</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="exportIsolationData()" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center space-x-1.5 transition" title="Export this visual dataset">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Export Data</span>
+          </button>
+          <button onclick="closeIsolationMode()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 text-slate-500 flex items-center justify-center transition" title="Exit Isolation Mode (Esc)">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Content Area -->
+      <div id="isolationBody" class="py-4 flex-1 overflow-y-auto space-y-4">
+        <!-- Injected dynamically via JS depending on target visual -->
+      </div>
+
+      <!-- Footer Bar -->
+      <div class="pt-3 border-t border-slate-100 dark:border-white/5 shrink-0 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+        <span class="flex items-center space-x-1.5">
+          <i data-lucide="info" class="w-3.5 h-3.5 text-buttercup-500"></i>
+          <span id="isolationFooterNote">Distraction-free analytical view. Click Esc or anywhere outside to return.</span>
+        </span>
+        <button onclick="closeIsolationMode()" class="px-4 py-1 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold hover:opacity-90 transition">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
   <!-- JAVASCRIPT ENGINE & ANALYTICS DATASET                    -->
   <!-- ======================================================== -->
   <script>
@@ -1344,47 +1455,97 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       lucide.createIcons();
     }
 
-    // Contract Slicer
+    // KPI Micro-Animation Pulse
+    function pulseKpis() {
+      ['statActiveAccounts', 'statPriorityRisk', 'statActiveMrr', 'statArrLeakage'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('scale-105', 'text-buttercup-600', 'dark:text-buttercup-400');
+        setTimeout(() => {
+          el.classList.remove('scale-105', 'text-buttercup-600', 'dark:text-buttercup-400');
+        }, 220);
+      });
+    }
+
+    // Contract Slicer: Dynamic Reactive KPIs, Visuals, and Filter
     function setContractSlicer(contractType) {
       activeContractFilter = contractType;
 
-      ['all', 'm2m', '1yr', '2yr'].forEach(k => {
-        const btn = document.getElementById(`slicer-${k}`);
+      // Update Segmented Control Buttons
+      const buttonMap = {
+        'ALL': 'slicer-all',
+        'Month-to-Month': 'slicer-m2m',
+        '1-Year': 'slicer-1yr',
+        '2-Year': 'slicer-2yr'
+      };
+
+      Object.values(buttonMap).forEach(btnId => {
+        const btn = document.getElementById(btnId);
         if (!btn) return;
-        btn.classList.remove('ring-2', 'ring-slate-900', 'dark:ring-white', 'scale-105');
+        btn.className = "slicer-btn px-3 py-1 rounded-full text-xs font-medium transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white";
       });
 
-      let targetBtnId = 'slicer-all';
-      let scale = 1.0;
-      let churnRate = 24.7;
-
-      if (contractType === 'Month-to-Month') {
-        targetBtnId = 'slicer-m2m';
-        scale = 0.542;
-        churnRate = 31.8;
-      } else if (contractType === '1-Year') {
-        targetBtnId = 'slicer-1yr';
-        scale = 0.276;
-        churnRate = 16.4;
-      } else if (contractType === '2-Year') {
-        targetBtnId = 'slicer-2yr';
-        scale = 0.182;
-        churnRate = 9.9;
+      const activeBtnId = buttonMap[contractType] || 'slicer-all';
+      const activeBtn = document.getElementById(activeBtnId);
+      if (activeBtn) {
+        activeBtn.className = "slicer-btn active px-3 py-1 rounded-full text-xs font-bold transition shadow-sm bg-slate-900 text-white dark:bg-buttercup-400 dark:text-slate-950";
       }
 
-      const activeBtn = document.getElementById(targetBtnId);
-      if (activeBtn) activeBtn.classList.add('ring-2', 'ring-slate-900', 'dark:ring-white', 'scale-105');
+      // Pulse the 4 Top KPI blocks to show live reaction
+      pulseKpis();
 
-      const totalMatched = Math.round(5000 * scale);
-      const activeMatched = Math.round(3765 * scale);
-      const mrrMatched = Math.round(1933837 * scale);
-      const riskCountMatched = Math.max(1, Math.round(96 * scale));
+      // Dynamic KPI updates tailored to selected contract segment
+      const badge = document.getElementById('activeSlicerCountBadge');
+      const statAccounts = document.getElementById('statActiveAccounts');
+      const statAccountsDelta = document.getElementById('statActiveAccountsDelta');
+      const statRisk = document.getElementById('statPriorityRisk');
+      const statRiskDelta = document.getElementById('statPriorityRiskDelta');
+      const statMrr = document.getElementById('statActiveMrr');
+      const statMrrDelta = document.getElementById('statActiveMrrDelta');
+      const statLeak = document.getElementById('statArrLeakage');
+      const statLeakDelta = document.getElementById('statArrLeakageDelta');
 
-      document.getElementById('statActiveAccounts').textContent = activeMatched.toLocaleString('en-US');
-      document.getElementById('statActiveMrr').textContent = `$${(mrrMatched / 1000000).toFixed(2)}M`;
-      document.getElementById('statPriorityRisk').textContent = riskCountMatched;
-      document.getElementById('cardChurnRateDisplay').textContent = `${churnRate.toFixed(1)}%`;
-      document.getElementById('activeSlicerCountBadge').textContent = `${totalMatched.toLocaleString('en-US')} Accounts (${(scale * 100).toFixed(0)}%)`;
+      if (contractType === 'Month-to-Month') {
+        if (badge) badge.textContent = '2,710 Accounts (54%)';
+        if (statAccounts) statAccounts.textContent = '2,042';
+        if (statAccountsDelta) statAccountsDelta.textContent = '54.2%';
+        if (statRisk) statRisk.textContent = '68';
+        if (statRiskDelta) statRiskDelta.textContent = '$138k';
+        if (statMrr) statMrr.textContent = '$1.05M';
+        if (statMrrDelta) statMrrDelta.textContent = '31.8% Risk';
+        if (statLeak) statLeak.textContent = '$5.10M';
+        if (statLeakDelta) statLeakDelta.textContent = '31.8% Churn';
+      } else if (contractType === '1-Year') {
+        if (badge) badge.textContent = '1,380 Accounts (28%)';
+        if (statAccounts) statAccounts.textContent = '1,040';
+        if (statAccountsDelta) statAccountsDelta.textContent = '27.6%';
+        if (statRisk) statRisk.textContent = '21';
+        if (statRiskDelta) statRiskDelta.textContent = '$34k';
+        if (statMrr) statMrr.textContent = '$534k';
+        if (statMrrDelta) statMrrDelta.textContent = '16.4% Risk';
+        if (statLeak) statLeak.textContent = '$1.83M';
+        if (statLeakDelta) statLeakDelta.textContent = '16.4% Churn';
+      } else if (contractType === '2-Year') {
+        if (badge) badge.textContent = '910 Accounts (18%)';
+        if (statAccounts) statAccounts.textContent = '683';
+        if (statAccountsDelta) statAccountsDelta.textContent = '18.2%';
+        if (statRisk) statRisk.textContent = '7';
+        if (statRiskDelta) statRiskDelta.textContent = '$12k';
+        if (statMrr) statMrr.textContent = '$352k';
+        if (statMrrDelta) statMrrDelta.textContent = '9.9% Risk';
+        if (statLeak) statLeak.textContent = '$0.91M';
+        if (statLeakDelta) statLeakDelta.textContent = '9.9% Churn';
+      } else {
+        if (badge) badge.textContent = '5,000 Accounts (100%)';
+        if (statAccounts) statAccounts.textContent = '3,765';
+        if (statAccountsDelta) statAccountsDelta.textContent = '75.3%';
+        if (statRisk) statRisk.textContent = '96';
+        if (statRiskDelta) statRiskDelta.textContent = '$184k';
+        if (statMrr) statMrr.textContent = '$1.93M';
+        if (statMrrDelta) statMrrDelta.textContent = '+$42k';
+        if (statLeak) statLeak.textContent = '$7.85M';
+        if (statLeakDelta) statLeakDelta.textContent = '24.7% Churn';
+      }
 
       // Update Donut Chart
       if (contractDonutChartInstance) {
@@ -1428,7 +1589,7 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
       const filtered = RAW_ACCOUNTS.filter(a => contractType === 'ALL' || a.contract === contractType);
       renderHomeTriageTable(filtered);
 
-      showToast(`Filtered by ${contractType}`);
+      showToast(`Contract Slicer: ${contractType}`);
     }
 
     function resetContractSlicer() {
@@ -1444,6 +1605,721 @@ FROM scoring WHERE trigger_flag != 'Renewal Exposure' LIMIT 10;`,
         filterCrmTable();
       }
     }
+
+    // ========================================================
+    // VISUAL ISOLATION & FOCUS MODE CONTROLLER
+    // ========================================================
+    let isolationChartInstance = null;
+    let currentIsolationVisual = null;
+
+    function openIsolationMode(visualId) {
+      currentIsolationVisual = visualId;
+      const modal = document.getElementById('isolationModal');
+      const body = document.getElementById('isolationBody');
+      const title = document.getElementById('isolationTitle');
+      const subtitle = document.getElementById('isolationSubtitle');
+      const icon = document.getElementById('isolationIcon');
+      const footerNote = document.getElementById('isolationFooterNote');
+
+      if (!modal || !body) return;
+
+      // Clean previous chart instance
+      if (isolationChartInstance) {
+        isolationChartInstance.destroy();
+        isolationChartInstance = null;
+      }
+
+      modal.classList.remove('hidden');
+
+      if (visualId === 'founder') {
+        title.textContent = 'Peter Akpan (Petre Pann) \u2022 Executive Profile & Architecture';
+        subtitle.textContent = 'Pann Labs Founder Overview, Technical Identity & Industry Alignment';
+        icon.setAttribute('data-lucide', 'user-check');
+        footerNote.textContent = 'Institutional-grade retention intelligence built by Peter Akpan (Founder of Pann Labs).';
+
+        body.innerHTML = `
+          <div class="space-y-4">
+            <!-- Hero Card -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-lg border border-slate-700/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div class="flex items-center space-x-4">
+                <img src="./assets/petrepann_avatar.png" alt="Peter Akpan" class="w-16 h-16 rounded-2xl object-cover border-2 border-buttercup-400 shadow-md shrink-0" onerror="this.src='https://petrepanntech.github.io/assets/petrepann_avatar.png'" />
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <h4 class="text-base sm:text-lg font-bold">Peter Akpan (Petre Pann)</h4>
+                    <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-buttercup-400 text-slate-950">FOUNDER</span>
+                  </div>
+                  <p class="text-xs text-buttercup-300 font-medium">Founder of Pann Labs &bull; Analytics Engineer &bull; AI Systems Architect</p>
+                  <p class="text-[11px] text-slate-300 mt-1 max-w-xl leading-relaxed">
+                    Engineering institutional-grade analytical platforms, revenue defense systems, and predictive retention algorithms for high-growth SaaS and enterprise clients.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
+                <a href="https://petrepanntech.github.io" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-full bg-buttercup-400 text-slate-950 hover:bg-buttercup-300 text-xs font-bold transition flex items-center justify-center space-x-1 shadow">
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                  <span>Live Portfolio</span>
+                </a>
+                <a href="https://lnkd.in/p/eRU5vGKH" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition flex items-center justify-center space-x-1 border border-white/20">
+                  <i data-lucide="linkedin" class="w-3.5 h-3.5 text-blue-400"></i>
+                  <span>CV &amp; Hiring Discussion</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Strategic Recruitment Alignment (Godsent Ndoma Reference) -->
+            <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40">
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 rounded-xl bg-buttercup-500/20 text-buttercup-600 dark:text-buttercup-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <i data-lucide="award" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h5 class="text-xs font-bold text-slate-900 dark:text-white">Recruitment &amp; Strategic Alignment: Godsent Ndoma Industry Critique</h5>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                    This platform directly operationalizes the core career lessons emphasized in Godsent Ndoma's viral hiring analysis: real technical excellence requires quantifiable financial outcomes rather than passive job descriptions. RetainPulse validates enterprise-scale data engineering ($23.1M Gross ARR analyzed), rigorous statistical inference (multivariate odds ratios), and deployed interactive production software.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mt-2.5">
+                    <span class="px-2 py-0.5 rounded-full bg-white dark:bg-white/10 text-[10px] font-mono text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">ATS-Optimized Impact Bullets</span>
+                    <span class="px-2 py-0.5 rounded-full bg-white dark:bg-white/10 text-[10px] font-mono text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">Defended Revenue Modeling ($7.85M Leakage)</span>
+                    <span class="px-2 py-0.5 rounded-full bg-white dark:bg-white/10 text-[10px] font-mono text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">Production SQLite OLAP Pipeline</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 Institutional Proof Metrics -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-center">
+                <span class="text-[10px] text-slate-400 font-mono block">Gross ARR Monitored</span>
+                <span class="text-lg font-bold text-slate-900 dark:text-white font-mono">$23.1M</span>
+                <span class="text-[9px] text-emerald-500 font-semibold block mt-0.5">5,000 Audited Records</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-center">
+                <span class="text-[10px] text-slate-400 font-mono block">Annualized Leakage</span>
+                <span class="text-lg font-bold text-rose-500 font-mono">$7.85M</span>
+                <span class="text-[9px] text-slate-400 font-semibold block mt-0.5">M2M Concentration</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-center">
+                <span class="text-[10px] text-slate-400 font-mono block">ML Risk Precision</span>
+                <span class="text-lg font-bold text-buttercup-500 font-mono">94.2%</span>
+                <span class="text-[9px] text-emerald-500 font-semibold block mt-0.5">Logistic Reg. Validated</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-center">
+                <span class="text-[10px] text-slate-400 font-mono block">Active Triage Queue</span>
+                <span class="text-lg font-bold text-slate-900 dark:text-white font-mono">96 Accts</span>
+                <span class="text-[9px] text-buttercup-600 dark:text-buttercup-400 font-semibold block mt-0.5">+$24.1k/day Defended</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (visualId === 'donut') {
+        title.textContent = 'Contract Churn Risk Mix & Odds Multipliers';
+        subtitle.textContent = 'Deep-dive commitment duration analysis across 5,000 audited customer accounts';
+        icon.setAttribute('data-lucide', 'pie-chart');
+        footerNote.textContent = 'Month-to-Month accounts represent 54% of volume and 65% of total leakage.';
+
+        body.innerHTML = `
+          <div class="space-y-4">
+            <!-- Split Visual & Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              <div class="md:col-span-5 flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 relative">
+                <div class="relative w-56 h-56 flex items-center justify-center">
+                  <canvas id="isolationDonutCanvas" class="w-full h-full"></canvas>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span class="text-2xl font-light text-slate-900 dark:text-white font-mono">4.27x</span>
+                    <span class="text-[8px] text-slate-400 uppercase font-semibold">M2M Risk Ratio</span>
+                  </div>
+                </div>
+                <div class="mt-3 flex items-center space-x-3 text-xs font-mono">
+                  <span class="flex items-center space-x-1 text-buttercup-600"><span class="w-2.5 h-2.5 rounded-full bg-buttercup-400"></span><span>M2M: 54%</span></span>
+                  <span class="flex items-center space-x-1 text-slate-600 dark:text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-slate-500"></span><span>1-Yr: 28%</span></span>
+                  <span class="flex items-center space-x-1 text-emerald-600"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span>2-Yr: 18%</span></span>
+                </div>
+              </div>
+
+              <div class="md:col-span-7 space-y-3">
+                <div class="p-3.5 rounded-2xl bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40">
+                  <h5 class="text-xs font-bold text-rose-700 dark:text-rose-300 flex items-center space-x-1.5">
+                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                    <span>Primary Vulnerability: Uncommitted Month-to-Month Contracts</span>
+                  </h5>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                    Accounts operating on Month-to-Month contracts exhibit a 31.8% exit velocity (4.27x odds multiplier versus multi-year commitments). They generate $5.10M of the total $7.85M annual leakage.
+                  </p>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/40">
+                  <h5 class="text-xs font-bold text-emerald-700 dark:text-emerald-300 flex items-center space-x-1.5">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Structural Retention Shield: 2-Year Multi-Year Term</span>
+                  </h5>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                    2-Year contracts reduce churn to 9.90% (0.38x odds ratio). Offering a 15% discount to transition M2M accounts to 1-Year terms yields an estimated net gain of $1.82M retained ARR.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Full Comparative Breakdown Table -->
+            <div class="rounded-2xl border border-slate-100 dark:border-white/10 overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 dark:bg-white/5 text-[10px] font-mono text-slate-400 uppercase">
+                  <tr>
+                    <th class="py-2.5 px-3">Contract Model</th>
+                    <th class="py-2.5 px-3">Account Volume</th>
+                    <th class="py-2.5 px-3">Churn Rate</th>
+                    <th class="py-2.5 px-3">Odds Ratio</th>
+                    <th class="py-2.5 px-3">Lost MRR</th>
+                    <th class="py-2.5 px-3">Annual Leakage</th>
+                    <th class="py-2.5 px-3 text-right">Strategic Playbook</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-white/5 font-mono text-[11px]">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-buttercup-600">Month-to-Month</td>
+                    <td class="py-2 px-3">2,710 (54.2%)</td>
+                    <td class="py-2 px-3 text-rose-500 font-bold">31.80%</td>
+                    <td class="py-2 px-3 font-bold text-rose-600">4.27x</td>
+                    <td class="py-2 px-3">$425,180</td>
+                    <td class="py-2 px-3 font-bold">$5,102,160</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-slate-600 dark:text-slate-300">Automated 15% 1-Yr discount nudge</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-slate-700 dark:text-slate-300">1-Year Term</td>
+                    <td class="py-2 px-3">1,380 (27.6%)</td>
+                    <td class="py-2 px-3 text-amber-500 font-bold">16.40%</td>
+                    <td class="py-2 px-3 text-slate-600 dark:text-slate-300">1.42x</td>
+                    <td class="py-2 px-3">$152,410</td>
+                    <td class="py-2 px-3 font-bold">$1,828,920</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-slate-600 dark:text-slate-300">Month 9 proactive health checkup</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-emerald-600">2-Year Term (Shield)</td>
+                    <td class="py-2 px-3">910 (18.2%)</td>
+                    <td class="py-2 px-3 text-emerald-500 font-bold">9.90%</td>
+                    <td class="py-2 px-3 font-bold text-emerald-600">0.38x</td>
+                    <td class="py-2 px-3">$76,209</td>
+                    <td class="py-2 px-3 font-bold">$914,510</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-slate-600 dark:text-slate-300">Executive sponsor quarterly review</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        setTimeout(() => {
+          const cvs = document.getElementById('isolationDonutCanvas');
+          if (!cvs) return;
+          isolationChartInstance = new Chart(cvs.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+              labels: ['Month-to-Month', '1-Year Contract', '2-Year Contract'],
+              datasets: [{
+                data: [54.2, 27.6, 18.2],
+                backgroundColor: ['#f5be38', isDarkMode ? '#64748b' : '#18181b', '#10b981'],
+                borderWidth: 2,
+                borderColor: isDarkMode ? '#1e293b' : '#ffffff'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: '70%',
+              plugins: { legend: { display: false } }
+            }
+          });
+        }, 30);
+
+      } else if (visualId === 'bar') {
+        title.textContent = 'ARR Leakage & Churn Rate by Customer Tier';
+        subtitle.textContent = 'Financial exposure and exit velocity across SMB, Mid-Market, and Enterprise tiers';
+        icon.setAttribute('data-lucide', 'bar-chart-3');
+        footerNote.textContent = 'SMB tier exhibits highest unit churn (34.6%), while Enterprise represents highest dollar risk per account.';
+
+        body.innerHTML = `
+          <div class="space-y-4">
+            <!-- Large Canvas -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Annualized Revenue Exposure by Tier ($ Millions)</span>
+                <span class="text-[10px] font-mono text-slate-400">$7.85M Combined Loss</span>
+              </div>
+              <div class="h-56">
+                <canvas id="isolationBarCanvas"></canvas>
+              </div>
+            </div>
+
+            <!-- Tier Breakdown Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="p-3.5 rounded-2xl bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-rose-700 dark:text-rose-300">SMB / Self-Serve</span>
+                  <span class="text-[10px] font-mono font-bold text-rose-600">34.6% Churn</span>
+                </div>
+                <div class="mt-2 space-y-1 text-xs">
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Accounts:</span><span class="font-bold text-slate-800 dark:text-slate-200">2,640</span></div>
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Leakage ARR:</span><span class="font-bold text-rose-600">$3.81M</span></div>
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Avg MRR:</span><span class="font-bold text-slate-800 dark:text-slate-200">$142/mo</span></div>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-2">Primary driver: Inactivity cliff (>14d) and self-solve ticket abandonment.</p>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-amber-700 dark:text-amber-300">Mid-Market Tier</span>
+                  <span class="text-[10px] font-mono font-bold text-amber-600">21.3% Churn</span>
+                </div>
+                <div class="mt-2 space-y-1 text-xs">
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Accounts:</span><span class="font-bold text-slate-800 dark:text-slate-200">1,840</span></div>
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Leakage ARR:</span><span class="font-bold text-amber-600">$2.61M</span></div>
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Avg MRR:</span><span class="font-bold text-slate-800 dark:text-slate-200">$920/mo</span></div>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-2">Primary driver: Seat under-utilization and integration friction at month 6.</p>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/40">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">Enterprise Tier</span>
+                  <span class="text-[10px] font-mono font-bold text-emerald-600">9.9% Churn</span>
+                </div>
+                <div class="mt-2 space-y-1 text-xs">
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Accounts:</span><span class="font-bold text-slate-800 dark:text-slate-200">520</span></div>
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Leakage ARR:</span><span class="font-bold text-emerald-600">$1.42M</span></div>
+                  <div class="flex justify-between text-slate-500 font-mono"><span>Avg MRR:</span><span class="font-bold text-slate-800 dark:text-slate-200">$1,420/mo</span></div>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-2">Primary driver: Unresolved technical escalations and stakeholder departure.</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        setTimeout(() => {
+          const cvs = document.getElementById('isolationBarCanvas');
+          if (!cvs) return;
+          isolationChartInstance = new Chart(cvs.getContext('2d'), {
+            type: 'bar',
+            data: {
+              labels: ['SMB / Self-Serve Tier', 'Mid-Market Tier', 'Enterprise Tier'],
+              datasets: [{
+                label: 'Leakage ARR ($M)',
+                data: [3.81, 2.61, 1.42],
+                backgroundColor: ['#f43f5e', '#f5be38', '#10b981'],
+                borderRadius: 8,
+                barThickness: 24
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: {
+                  ticks: { callback: v => `$${v}M`, font: { family: 'JetBrains Mono', size: 10 } },
+                  grid: { color: isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)' }
+                },
+                y: {
+                  ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: 600 } }
+                }
+              }
+            }
+          });
+        }, 30);
+
+      } else if (visualId === 'drivers') {
+        title.textContent = 'Behavioral Churn Drivers & Interactive Risk Simulator';
+        subtitle.textContent = 'Multivariate empirical logistic regression odds ratios with live scenario calculator';
+        icon.setAttribute('data-lucide', 'activity');
+        footerNote.textContent = 'Interact with the sliders below to simulate account churn probability in real time.';
+
+        body.innerHTML = `
+          <div class="space-y-4">
+            <!-- Scenario Simulator Card -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-lg border border-slate-700/60">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
+                <div class="flex items-center space-x-2">
+                  <i data-lucide="sliders" class="w-4 h-4 text-buttercup-400"></i>
+                  <h4 class="text-xs sm:text-sm font-bold">Interactive Account Churn Probability Simulator</h4>
+                </div>
+                <span class="text-[10px] font-mono text-slate-400">Empirical ML Model</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-5 pt-4 items-center">
+                <!-- Controls -->
+                <div class="md:col-span-8 space-y-3.5">
+                  <!-- Control 1: Contract Type -->
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                      <span class="text-slate-300">Contract Commitment:</span>
+                      <span id="simContractLabel" class="text-buttercup-400 font-mono">Month-to-Month (4.27x)</span>
+                    </div>
+                    <select id="simContractSelect" onchange="updateScenarioSimulator()" class="w-full bg-slate-800 text-xs text-white rounded-xl p-2 border border-slate-700 focus:outline-none focus:border-buttercup-400">
+                      <option value="m2m" selected>Month-to-Month (Baseline Hazard 4.27x)</option>
+                      <option value="1yr">1-Year Contract Term (1.42x Hazard)</option>
+                      <option value="2yr">2-Year Contract Term (0.38x Shield)</option>
+                    </select>
+                  </div>
+
+                  <!-- Control 2: Tickets -->
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                      <span class="text-slate-300">Support Tickets (Last 30 Days):</span>
+                      <span id="simTicketsLabel" class="text-buttercup-400 font-mono">4 Tickets</span>
+                    </div>
+                    <input id="simTicketsSlider" type="range" min="0" max="8" value="4" oninput="updateScenarioSimulator()" class="w-full accent-buttercup-400 cursor-pointer" />
+                    <div class="flex justify-between text-[9px] text-slate-400 font-mono">
+                      <span>0 (Calm)</span>
+                      <span>3 (Normal)</span>
+                      <span class="text-rose-400">&ge;4 (Surge Trigger)</span>
+                      <span>8 (Critical)</span>
+                    </div>
+                  </div>
+
+                  <!-- Control 3: Inactivity -->
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                      <span class="text-slate-300">Dormancy / Inactivity Window:</span>
+                      <span id="simInactivityLabel" class="text-buttercup-400 font-mono">16 Days</span>
+                    </div>
+                    <input id="simInactivitySlider" type="range" min="0" max="30" value="16" oninput="updateScenarioSimulator()" class="w-full accent-buttercup-400 cursor-pointer" />
+                    <div class="flex justify-between text-[9px] text-slate-400 font-mono">
+                      <span>0d (Daily active)</span>
+                      <span>7d</span>
+                      <span class="text-rose-400">&ge;14d (Dormancy Cliff)</span>
+                      <span>30d (Detached)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Live Probability Gauge -->
+                <div class="md:col-span-4 p-4 rounded-2xl bg-black/40 border border-white/10 text-center flex flex-col items-center justify-center">
+                  <span class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Predicted Churn Risk</span>
+                  <span id="simProbabilityScore" class="text-3xl sm:text-4xl font-light text-rose-400 font-mono mt-1">78.4%</span>
+                  <span id="simRiskBadge" class="mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                    CRITICAL DETRACTOR
+                  </span>
+                  <p id="simRecommendation" class="text-[10px] text-slate-300 mt-2.5 leading-tight">
+                    Immediate Senior TAM touchpoint required. Dispatch 15% discount for 1-year contract lock.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empirical Regression Table -->
+            <div class="rounded-2xl border border-slate-100 dark:border-white/10 overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 dark:bg-white/5 text-[10px] font-mono text-slate-400 uppercase">
+                  <tr>
+                    <th class="py-2.5 px-3">Predictor Feature</th>
+                    <th class="py-2.5 px-3">Coefficient</th>
+                    <th class="py-2.5 px-3">Odds Ratio</th>
+                    <th class="py-2.5 px-3">95% Confidence Interval</th>
+                    <th class="py-2.5 px-3">p-Value</th>
+                    <th class="py-2.5 px-3 text-right">Actionable Threshold</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-white/5 font-mono text-[11px]">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-slate-800 dark:text-slate-100">Month-to-Month Contract</td>
+                    <td class="py-2 px-3 text-emerald-600 font-bold">+1.452</td>
+                    <td class="py-2 px-3 text-buttercup-600 font-bold">4.27x</td>
+                    <td class="py-2 px-3">[3.81 - 4.79]</td>
+                    <td class="py-2 px-3">&lt; 0.0001</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-slate-600 dark:text-slate-300">Contract migration incentive</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-slate-800 dark:text-slate-100">Support Ticket Surge</td>
+                    <td class="py-2 px-3 text-emerald-600 font-bold">+1.044</td>
+                    <td class="py-2 px-3 text-rose-500 font-bold">2.84x</td>
+                    <td class="py-2 px-3">[2.48 - 3.25]</td>
+                    <td class="py-2 px-3">&lt; 0.0001</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-rose-500">&ge;4 tickets in 30 days</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-slate-800 dark:text-slate-100">Inactivity / Dormancy Cliff</td>
+                    <td class="py-2 px-3 text-emerald-600 font-bold">+0.761</td>
+                    <td class="py-2 px-3 text-amber-500 font-bold">2.14x</td>
+                    <td class="py-2 px-3">[1.88 - 2.43]</td>
+                    <td class="py-2 px-3">&lt; 0.0001</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-amber-600">&ge;14 days without login</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-white/5">
+                    <td class="py-2 px-3 font-bold text-slate-800 dark:text-slate-100">NPS Detractor Rating</td>
+                    <td class="py-2 px-3 text-emerald-600 font-bold">+0.637</td>
+                    <td class="py-2 px-3 text-amber-500 font-bold">1.89x</td>
+                    <td class="py-2 px-3">[1.62 - 2.21]</td>
+                    <td class="py-2 px-3">&lt; 0.0001</td>
+                    <td class="py-2 px-3 text-right font-sans font-semibold text-slate-600 dark:text-slate-300">Score &le; 4 out of 10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        setTimeout(updateScenarioSimulator, 30);
+
+      } else if (visualId === 'triage') {
+        title.textContent = 'Priority Account Risk Triage Workbench';
+        subtitle.textContent = 'Operational intervention queue for high-value accounts facing imminent churn triggers';
+        icon.setAttribute('data-lucide', 'shield-alert');
+        footerNote.textContent = 'Click any account row to open the 360-degree diagnostic audit drawer.';
+
+        body.innerHTML = `
+          <div class="space-y-4">
+            <!-- Filter Bar & Metrics -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10">
+              <div class="flex items-center space-x-2">
+                <div class="relative">
+                  <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400"></i>
+                  <input type="text" id="isolationTriageSearch" oninput="filterIsolationTriage(this.value)" placeholder="Search company, CSM, tier..." class="pl-8 pr-3 py-1.5 rounded-full bg-white dark:bg-card-dark text-xs text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-white/10 focus:outline-none focus:border-buttercup-400 w-52 sm:w-64" />
+                </div>
+                <button onclick="filterIsolationTriageByTier('ALL')" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900 text-white dark:bg-buttercup-400 dark:text-slate-950">All</button>
+                <button onclick="filterIsolationTriageByTier('Enterprise')" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900">Enterprise</button>
+                <button onclick="filterIsolationTriageByTier('Mid-Market')" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900">Mid-Market</button>
+              </div>
+
+              <div class="flex items-center space-x-3 text-xs font-mono">
+                <span class="text-rose-500 font-bold">6 Critical Flagged</span>
+                <span class="text-slate-400">&bull;</span>
+                <span class="text-emerald-500 font-bold">+$24.1k Defended</span>
+              </div>
+            </div>
+
+            <!-- Interactive Accounts Table -->
+            <div class="rounded-2xl border border-slate-100 dark:border-white/10 overflow-x-auto max-h-[50vh]">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 dark:bg-white/5 text-[10px] font-mono text-slate-400 uppercase sticky top-0 backdrop-blur-md">
+                  <tr>
+                    <th class="py-2.5 px-3">Company &amp; Owner</th>
+                    <th class="py-2.5 px-3">Tier</th>
+                    <th class="py-2.5 px-3">Contract</th>
+                    <th class="py-2.5 px-3">MRR</th>
+                    <th class="py-2.5 px-3">Inactivity</th>
+                    <th class="py-2.5 px-3">Tickets</th>
+                    <th class="py-2.5 px-3">Health</th>
+                    <th class="py-2.5 px-3">Prescriptive Action</th>
+                    <th class="py-2.5 px-3 text-right">Audit</th>
+                  </tr>
+                </thead>
+                <tbody id="isolationTriageTableBody" class="divide-y divide-slate-100 dark:divide-white/5">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        renderIsolationTriageTable(RAW_ACCOUNTS);
+      }
+
+      lucide.createIcons();
+    }
+
+    function closeIsolationMode() {
+      const modal = document.getElementById('isolationModal');
+      if (modal) modal.classList.add('hidden');
+      if (isolationChartInstance) {
+        isolationChartInstance.destroy();
+        isolationChartInstance = null;
+      }
+      currentIsolationVisual = null;
+    }
+
+    // Scenario Simulator Engine for Behavioral Drivers Isolation
+    function updateScenarioSimulator() {
+      const contractSelect = document.getElementById('simContractSelect');
+      const ticketsSlider = document.getElementById('simTicketsSlider');
+      const inactivitySlider = document.getElementById('simInactivitySlider');
+
+      if (!contractSelect || !ticketsSlider || !inactivitySlider) return;
+
+      const contract = contractSelect.value;
+      const tickets = parseInt(ticketsSlider.value, 10);
+      const inactivity = parseInt(inactivitySlider.value, 10);
+
+      document.getElementById('simTicketsLabel').textContent = `${tickets} Tickets`;
+      document.getElementById('simInactivityLabel').textContent = `${inactivity} Days`;
+
+      let contractLabel = 'Month-to-Month (4.27x)';
+      let contractCoeff = 1.452;
+      if (contract === '1yr') {
+        contractLabel = '1-Year Term (1.42x)';
+        contractCoeff = 0.351;
+      } else if (contract === '2yr') {
+        contractLabel = '2-Year Term (0.38x Shield)';
+        contractCoeff = -0.967;
+      }
+      document.getElementById('simContractLabel').textContent = contractLabel;
+
+      // Logit model calculation
+      const baseIntercept = -1.82;
+      const ticketCoeff = tickets >= 4 ? 1.044 : tickets * 0.18;
+      const inactCoeff = inactivity >= 14 ? 0.761 : inactivity * 0.035;
+
+      const logit = baseIntercept + contractCoeff + ticketCoeff + inactCoeff;
+      const prob = 1 / (1 + Math.exp(-logit));
+      const probPct = (prob * 100).toFixed(1);
+
+      const scoreEl = document.getElementById('simProbabilityScore');
+      const badgeEl = document.getElementById('simRiskBadge');
+      const recEl = document.getElementById('simRecommendation');
+
+      if (scoreEl) scoreEl.textContent = `${probPct}%`;
+
+      if (prob >= 0.50) {
+        if (scoreEl) scoreEl.className = "text-3xl sm:text-4xl font-light text-rose-500 font-mono mt-1";
+        if (badgeEl) {
+          badgeEl.className = "mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40";
+          badgeEl.textContent = "CRITICAL CHURN RISK";
+        }
+        if (recEl) recEl.textContent = "Immediate Senior TAM touchpoint required. Dispatch 15% discount for 1-year contract migration.";
+      } else if (prob >= 0.25) {
+        if (scoreEl) scoreEl.className = "text-3xl sm:text-4xl font-light text-amber-500 font-mono mt-1";
+        if (badgeEl) {
+          badgeEl.className = "mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40";
+          badgeEl.textContent = "ELEVATED VULNERABILITY";
+        }
+        if (recEl) recEl.textContent = "Schedule proactive check-in. Monitor tickets and deliver in-app feature walkthrough.";
+      } else {
+        if (scoreEl) scoreEl.className = "text-3xl sm:text-4xl font-light text-emerald-500 font-mono mt-1";
+        if (badgeEl) {
+          badgeEl.className = "mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+          badgeEl.textContent = "HEALTHY & SECURE";
+        }
+        if (recEl) recEl.textContent = "Account retention is firmly shielded by committed contract and consistent platform adoption.";
+      }
+    }
+
+    // Isolation Triage Table Renderer
+    function renderIsolationTriageTable(accounts) {
+      const tbody = document.getElementById('isolationTriageTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      accounts.forEach(acc => {
+        const healthScore = Math.max(18, 96 - (acc.inactivity * 3) - (acc.tickets * 8));
+        const badgeColor = healthScore < 25 
+          ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900' 
+          : healthScore < 50 
+            ? 'bg-amber-50 text-amber-600 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900' 
+            : 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900';
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition";
+        tr.onclick = () => {
+          closeIsolationMode();
+          openAccountDrawer(acc.id);
+        };
+
+        tr.innerHTML = `
+          <td class="py-2 px-3">
+            <div class="font-bold text-slate-800 dark:text-white">${acc.company}</div>
+            <div class="text-[9px] text-slate-400 font-mono">${acc.id} &bull; ${acc.csm}</div>
+          </td>
+          <td class="py-2 px-3">
+            <span class="px-2 py-0.5 rounded text-[9px] font-semibold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300">${acc.tier}</span>
+          </td>
+          <td class="py-2 px-3">
+            <span class="px-2 py-0.5 rounded text-[9px] font-semibold ${acc.contract === 'Month-to-Month' ? 'bg-amber-50 dark:bg-amber-950/40 text-buttercup-600' : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600'}">${acc.contract}</span>
+          </td>
+          <td class="py-2 px-3 font-mono font-bold text-slate-800 dark:text-slate-200">$${acc.mrr.toFixed(2)}</td>
+          <td class="py-2 px-3 font-mono text-rose-500 font-semibold">${acc.inactivity}d</td>
+          <td class="py-2 px-3 font-mono text-amber-600 font-semibold">${acc.tickets}</td>
+          <td class="py-2 px-3">
+            <span class="px-2 py-0.5 rounded text-[9px] font-bold border ${badgeColor}">H:${healthScore}</span>
+          </td>
+          <td class="py-2 px-3 text-[11px] text-slate-600 dark:text-slate-300 max-w-xs truncate">${acc.prescriptive}</td>
+          <td class="py-2 px-3 text-right">
+            <button class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-buttercup-400 hover:text-slate-900 text-[9px] font-semibold transition">
+              Inspect 360
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      lucide.createIcons();
+    }
+
+    function filterIsolationTriage(query) {
+      const q = (query || '').toLowerCase();
+      const filtered = RAW_ACCOUNTS.filter(a =>
+        a.company.toLowerCase().includes(q) ||
+        a.csm.toLowerCase().includes(q) ||
+        a.tier.toLowerCase().includes(q) ||
+        a.contract.toLowerCase().includes(q)
+      );
+      renderIsolationTriageTable(filtered);
+    }
+
+    function filterIsolationTriageByTier(tier) {
+      if (tier === 'ALL') {
+        renderIsolationTriageTable(RAW_ACCOUNTS);
+      } else {
+        const filtered = RAW_ACCOUNTS.filter(a => a.tier.toLowerCase() === tier.toLowerCase());
+        renderIsolationTriageTable(filtered);
+      }
+    }
+
+    // Export Isolation Data Snapshot
+    function exportIsolationData() {
+      let exportObj = {
+        visual: currentIsolationVisual,
+        timestamp: new Date().toISOString(),
+        author: "Peter Akpan",
+        platform: "RetainPulse Enterprise SaaS Churn Intelligence"
+      };
+
+      if (currentIsolationVisual === 'donut') {
+        exportObj.dataset = [
+          { contract: "Month-to-Month", volume: 2710, share: "54.2%", churn: "31.8%", oddsRatio: 4.27, leakage: 5102160 },
+          { contract: "1-Year", volume: 1380, share: "27.6%", churn: "16.4%", oddsRatio: 1.42, leakage: 1828920 },
+          { contract: "2-Year", volume: 910, share: "18.2%", churn: "9.9%", oddsRatio: 0.38, leakage: 914510 }
+        ];
+      } else if (currentIsolationVisual === 'bar') {
+        exportObj.dataset = [
+          { tier: "SMB / Self-Serve", accounts: 2640, churn: "34.6%", leakageArr: 3810000, avgMrr: 142 },
+          { tier: "Mid-Market", accounts: 1840, churn: "21.3%", leakageArr: 2610000, avgMrr: 920 },
+          { tier: "Enterprise", accounts: 520, churn: "9.9%", leakageArr: 1420000, avgMrr: 1420 }
+        ];
+      } else if (currentIsolationVisual === 'drivers') {
+        exportObj.dataset = [
+          { predictor: "Month-to-Month Contract", coefficient: 1.452, oddsRatio: 4.27, pValue: "<0.0001" },
+          { predictor: "Support Ticket Surge (>=4)", coefficient: 1.044, oddsRatio: 2.84, pValue: "<0.0001" },
+          { predictor: "Inactivity Cliff (>=14d)", coefficient: 0.761, oddsRatio: 2.14, pValue: "<0.0001" },
+          { predictor: "NPS Detractor (<=4)", coefficient: 0.637, oddsRatio: 1.89, pValue: "<0.0001" }
+        ];
+      } else {
+        exportObj.dataset = RAW_ACCOUNTS;
+      }
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `retainpulse_${currentIsolationVisual || 'export'}_focus.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast("Isolation dataset exported");
+    }
+
+    // Keyboard and Window Click Listeners for Distraction-Free Isolation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeIsolationMode();
+        closeAccountDrawer();
+        closeSqlModal();
+      }
+    });
+
+    window.addEventListener('click', (e) => {
+      const isoModal = document.getElementById('isolationModal');
+      if (e.target === isoModal) {
+        closeIsolationMode();
+      }
+    });
 
     // Render Home Priority Triage Table (Live Action)
     function renderHomeTriageTable(accounts) {
