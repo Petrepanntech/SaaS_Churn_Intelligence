@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaaS Customer Churn & Revenue Retention Intelligence | Peter Akpan</title>
+  <meta name="description" content="End-to-end B2B SaaS customer churn analytics, predictive risk modeling, and interactive executive retention telemetry by Peter Akpan (Petre Pann).">
+  <meta property="og:title" content="SaaS Customer Churn & Revenue Retention Intelligence">
+  <meta property="og:description" content="Interactive telemetry, cohort retention curves, and SQL analytics engine for 5,000 enterprise accounts.">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="header">
+    <div class="container nav-wrap">
+      <div class="brand-block">
+        <span class="brand-badge">Pann Labs</span>
+        <div>
+          <h1 class="brand-title">SaaS Churn Intelligence</h1>
+          <p class="brand-author">Executive Telemetry & Retention Engine · By Peter Akpan</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="https://petrepanntech.github.io" class="btn-link btn-secondary" target="_blank" rel="noopener">Portfolio</a>
+        <a href="https://github.com/Petrepanntech/SaaS_Churn_Intelligence" class="btn-link btn-primary" target="_blank" rel="noopener">GitHub Repository</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div class="hero-pill">
+        <span class="pulse-dot"></span> Live Telemetry: 5,000 Enterprise Accounts Audited
+      </div>
+      <h2 class="hero-title">Predictive Churn Analytics & Revenue Retention Engine</h2>
+      <p class="hero-subtitle">
+        Bridging SQL relational modeling, longitudinal cohort survival analysis, and operational risk triage to isolate revenue leakage and safeguard Monthly Recurring Revenue (MRR).
+      </p>
+    </section>
+
+    <!-- Executive KPI Grid -->
+    <section class="kpi-grid" id="kpi-container">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Active Portfolio MRR</span>
+          <span class="kpi-icon">💵</span>
+        </div>
+        <div class="kpi-value" id="val-active-mrr">$0.00</div>
+        <div class="kpi-subtext" id="val-active-accts">Loading active accounts...</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Portfolio Churn Rate</span>
+          <span class="kpi-icon">📉</span>
+        </div>
+        <div class="kpi-value" id="val-churn-rate">0.0%</div>
+        <div class="kpi-subtext highlight-danger" id="val-churn-accts">Loading churned accounts...</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">High-Risk MRR at Stake</span>
+          <span class="kpi-icon">⚠️</span>
+        </div>
+        <div class="kpi-value" id="val-risk-mrr">$0.00</div>
+        <div class="kpi-subtext highlight-danger" id="val-risk-accts">Loading risk exposure...</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Average Customer Tenure</span>
+          <span class="kpi-icon">⏳</span>
+        </div>
+        <div class="kpi-value" id="val-avg-tenure">0.0 mo</div>
+        <div class="kpi-subtext highlight-success" id="val-adoption">Loading feature adoption...</div>
+      </div>
+    </section>
+
+    <!-- Longitudinal Charts Section -->
+    <div class="section-header">
+      <div>
+        <h3 class="section-title">Longitudinal Survival & Risk Factor Dynamics</h3>
+        <p class="section-desc">Empirical survival distributions across signup cohorts, contract structures, and subscription tiers.</p>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <!-- Chart 1: Cohort Retention Curve -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h4 class="chart-title">Cohort Retention Curve (Survival over Time)</h4>
+          <p class="chart-subtitle">Longitudinal retention percentages tracked across recent signup cohorts.</p>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="canvas-cohort"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Contract Type Risk -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h4 class="chart-title">Churn Probability by Contract Commitment</h4>
+          <p class="chart-subtitle">Comparing Month-to-Month, 1-Year, and 2-Year contractual retention rates.</p>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="canvas-contract"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 3: Tier Risk -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h4 class="chart-title">Churn Rate by Subscription Tier</h4>
+          <p class="chart-subtitle">Benchmark churn distribution across Enterprise, Professional, and Starter accounts.</p>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="canvas-tier"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Triage & Risk Filter Table -->
+    <div class="section-header" style="margin-top: 50px;">
+      <div>
+        <h3 class="section-title">Prescriptive Account Risk Triage</h3>
+        <p class="section-desc">Searchable directory of accounts ranked by revenue exposure with automated intervention recommendations.</p>
+      </div>
+      <span id="filtered-count" style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Showing 0 accounts</span>
+    </div>
+
+    <div class="table-controls">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-accounts" class="search-input" placeholder="Search by company name, ID, or industry...">
+      </div>
+
+      <div class="filter-group">
+        <button class="filter-btn filter-risk-btn active" data-filter="All">All Risks</button>
+        <button class="filter-btn filter-risk-btn" data-filter="High Risk">High Risk</button>
+        <button class="filter-btn filter-risk-btn" data-filter="Medium Risk">Medium Risk</button>
+        <button class="filter-btn filter-risk-btn" data-filter="Low Risk">Low Risk</button>
+      </div>
+
+      <div class="filter-group">
+        <button class="filter-btn filter-tier-btn active" data-tier="All">All Tiers</button>
+        <button class="filter-btn filter-tier-btn" data-tier="Enterprise">Enterprise</button>
+        <button class="filter-btn filter-tier-btn" data-tier="Professional">Professional</button>
+        <button class="filter-btn filter-tier-btn" data-tier="Starter">Starter</button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Company / Account ID</th>
+            <th>Tier</th>
+            <th>Contract</th>
+            <th>Monthly MRR</th>
+            <th>Last Login</th>
+            <th>Risk Score</th>
+            <th>Recommended Retention Action</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr>
+            <td colspan="7" style="text-align:center; padding: 24px; color: var(--text-muted);">Loading account records...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interactive SQL Workbench Section -->
+    <div class="section-header" style="margin-top: 50px;">
+      <div>
+        <h3 class="section-title">Interactive SQL Analytics Workbench</h3>
+        <p class="section-desc">Explore the exact production queries used to calculate retention rates, revenue leakage, and account prioritization.</p>
+      </div>
+    </div>
+
+    <div class="sql-workbench">
+      <div class="sql-tabs" id="sql-tabs">
+        <!-- Tabs populated dynamically -->
+      </div>
+      <div class="sql-meta">
+        <span id="sql-meta-desc">Select a query tab above to inspect SQL syntax and real database output.</span>
+      </div>
+      <pre class="sql-code-box" id="sql-code-box">-- SQL Query Code</pre>
+
+      <div class="sql-results-table" id="sql-results">
+        <!-- Results populated dynamically -->
+      </div>
+    </div>
+
+    <!-- Empirical Findings & Strategic Recommendations -->
+    <div class="section-header" style="margin-top: 50px;">
+      <div>
+        <h3 class="section-title">Empirical Findings & Actionable Business Insights</h3>
+        <p class="section-desc">Statistical conclusions derived from relational audit and predictive churn modeling across 5,000 accounts.</p>
+      </div>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-num">Empirical Finding 01</div>
+        <h4 class="insight-title">4.27x Churn Odds on Month-to-Month Contracts</h4>
+        <p class="insight-body">
+          Month-to-month contracts experience a 31.8% churn rate compared to 9.9% for 2-year agreements (Odds Ratio: 4.27x). Locking accounts into multi-year agreements represents the single highest-leverage retention driver.
+        </p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-num">Empirical Finding 02</div>
+        <h4 class="insight-title">Support Ticket Velocity is an Early Warning Signal</h4>
+        <p class="insight-body">
+          Accounts opening 4 or more support tickets in a 30-day window exhibit a 44.2% churn rate vs 22.6% for low-friction accounts (Odds Ratio: 2.70x). High ticket volume reflects integration friction rather than healthy product engagement.
+        </p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-num">Empirical Finding 03</div>
+        <h4 class="insight-title">14-Day Inactivity Threshold Triggers Churn Cascade</h4>
+        <p class="insight-body">
+          Accounts with zero user logins for 14 or more consecutive days show a 43.4% churn rate (Odds Ratio: 2.53x). Automated re-engagement campaigns must trigger at day 7 to prevent dormant accounts from entering the irreversible drop-off zone.
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        Architected and Built by <strong>Peter Akpan (Petre Pann)</strong> · Founder, Pann Labs
+      </p>
+      <p style="margin-top: 6px;">
+        <a href="https://petrepanntech.github.io" target="_blank" rel="noopener">Interactive Portfolio</a> · 
+        <a href="https://linkedin.com/in/peter-akpan-69b76615b/" target="_blank" rel="noopener">LinkedIn</a> · 
+        <a href="mailto:petrepann.tech@gmail.com">petrepann.tech@gmail.com</a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
